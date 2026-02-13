@@ -1,0 +1,1198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAFL / TUFL – Unit 1 | Introduction to Automata</title>
+    <style>
+        html{
+  scroll-behavior: smooth;
+}
+
+.home-btn{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  background: #1e293b;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.home-btn:hover{
+  background: #0f172a;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding: 20px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        nav {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        nav h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        nav ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        main {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .definition {
+            background-color: #e8f4f8;
+            border-left: 5px solid #667eea;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .definition strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        ul, ol {
+            margin-left: 40px;
+            margin-bottom: 20px;
+        }
+
+        ul li, ol li {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background-color: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tr:hover {
+            background-color: #f5f7fa;
+        }
+
+        .exam-focus {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .exam-focus h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .example-box {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .example-box strong {
+            color: #495057;
+        }
+
+        .notation {
+            font-family: 'Courier New', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.95em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        /* @media print {
+            body {
+                display: none !important;
+            }
+        } */
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.6em;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            h3 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <a href="#top" class="home-btn" title="Back to Top">↑</a>
+    <header>
+        <h1>TAFL – Unit 1</h1>
+        <p>Introduction to Automata</p>
+        <p>AKTU B.Tech CSE – Exam Oriented Notes</p>
+    </header>
+
+    <nav>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#intro-automata">Introduction to Automata Theory</a></li>
+            <li><a href="#alphabets">Alphabets, Strings, and Languages</a></li>
+            <li><a href="#string-operations">Operations on Strings</a></li>
+            <li><a href="#language-operations">Operations on Languages</a></li>
+            <li><a href="#finite-automata">Finite Automata</a></li>
+            <li><a href="#dfa">Deterministic Finite Automata (DFA)</a></li>
+            <li><a href="#nfa">Non-Deterministic Finite Automata (NFA)</a></li>
+            <li><a href="#dfa-vs-nfa">DFA vs NFA</a></li>
+            <li><a href="#exam-focus">Exam Focus Box</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="intro-automata">
+            <h2>1. Introduction to Automata Theory</h2>
+            
+            <h3>1.1 Meaning of Automata Theory</h3>
+            <div class="definition">
+                <strong>Automata Theory:</strong> Automata theory is the study of abstract computing devices or machines. It deals with the definitions and properties of mathematical models of computation. An automaton is an abstract model of a digital computer that has a finite number of states and transitions between these states based on input symbols.
+            </div>
+            <p>The word "automata" is the plural of "automaton" which comes from the Greek word meaning "self-acting". In computer science, automata theory forms the theoretical foundation for understanding computation, designing compilers, and analyzing the complexity of algorithms.</p>
+            <p>Automata theory provides a mathematical framework to study:</p>
+            <ul>
+                <li>What can be computed and what cannot be computed</li>
+                <li>How efficiently a problem can be solved</li>
+                <li>The relationship between different computational models</li>
+                <li>The limits of computation</li>
+            </ul>
+
+            <h3>1.2 Importance of Automata in Computer Science</h3>
+            <p>Automata theory is fundamental to computer science for several reasons:</p>
+            <ul>
+                <li><strong>Compiler Design:</strong> Automata theory is used extensively in lexical analysis and parsing phases of compiler construction. Finite automata are used to recognize tokens and regular expressions in programming languages</li>
+                <li><strong>String Processing:</strong> Pattern matching algorithms and text editors use finite automata to search for patterns in text</li>
+                <li><strong>Digital Circuit Design:</strong> Sequential circuits and state machines in digital electronics are modeled using finite automata</li>
+                <li><strong>Natural Language Processing:</strong> Automata help in understanding and processing human languages in computational linguistics</li>
+                <li><strong>Formal Verification:</strong> Used to verify the correctness of hardware and software systems</li>
+                <li><strong>Theoretical Computer Science:</strong> Provides the foundation for understanding computability and complexity theory</li>
+                <li><strong>Protocol Design:</strong> Network protocols and communication systems are designed and verified using automata models</li>
+            </ul>
+
+            <h3>1.3 Applications of Automata Theory</h3>
+            <p>Automata theory has numerous practical applications in various domains:</p>
+            <ul>
+                <li><strong>Lexical Analyzers:</strong> The first phase of a compiler uses finite automata to break source code into tokens</li>
+                <li><strong>Text Editors:</strong> Search and replace functionality uses pattern matching based on automata</li>
+                <li><strong>Software Verification:</strong> Model checking techniques use automata to verify software properties</li>
+                <li><strong>Network Security:</strong> Intrusion detection systems use automata to identify attack patterns</li>
+                <li><strong>Bioinformatics:</strong> DNA sequence matching and protein structure analysis use automata-based algorithms</li>
+                <li><strong>Database Query Optimization:</strong> Query processing engines use automata for pattern matching in database systems</li>
+                <li><strong>Robotics:</strong> Behavior modeling of robots uses state machines based on automata</li>
+                <li><strong>Game Development:</strong> AI behavior in games is often modeled using finite state machines</li>
+                <li><strong>XML Processing:</strong> XML parsers and validators use automata to check document structure</li>
+            </ul>
+        </section>
+
+        <section id="alphabets">
+            <h2>2. Alphabets, Strings, and Languages</h2>
+            
+            <h3>2.1 Definition of Alphabet</h3>
+            <div class="definition">
+                <strong>Alphabet:</strong> An alphabet is a finite, non-empty set of symbols or characters. It is denoted by the Greek letter Σ (sigma).
+            </div>
+            <p>An alphabet is the basic building block in automata theory. It consists of symbols that are used to form strings.</p>
+            
+            <div class="example-box">
+                <strong>Examples of Alphabets:</strong>
+                <ul>
+                    <li>Σ = {0, 1} - Binary alphabet</li>
+                    <li>Σ = {a, b, c} - Alphabet with three letters</li>
+                    <li>Σ = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} - Decimal digit alphabet</li>
+                    <li>Σ = {a, b, c, ..., z} - English lowercase alphabet</li>
+                </ul>
+            </div>
+            <p><strong>Important Points:</strong></p>
+            <ul>
+                <li>An alphabet must be finite (cannot have infinite symbols)</li>
+                <li>An alphabet must be non-empty (must have at least one symbol)</li>
+                <li>Symbols in an alphabet are atomic (indivisible)</li>
+            </ul>
+
+            <h3>2.2 Definition of String</h3>
+            <div class="definition">
+                <strong>String:</strong> A string (or word) is a finite sequence of symbols from an alphabet. It is formed by concatenating zero or more symbols from the alphabet.
+            </div>
+            <p>Strings are formed by selecting symbols from an alphabet and arranging them in a sequence.</p>
+            
+            <div class="example-box">
+                <strong>Examples of Strings:</strong>
+                <p>For alphabet Σ = {0, 1}:</p>
+                <ul>
+                    <li>0, 1, 00, 01, 10, 11, 000, 001, 010, 011, 100, 101, 110, 111, ...</li>
+                </ul>
+                <p>For alphabet Σ = {a, b}:</p>
+                <ul>
+                    <li>a, b, aa, ab, ba, bb, aaa, aab, aba, abb, baa, bab, bba, bbb, ...</li>
+                </ul>
+            </div>
+
+            <h3>2.3 Length of a String</h3>
+            <div class="definition">
+                <strong>Length of a String:</strong> The length of a string is the number of symbols in the string. It is denoted by |w| where w is the string.
+            </div>
+            
+            <div class="example-box">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>If w = "010", then |w| = 3</li>
+                    <li>If w = "abba", then |w| = 4</li>
+                    <li>If w = "a", then |w| = 1</li>
+                    <li>If w = "0000", then |w| = 4</li>
+                </ul>
+            </div>
+
+            <h3>2.4 Empty String</h3>
+            <div class="definition">
+                <strong>Empty String:</strong> The empty string, denoted by ε (epsilon) or λ (lambda), is a string with no symbols. It has length zero.
+            </div>
+            <p><strong>Properties of Empty String:</strong></p>
+            <ul>
+                <li>|ε| = 0 (length of empty string is zero)</li>
+                <li>ε is a string over any alphabet</li>
+                <li>For any string w, w·ε = ε·w = w (concatenation with empty string gives the original string)</li>
+                <li>The empty string is different from an empty set</li>
+            </ul>
+
+            <h3>2.5 Definition of Language</h3>
+            <div class="definition">
+                <strong>Language:</strong> A language is a set of strings over an alphabet. It can be finite or infinite. A language is denoted by L.
+            </div>
+            <p>A language is any collection of strings formed from symbols of an alphabet. It may contain zero, one, or infinitely many strings.</p>
+            
+            <div class="example-box">
+                <strong>Examples of Languages:</strong>
+                <p>For alphabet Σ = {0, 1}:</p>
+                <ul>
+                    <li>L₁ = {0, 1, 00, 11} - Finite language with 4 strings</li>
+                    <li>L₂ = {0, 00, 000, 0000, ...} - Infinite language of strings containing only 0s</li>
+                    <li>L₃ = {ε} - Language containing only empty string</li>
+                    <li>L₄ = ∅ - Empty language (contains no strings)</li>
+                    <li>L₅ = {w | w starts with 0} - Language of all strings starting with 0</li>
+                    <li>L₆ = {w | w has equal number of 0s and 1s} - Infinite language</li>
+                </ul>
+            </div>
+            <p><strong>Important Distinctions:</strong></p>
+            <ul>
+                <li><strong>Empty Language (∅):</strong> Contains no strings at all</li>
+                <li><strong>Language {ε}:</strong> Contains exactly one string - the empty string</li>
+                <li>These two are different: ∅ ≠ {ε}</li>
+            </ul>
+        </section>
+
+        <section id="string-operations">
+            <h2>3. Operations on Strings</h2>
+            
+            <h3>3.1 Concatenation</h3>
+            <div class="definition">
+                <strong>Concatenation:</strong> Concatenation of two strings x and y, denoted as x·y or simply xy, is the operation of joining two strings by writing them one after another.
+            </div>
+            <p>If x and y are two strings, then xy is formed by appending y to the end of x.</p>
+            
+            <div class="example-box">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>If x = "ab" and y = "cd", then xy = "abcd"</li>
+                    <li>If x = "01" and y = "10", then xy = "0110"</li>
+                    <li>If x = "abc" and y = ε, then xy = "abc"</li>
+                    <li>If x = "a" and y = "a", then xy = "aa"</li>
+                </ul>
+            </div>
+            <p><strong>Properties of Concatenation:</strong></p>
+            <ul>
+                <li><strong>Length Property:</strong> |xy| = |x| + |y|</li>
+                <li><strong>Identity Element:</strong> For any string w, w·ε = ε·w = w</li>
+                <li><strong>Associative:</strong> (xy)z = x(yz)</li>
+                <li><strong>Not Commutative:</strong> xy ≠ yx in general</li>
+            </ul>
+
+            <h3>3.2 Power of a String</h3>
+            <div class="definition">
+                <strong>Power of a String:</strong> The power of a string w, denoted as wⁿ, is the concatenation of string w with itself n times, where n ≥ 0.
+            </div>
+            <p><strong>Definition:</strong></p>
+            <ul>
+                <li>w⁰ = ε (any string to power 0 is empty string)</li>
+                <li>w¹ = w (string to power 1 is the string itself)</li>
+                <li>wⁿ = w·wⁿ⁻¹ for n > 1 (recursive definition)</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>If w = "ab", then w² = "abab"</li>
+                    <li>If w = "0", then w³ = "000"</li>
+                    <li>If w = "abc", then w⁰ = ε</li>
+                    <li>If w = "01", then w⁴ = "01010101"</li>
+                </ul>
+            </div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>|wⁿ| = n × |w|</li>
+                <li>wᵐ·wⁿ = wᵐ⁺ⁿ</li>
+                <li>(wᵐ)ⁿ = wᵐⁿ</li>
+            </ul>
+
+            <h3>3.3 Reverse of a String</h3>
+            <div class="definition">
+                <strong>Reverse of a String:</strong> The reverse of a string w, denoted as wᴿ or w<sup>R</sup>, is the string obtained by writing the symbols of w in reverse order.
+            </div>
+            <p>The reverse operation reads the string from right to left instead of left to right.</p>
+            
+            <div class="example-box">
+                <strong>Examples:</strong>
+                <ul>
+                    <li>If w = "abc", then wᴿ = "cba"</li>
+                    <li>If w = "0110", then wᴿ = "0110" (palindrome)</li>
+                    <li>If w = "ab", then wᴿ = "ba"</li>
+                    <li>If w = "a", then wᴿ = "a"</li>
+                    <li>If w = ε, then wᴿ = ε</li>
+                </ul>
+            </div>
+            <p><strong>Properties of Reverse:</strong></p>
+            <ul>
+                <li>(wᴿ)ᴿ = w (reverse of reverse is original string)</li>
+                <li>|wᴿ| = |w| (length remains same)</li>
+                <li>(xy)ᴿ = yᴿxᴿ (reverse of concatenation)</li>
+                <li>εᴿ = ε</li>
+                <li>If w = wᴿ, then w is a palindrome</li>
+            </ul>
+
+            <h3>3.4 Properties of String Operations</h3>
+            <p><strong>Summary of Important Properties:</strong></p>
+            <ul>
+                <li><strong>Concatenation is Associative:</strong> (x·y)·z = x·(y·z)</li>
+                <li><strong>Concatenation is Not Commutative:</strong> x·y ≠ y·x in general</li>
+                <li><strong>ε is Identity for Concatenation:</strong> x·ε = ε·x = x</li>
+                <li><strong>Length of Concatenation:</strong> |x·y| = |x| + |y|</li>
+                <li><strong>Power Properties:</strong> wᵐ·wⁿ = wᵐ⁺ⁿ and (wᵐ)ⁿ = wᵐⁿ</li>
+                <li><strong>Reverse Properties:</strong> (x·y)ᴿ = yᴿ·xᴿ and (wᴿ)ᴿ = w</li>
+            </ul>
+        </section>
+
+        <section id="language-operations">
+            <h2>4. Operations on Languages</h2>
+            
+            <h3>4.1 Union</h3>
+            <div class="definition">
+                <strong>Union:</strong> The union of two languages L₁ and L₂, denoted as L₁ ∪ L₂, is the set of all strings that are in L₁ or in L₂ or in both.
+            </div>
+            <p>L₁ ∪ L₂ = {w | w ∈ L₁ or w ∈ L₂}</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L₁ = {a, ab, abc} and L₂ = {ab, cd}</p>
+                <p>Then L₁ ∪ L₂ = {a, ab, abc, cd}</p>
+                <p>Note: "ab" appears in both languages but is listed only once in the union</p>
+            </div>
+
+            <h3>4.2 Intersection</h3>
+            <div class="definition">
+                <strong>Intersection:</strong> The intersection of two languages L₁ and L₂, denoted as L₁ ∩ L₂, is the set of all strings that are in both L₁ and L₂.
+            </div>
+            <p>L₁ ∩ L₂ = {w | w ∈ L₁ and w ∈ L₂}</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L₁ = {a, ab, abc} and L₂ = {ab, abc, cd}</p>
+                <p>Then L₁ ∩ L₂ = {ab, abc}</p>
+            </div>
+
+            <h3>4.3 Difference</h3>
+            <div class="definition">
+                <strong>Difference:</strong> The difference of two languages L₁ and L₂, denoted as L₁ - L₂, is the set of all strings that are in L₁ but not in L₂.
+            </div>
+            <p>L₁ - L₂ = {w | w ∈ L₁ and w ∉ L₂}</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L₁ = {a, ab, abc, abcd} and L₂ = {ab, cd}</p>
+                <p>Then L₁ - L₂ = {a, abc, abcd}</p>
+            </div>
+
+            <h3>4.4 Complement</h3>
+            <div class="definition">
+                <strong>Complement:</strong> The complement of a language L, denoted as L̄ or Lᶜ, is the set of all strings over the alphabet Σ that are not in L.
+            </div>
+            <p>L̄ = Σ* - L = {w | w ∈ Σ* and w ∉ L}</p>
+            <p>where Σ* denotes the set of all possible strings over alphabet Σ.</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let Σ = {0, 1} and L = {0, 01, 011}</p>
+                <p>Then L̄ = {ε, 1, 00, 10, 11, 000, 001, 010, 100, 101, 110, 111, ...} - all strings except 0, 01, 011</p>
+            </div>
+
+            <h3>4.5 Concatenation</h3>
+            <div class="definition">
+                <strong>Concatenation:</strong> The concatenation of two languages L₁ and L₂, denoted as L₁·L₂ or L₁L₂, is the set of all strings formed by concatenating any string from L₁ with any string from L₂.
+            </div>
+            <p>L₁L₂ = {xy | x ∈ L₁ and y ∈ L₂}</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L₁ = {a, ab} and L₂ = {c, cd}</p>
+                <p>Then L₁L₂ = {ac, acd, abc, abcd}</p>
+                <p>Explanation:</p>
+                <ul>
+                    <li>a·c = ac</li>
+                    <li>a·cd = acd</li>
+                    <li>ab·c = abc</li>
+                    <li>ab·cd = abcd</li>
+                </ul>
+            </div>
+            <p><strong>Properties of Concatenation:</strong></p>
+            <ul>
+                <li><strong>Associative:</strong> (L₁L₂)L₃ = L₁(L₂L₃)</li>
+                <li><strong>Not Commutative:</strong> L₁L₂ ≠ L₂L₁ in general</li>
+                <li><strong>Identity:</strong> L{ε} = {ε}L = L</li>
+                <li><strong>Zero Element:</strong> L∅ = ∅L = ∅</li>
+            </ul>
+
+            <h3>4.6 Kleene Star</h3>
+            <div class="definition">
+                <strong>Kleene Star:</strong> The Kleene star of a language L, denoted as L*, is the set of all strings formed by concatenating zero or more strings from L.
+            </div>
+            <p>L* = L⁰ ∪ L¹ ∪ L² ∪ L³ ∪ ...</p>
+            <p>where:</p>
+            <ul>
+                <li>L⁰ = {ε}</li>
+                <li>L¹ = L</li>
+                <li>Lⁿ = LLⁿ⁻¹ for n ≥ 2</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L = {0, 1}</p>
+                <p>Then L* = {ε, 0, 1, 00, 01, 10, 11, 000, 001, 010, 011, 100, 101, 110, 111, ...}</p>
+                <p>This is the set of all binary strings including the empty string</p>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L = {a}</p>
+                <p>Then L* = {ε, a, aa, aaa, aaaa, ...}</p>
+            </div>
+            <p><strong>Properties of Kleene Star:</strong></p>
+            <ul>
+                <li>ε ∈ L* always (even if ε ∉ L)</li>
+                <li>L* is always infinite (except when L = ∅)</li>
+                <li>(L*)* = L*</li>
+                <li>∅* = {ε}</li>
+                <li>{ε}* = {ε}</li>
+                <li>L⁺ ∪ {ε} = L*</li>
+            </ul>
+
+            <h3>4.7 Kleene Plus</h3>
+            <div class="definition">
+                <strong>Kleene Plus:</strong> The Kleene plus of a language L, denoted as L⁺, is the set of all strings formed by concatenating one or more strings from L.
+            </div>
+            <p>L⁺ = L¹ ∪ L² ∪ L³ ∪ ...</p>
+            <p>Alternatively: L⁺ = LL* = L*L</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L = {0, 1}</p>
+                <p>Then L⁺ = {0, 1, 00, 01, 10, 11, 000, 001, 010, 011, 100, 101, 110, 111, ...}</p>
+                <p>Note: L⁺ does not include ε, unlike L*</p>
+            </div>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Let L = {a}</p>
+                <p>Then L⁺ = {a, aa, aaa, aaaa, ...}</p>
+            </div>
+            <p><strong>Relationship between Kleene Star and Plus:</strong></p>
+            <ul>
+                <li>L⁺ = L* - {ε} (if ε ∉ L)</li>
+                <li>L* = L⁺ ∪ {ε}</li>
+                <li>L⁺ = LL*</li>
+                <li>L⁺ does not contain ε unless ε ∈ L</li>
+            </ul>
+
+            <h3>4.8 Summary of Language Operations</h3>
+            <table>
+                <tr>
+                    <th>Operation</th>
+                    <th>Notation</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Union</td>
+                    <td>L₁ ∪ L₂</td>
+                    <td>Strings in L₁ or L₂ or both</td>
+                </tr>
+                <tr>
+                    <td>Intersection</td>
+                    <td>L₁ ∩ L₂</td>
+                    <td>Strings in both L₁ and L₂</td>
+                </tr>
+                <tr>
+                    <td>Difference</td>
+                    <td>L₁ - L₂</td>
+                    <td>Strings in L₁ but not in L₂</td>
+                </tr>
+                <tr>
+                    <td>Complement</td>
+                    <td>L̄</td>
+                    <td>All strings not in L</td>
+                </tr>
+                <tr>
+                    <td>Concatenation</td>
+                    <td>L₁L₂</td>
+                    <td>Strings formed by joining strings from L₁ and L₂</td>
+                </tr>
+                <tr>
+                    <td>Kleene Star</td>
+                    <td>L*</td>
+                    <td>Zero or more concatenations of strings from L</td>
+                </tr>
+                <tr>
+                    <td>Kleene Plus</td>
+                    <td>L⁺</td>
+                    <td>One or more concatenations of strings from L</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="finite-automata">
+            <h2>5. Finite Automata</h2>
+            
+            <h3>5.1 Definition of Finite Automaton</h3>
+            <div class="definition">
+                <strong>Finite Automaton:</strong> A finite automaton is an abstract mathematical model of a machine with a finite number of states. It reads an input string symbol by symbol and transitions from one state to another based on the current state and input symbol.
+            </div>
+            <p>A finite automaton is the simplest computational model. It consists of:</p>
+            <ul>
+                <li>A finite set of states</li>
+                <li>An input alphabet</li>
+                <li>A start state</li>
+                <li>One or more final (accepting) states</li>
+                <li>A transition function that determines the next state based on current state and input</li>
+            </ul>
+            <p><strong>Working Principle:</strong></p>
+            <ul>
+                <li>The automaton starts in the start state</li>
+                <li>It reads the input string from left to right, one symbol at a time</li>
+                <li>For each symbol, it transitions to a new state according to the transition function</li>
+                <li>After reading the entire string, if the automaton is in a final state, the string is accepted; otherwise, it is rejected</li>
+            </ul>
+
+            <h3>5.2 Types of Finite Automata</h3>
+            <p>Finite automata are classified into two main types based on their transition behavior:</p>
+            
+            <h4>5.2.1 Deterministic Finite Automata (DFA)</h4>
+            <div class="definition">
+                <strong>DFA:</strong> In a Deterministic Finite Automaton, for each state and input symbol, there is exactly one transition to a next state. The behavior is completely deterministic.
+            </div>
+            <p><strong>Characteristics of DFA:</strong></p>
+            <ul>
+                <li>No ambiguity in transitions</li>
+                <li>For each state and input symbol, there is exactly one next state</li>
+                <li>No epsilon (ε) transitions allowed</li>
+                <li>Easy to implement in practice</li>
+            </ul>
+
+            <h4>5.2.2 Non-Deterministic Finite Automata (NFA)</h4>
+            <div class="definition">
+                <strong>NFA:</strong> In a Non-Deterministic Finite Automaton, for a given state and input symbol, there can be zero, one, or multiple possible next states. The automaton can make choices.
+            </div>
+            <p><strong>Characteristics of NFA:</strong></p>
+            <ul>
+                <li>May have multiple transitions for the same input from a state</li>
+                <li>May have no transition for some inputs from certain states</li>
+                <li>Can have epsilon (ε) transitions (transitions without consuming input)</li>
+                <li>More flexible and easier to design than DFA</li>
+                <li>Harder to implement directly but can be converted to DFA</li>
+            </ul>
+        </section>
+
+        <section id="dfa">
+            <h2>6. Deterministic Finite Automata (DFA)</h2>
+            
+            <h3>6.1 Formal Definition (5-tuple)</h3>
+            <div class="definition">
+                <strong>Formal Definition of DFA:</strong> A Deterministic Finite Automaton is a 5-tuple (Q, Σ, δ, q₀, F) where:
+                <ul>
+                    <li><strong>Q</strong> is a finite set of states</li>
+                    <li><strong>Σ</strong> is a finite input alphabet</li>
+                    <li><strong>δ</strong> is the transition function: δ : Q × Σ → Q</li>
+                    <li><strong>q₀</strong> is the start state (q₀ ∈ Q)</li>
+                    <li><strong>F</strong> is the set of final (accepting) states (F ⊆ Q)</li>
+                </ul>
+            </div>
+
+            <h3>6.2 Explanation of Each Component</h3>
+            
+            <h4>6.2.1 States (Q)</h4>
+            <p><strong>States:</strong> The set Q represents all possible states in which the automaton can exist. States represent the current configuration or situation of the automaton.</p>
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Q = {q₀, q₁, q₂}</p>
+                <p>This means the automaton has three states: q₀, q₁, and q₂</p>
+            </div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>The set of states must be finite</li>
+                <li>Each state represents a distinct configuration</li>
+                <li>States are often represented as circles in state diagrams</li>
+                <li>States can be named using q₀, q₁, q₂, ... or A, B, C, ...</li>
+            </ul>
+
+            <h4>6.2.2 Input Alphabet (Σ)</h4>
+            <p><strong>Input Alphabet:</strong> The set Σ is the finite set of symbols that the automaton can read as input.</p>
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Σ = {0, 1}</p>
+                <p>This means the automaton accepts binary strings as input</p>
+            </div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>Must be finite and non-empty</li>
+                <li>Defines what symbols can appear in input strings</li>
+                <li>Common alphabets: {0, 1}, {a, b}, {a, b, c}, etc.</li>
+            </ul>
+
+            <h4>6.2.3 Transition Function (δ)</h4>
+            <p><strong>Transition Function:</strong> The function δ determines the next state based on the current state and input symbol.</p>
+            <p>δ : Q × Σ → Q means δ takes a state and a symbol and returns the next state.</p>
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>If δ(q₀, 0) = q₁, this means:</p>
+                <p>"When in state q₀ and reading symbol 0, move to state q₁"</p>
+            </div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>Must be defined for every combination of state and input symbol</li>
+                <li>Returns exactly one state (deterministic)</li>
+                <li>Can be represented as a table or state diagram</li>
+                <li>Notation: δ(current_state, input_symbol) = next_state</li>
+            </ul>
+
+            <h4>6.2.4 Start State (q₀)</h4>
+            <p><strong>Start State:</strong> The state q₀ is the initial state where the automaton begins processing input.</p>
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>If q₀ is the start state, the automaton begins in state q₀ before reading any input</p>
+            </div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>There is exactly one start state</li>
+                <li>Must be an element of Q (q₀ ∈ Q)</li>
+                <li>Represented by an incoming arrow in state diagrams</li>
+                <li>Processing always begins from this state</li>
+            </ul>
+
+            <h4>6.2.5 Final States (F)</h4>
+            <p><strong>Final States:</strong> The set F contains all accepting states. If the automaton ends in one of these states after reading the entire input, the input string is accepted.</p>
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>If F = {q₂}, then only q₂ is an accepting state</p>
+                <p>If F = {q₁, q₂}, then both q₁ and q₂ are accepting states</p>
+            </div>
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>F is a subset of Q (F ⊆ Q)</li>
+                <li>Can be empty, meaning no strings are accepted</li>
+                <li>Can contain one or more states</li>
+                <li>Can equal Q, meaning all states are accepting</li>
+                <li>Represented by double circles in state diagrams</li>
+            </ul>
+
+            <h3>6.3 Acceptance of String by DFA</h3>
+            <div class="definition">
+                <strong>String Acceptance:</strong> A DFA accepts a string w if, starting from the start state q₀ and processing all symbols of w, the automaton ends in a final state (a state in F).
+            </div>
+            <p><strong>Formal Definition:</strong></p>
+            <p>Let w = a₁a₂a₃...aₙ be an input string. The DFA accepts w if there exists a sequence of states r₀, r₁, r₂, ..., rₙ such that:</p>
+            <ul>
+                <li>r₀ = q₀ (start in the start state)</li>
+                <li>δ(rᵢ, aᵢ₊₁) = rᵢ₊₁ for all i = 0, 1, ..., n-1 (valid transitions)</li>
+                <li>rₙ ∈ F (end in a final state)</li>
+            </ul>
+            <p><strong>Language Recognized by DFA:</strong></p>
+            <p>The language L(M) recognized by a DFA M is the set of all strings accepted by M:</p>
+            <p>L(M) = {w | w is accepted by M}</p>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>Consider a DFA that accepts binary strings ending with "01"</p>
+                <p>Accepted strings: 01, 001, 101, 1001, 0001, ...</p>
+                <p>Rejected strings: 0, 1, 00, 10, 11, 000, 010, ...</p>
+            </div>
+        </section>
+
+        <section id="nfa">
+            <h2>7. Non-Deterministic Finite Automata (NFA)</h2>
+            
+            <h3>7.1 Definition of NFA</h3>
+            <div class="definition">
+                <strong>NFA Formal Definition:</strong> A Non-Deterministic Finite Automaton is a 5-tuple (Q, Σ, δ, q₀, F) where:
+                <ul>
+                    <li><strong>Q</strong> is a finite set of states</li>
+                    <li><strong>Σ</strong> is a finite input alphabet</li>
+                    <li><strong>δ</strong> is the transition function: δ : Q × (Σ ∪ {ε}) → 2<sup>Q</sup></li>
+                    <li><strong>q₀</strong> is the start state (q₀ ∈ Q)</li>
+                    <li><strong>F</strong> is the set of final states (F ⊆ Q)</li>
+                </ul>
+            </div>
+            <p><strong>Key Difference from DFA:</strong></p>
+            <p>The transition function δ in NFA returns a set of states (2<sup>Q</sup> is the power set of Q) rather than a single state. This allows for multiple possible next states or no next state at all.</p>
+
+            <h3>7.2 Difference between DFA and NFA</h3>
+            <p><strong>Main Differences:</strong></p>
+            <ul>
+                <li><strong>Determinism:</strong> DFA has exactly one transition for each state-symbol pair, while NFA can have zero, one, or multiple transitions</li>
+                <li><strong>Transition Function:</strong> 
+                    <ul>
+                        <li>DFA: δ : Q × Σ → Q (returns one state)</li>
+                        <li>NFA: δ : Q × (Σ ∪ {ε}) → 2<sup>Q</sup> (returns set of states)</li>
+                    </ul>
+                </li>
+                <li><strong>Epsilon Transitions:</strong> NFA can have ε-transitions (state changes without consuming input), DFA cannot</li>
+                <li><strong>Acceptance:</strong> 
+                    <ul>
+                        <li>DFA: String accepted if the unique computation path ends in a final state</li>
+                        <li>NFA: String accepted if at least one computation path ends in a final state</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>7.3 Concept of Multiple Transitions</h3>
+            <p><strong>Multiple Transitions:</strong> In an NFA, from a given state with a given input symbol, the automaton can transition to multiple different states simultaneously.</p>
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>From state q₀ on input 'a', the NFA might be able to go to either q₁ or q₂ or both:</p>
+                <p>δ(q₀, a) = {q₁, q₂}</p>
+            </div>
+            <p><strong>Non-deterministic Choice:</strong></p>
+            <ul>
+                <li>The NFA can "guess" which path to take</li>
+                <li>If any path leads to acceptance, the string is accepted</li>
+                <li>Think of it as exploring all possibilities in parallel</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>No Transition Example:</strong>
+                <p>From state q₁ on input 'b', there might be no defined transition:</p>
+                <p>δ(q₁, b) = ∅ (empty set)</p>
+                <p>This computation path dies (fails)</p>
+            </div>
+
+            <h3>7.4 ε-moves (Introduction Only)</h3>
+            <div class="definition">
+                <strong>Epsilon Transitions (ε-moves):</strong> An epsilon transition is a state transition that occurs without consuming any input symbol. The automaton can spontaneously move from one state to another.
+            </div>
+            <p><strong>Characteristics of ε-transitions:</strong></p>
+            <ul>
+                <li>Denoted as ε or λ (lambda)</li>
+                <li>No input symbol is consumed</li>
+                <li>Can occur at any time</li>
+                <li>Provides additional flexibility in designing NFAs</li>
+            </ul>
+            
+            <div class="example-box">
+                <strong>Example:</strong>
+                <p>δ(q₀, ε) = {q₁, q₂}</p>
+                <p>This means from state q₀, the NFA can move to q₁ or q₂ without reading any input</p>
+            </div>
+            <p><strong>Usage:</strong></p>
+            <ul>
+                <li>Simplifies NFA construction for complex languages</li>
+                <li>Allows combining multiple automata easily</li>
+                <li>Can be eliminated (any NFA with ε-transitions can be converted to one without them)</li>
+            </ul>
+        </section>
+
+        <section id="dfa-vs-nfa">
+            <h2>8. DFA vs NFA</h2>
+            
+            <h3>8.1 Comparison Table</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>DFA</th>
+                    <th>NFA</th>
+                </tr>
+                <tr>
+                    <td><strong>Determinism</strong></td>
+                    <td>Completely deterministic - each state-input pair has exactly one next state</td>
+                    <td>Non-deterministic - can have zero, one, or multiple next states for a state-input pair</td>
+                </tr>
+                <tr>
+                    <td><strong>Transition Function</strong></td>
+                    <td>δ : Q × Σ → Q (returns a single state)</td>
+                    <td>δ : Q × (Σ ∪ {ε}) → 2<sup>Q</sup> (returns a set of states)</td>
+                </tr>
+                <tr>
+                    <td><strong>Number of Transitions</strong></td>
+                    <td>Exactly one transition per state-symbol pair</td>
+                    <td>Can have 0, 1, or multiple transitions per state-symbol pair</td>
+                </tr>
+                <tr>
+                    <td><strong>Epsilon Transitions</strong></td>
+                    <td>Not allowed</td>
+                    <td>Allowed (can move without consuming input)</td>
+                </tr>
+                <tr>
+                    <td><strong>Power (Expressiveness)</strong></td>
+                    <td>Recognizes regular languages</td>
+                    <td>Recognizes regular languages (same power as DFA)</td>
+                </tr>
+                <tr>
+                    <td><strong>Number of States</strong></td>
+                    <td>May require more states (up to 2<sup>n</sup> states where n is NFA states)</td>
+                    <td>Generally requires fewer states</td>
+                </tr>
+                <tr>
+                    <td><strong>Implementation</strong></td>
+                    <td>Easy to implement directly in software/hardware</td>
+                    <td>Harder to implement directly; usually converted to DFA first</td>
+                </tr>
+                <tr>
+                    <td><strong>Design Complexity</strong></td>
+                    <td>More complex to design for some languages</td>
+                    <td>Easier to design and understand</td>
+                </tr>
+                <tr>
+                    <td><strong>Execution Time</strong></td>
+                    <td>Faster - O(n) where n is input length</td>
+                    <td>Slower if simulated directly - may explore multiple paths</td>
+                </tr>
+                <tr>
+                    <td><strong>Memory Usage</strong></td>
+                    <td>More memory due to potentially more states</td>
+                    <td>Less memory with fewer states</td>
+                </tr>
+                <tr>
+                    <td><strong>Acceptance Condition</strong></td>
+                    <td>String accepted if the unique computation ends in a final state</td>
+                    <td>String accepted if at least one computation path ends in a final state</td>
+                </tr>
+                <tr>
+                    <td><strong>Conversion</strong></td>
+                    <td>Every DFA is also an NFA</td>
+                    <td>Every NFA can be converted to an equivalent DFA</td>
+                </tr>
+            </table>
+
+            <h3>8.2 Important Theorems</h3>
+            <p><strong>Equivalence Theorem:</strong></p>
+            <div class="definition">
+                <strong>Theorem:</strong> For every NFA, there exists an equivalent DFA that recognizes the same language. This means DFAs and NFAs have the same computational power.
+            </div>
+            <p><strong>Implications:</strong></p>
+            <ul>
+                <li>Any language recognized by an NFA can also be recognized by a DFA</li>
+                <li>NFAs do not provide additional computational power, only convenience in design</li>
+                <li>The class of languages recognized by DFAs and NFAs is the same: regular languages</li>
+            </ul>
+
+            <h3>8.3 When to Use DFA vs NFA</h3>
+            <p><strong>Use DFA when:</strong></p>
+            <ul>
+                <li>Implementation efficiency is critical</li>
+                <li>You need predictable, deterministic behavior</li>
+                <li>Fast execution time is required</li>
+                <li>Direct hardware implementation is needed</li>
+            </ul>
+            <p><strong>Use NFA when:</strong></p>
+            <ul>
+                <li>Designing the automaton for a complex language</li>
+                <li>Minimizing the number of states is important</li>
+                <li>Theoretical analysis or proof construction</li>
+                <li>Intermediate step before converting to DFA</li>
+                <li>Combining multiple automata</li>
+            </ul>
+        </section>
+
+        <section id="exam-focus">
+            <div class="exam-focus">
+                <h2>9. Exam Focus Box</h2>
+
+                <h3>9.1 Important Definitions to Memorize</h3>
+                <ul>
+                    <li><strong>Alphabet:</strong> A finite, non-empty set of symbols denoted by Σ</li>
+                    <li><strong>String:</strong> A finite sequence of symbols from an alphabet</li>
+                    <li><strong>Empty String (ε):</strong> A string with zero symbols, length |ε| = 0</li>
+                    <li><strong>Language:</strong> A set of strings over an alphabet (can be finite or infinite)</li>
+                    <li><strong>Kleene Star (L*):</strong> Set of all strings formed by concatenating zero or more strings from L</li>
+                    <li><strong>Kleene Plus (L⁺):</strong> Set of all strings formed by concatenating one or more strings from L</li>
+                    <li><strong>DFA:</strong> A 5-tuple (Q, Σ, δ, q₀, F) where transition function is deterministic</li>
+                    <li><strong>NFA:</strong> A 5-tuple (Q, Σ, δ, q₀, F) where transition function can be non-deterministic</li>
+                    <li><strong>Finite Automaton:</strong> Abstract machine with finite states that processes input strings</li>
+                </ul>
+
+                <h3>9.2 Frequently Asked AKTU Questions from Unit 1</h3>
+                <ul>
+                    <li>Define alphabet, string, and language with examples</li>
+                    <li>Explain different operations on strings (concatenation, reverse, power)</li>
+                    <li>What are the operations on languages? Explain with examples</li>
+                    <li>Differentiate between Kleene star and Kleene plus</li>
+                    <li>Define DFA with formal definition (5-tuple). Explain each component</li>
+                    <li>What is NFA? How is it different from DFA?</li>
+                    <li>Compare DFA and NFA in detail</li>
+                    <li>Explain the concept of ε-transitions in NFA</li>
+                    <li>What is the significance of final states in finite automata?</li>
+                    <li>Prove that for every NFA, there exists an equivalent DFA (theorem statement)</li>
+                    <li>Explain how a DFA accepts or rejects a string</li>
+                    <li>What is the power of finite automata? What languages can they recognize?</li>
+                </ul>
+
+                <h3>9.3 Keywords to Use in Answers</h3>
+                <p>Always include these keywords to score maximum marks:</p>
+                <ul>
+                    <li><strong>Alphabet and Strings:</strong> Finite set, Non-empty, Sequence, Concatenation, Empty string (ε)</li>
+                    <li><strong>Languages:</strong> Set of strings, Regular language, Infinite language, Empty language (∅)</li>
+                    <li><strong>String Operations:</strong> Concatenation, Reverse, Power, Length, Associative, Identity element</li>
+                    <li><strong>Language Operations:</strong> Union, Intersection, Complement, Concatenation, Kleene star, Kleene plus, Closure</li>
+                    <li><strong>DFA:</strong> Deterministic, 5-tuple, Transition function, Start state, Final state, Acceptance</li>
+                    <li><strong>NFA:</strong> Non-deterministic, Multiple transitions, Epsilon moves, Power set, Acceptance path</li>
+                    <li><strong>General:</strong> Finite automaton, State diagram, Transition table, Regular language, Computational model</li>
+                </ul>
+
+                <h3>9.4 Common Mistakes Students Make</h3>
+                <ul>
+                    <li><strong>Mistake:</strong> Confusing empty language (∅) with language containing empty string ({ε})<br>
+                        <strong>Correction:</strong> ∅ has no strings; {ε} has one string (the empty string)</li>
+                    
+                    <li><strong>Mistake:</strong> Writing L* without including ε<br>
+                        <strong>Correction:</strong> L* always contains ε, even if L does not contain ε</li>
+                    
+                    <li><strong>Mistake:</strong> Thinking concatenation of languages is commutative<br>
+                        <strong>Correction:</strong> L₁L₂ ≠ L₂L₁ in general; concatenation is NOT commutative</li>
+                    
+                    <li><strong>Mistake:</strong> Not explaining all 5 components when defining DFA/NFA<br>
+                        <strong>Correction:</strong> Always explain Q, Σ, δ, q₀, and F with their meanings</li>
+                    
+                    <li><strong>Mistake:</strong> Confusing DFA transition function with NFA transition function<br>
+                        <strong>Correction:</strong> DFA returns one state (δ: Q×Σ→Q); NFA returns set of states (δ: Q×(Σ∪{ε})→2<sup>Q</sup>)</li>
+                    
+                    <li><strong>Mistake:</strong> Saying NFA is more powerful than DFA<br>
+                        <strong>Correction:</strong> Both recognize the same class of languages (regular languages); they are equally powerful</li>
+                    
+                    <li><strong>Mistake:</strong> Not providing examples when explaining operations<br>
+                        <strong>Correction:</strong> Always give concrete examples for each operation</li>
+                    
+                    <li><strong>Mistake:</strong> Forgetting to mention that ε-transitions are only in NFA<br>
+                        <strong>Correction:</strong> Clearly state that DFA does not allow ε-transitions</li>
+                </ul>
+
+                <h3>9.5 Answer Writing Tips for Maximum Marks</h3>
+                <ul>
+                    <li>Always start definitions with "A [term] is..." format</li>
+                    <li>Use proper mathematical notation: Σ for alphabet, ε for empty string, δ for transition function</li>
+                    <li>For comparison questions, use tables to clearly show differences</li>
+                    <li>Provide at least 2-3 examples for each concept explained</li>
+                    <li>When defining DFA/NFA, write the complete 5-tuple first, then explain each component</li>
+                    <li>Draw state diagrams when possible to support your answer</li>
+                    <li>For language operation questions, show step-by-step calculations</li>
+                    <li>Always conclude with properties or significance of the concept</li>
+                    <li>Use bullet points for listing features, characteristics, or differences</li>
+                    <li>For 10-mark questions, aim for 2 pages; for 5-mark questions, aim for 1 page</li>
+                    <li>Mention theorems when relevant (e.g., DFA-NFA equivalence)</li>
+                    <li>Write clearly and use proper spacing between sections</li>
+                </ul>
+
+                <h3>9.6 Quick Revision Checklist</h3>
+                <ul>
+                    <li>Memorize formal definitions of DFA and NFA (5-tuple)</li>
+                    <li>Remember: L* always includes ε, L⁺ does not (unless ε ∈ L)</li>
+                    <li>Practice calculating L₁L₂, L*, L⁺ for simple languages</li>
+                    <li>Remember: ∅* = {ε} and {ε}* = {ε}</li>
+                    <li>Know the difference between δ in DFA and NFA (return types)</li>
+                    <li>Understand that DFA and NFA are equally powerful</li>
+                    <li>Review the DFA vs NFA comparison table</li>
+                    <li>Practice string operations: concatenation, reverse, power</li>
+                    <li>Remember properties: concatenation is associative but not commutative</li>
+                    <li>Know all language operations and their notations</li>
+                </ul>
+
+                <h3>9.7 Important Formulas and Properties</h3>
+                <ul>
+                    <li>|xy| = |x| + |y| (length of concatenation)</li>
+                    <li>|wⁿ| = n × |w| (length of power)</li>
+                    <li>|wᴿ| = |w| (length of reverse)</li>
+                    <li>w·ε = ε·w = w (ε is identity for concatenation)</li>
+                    <li>(wᴿ)ᴿ = w (reverse of reverse)</li>
+                    <li>(xy)ᴿ = yᴿxᴿ (reverse of concatenation)</li>
+                    <li>L* = L⁰ ∪ L¹ ∪ L² ∪ ... = {ε} ∪ L ∪ LL ∪ ...</li>
+                    <li>L⁺ = L¹ ∪ L² ∪ L³ ∪ ... = LL*</li>
+                    <li>L* = L⁺ ∪ {ε}</li>
+                    <li>(L*)* = L*</li>
+                    <li>∅* = {ε}</li>
+                    <li>L{ε} = {ε}L = L (identity for language concatenation)</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Prepared for AKTU B.Tech CSE – TAFL  Unit 1</p>
+    </footer>
+</body>
+</html>
+```

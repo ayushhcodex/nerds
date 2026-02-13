@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Study Hub | Operating System & Theory of Automata</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .subject-card h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subject-card .icon {
+            font-size: 1.5em;
+        }
+
+        .subject-card p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .units-list {
+            list-style: none;
+        }
+
+        .units-list li {
+            margin-bottom: 12px;
+        }
+
+        .units-list a {
+            display: block;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .units-list a:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            margin-top: 50px;
+            font-size: 0.95em;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1.1em;
+            }
+
+            .subject-card h2 {
+                font-size: 1.6em;
+            }
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .features h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .features ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .features li {
+            padding: 10px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .features li::before {
+            content: "✓";
+            margin-right: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 CS Study Hub</h1>
+            <p>Your Complete Guide to Operating Systems & Theory of Automata</p>
+        </header>
+
+        <div class="features">
+            <h3>📚 What You'll Find Here</h3>
+            <ul>
+                <li>Comprehensive Notes</li>
+                <li>5 Units Per Subject</li>
+                <li>Easy Navigation</li>
+                <li>Clean & Modern Design</li>
+            </ul>
+        </div>
+
+        <div class="subjects-grid">
+            <!-- Operating System Card -->
+            <div class="subject-card">
+                <h2>
+                    <span class="icon">💻</span>
+                    Operating System
+                </h2>
+                <p>Master the fundamentals of Operating Systems including processes, memory management, file systems, and more.</p>
+                <ul class="units-list">
+                    <li><a href="os_unit1.html">Unit 1 - Introduction to Operating System</a></li>
+                    <li><a href="osunit2.html">Unit 2 - Process Management</a></li>
+                    <li><a href="os_unit3.html">Unit 3 - Memory Management</a></li>
+                    <li><a href="os_unit4.html">Unit 4 - File Systems</a></li>
+                    <li><a href="os_unit5.html">Unit 5 - I/O & Storage Management</a></li>
+                </ul>
+            </div>
+
+            <!-- Theory of Automata Card -->
+            <div class="subject-card">
+                <h2>
+                    <span class="icon">🤖</span>
+                    Theory of Automata & Formal Languages
+                </h2>
+                <p>Explore the theoretical foundations of computation, formal languages, and automata theory.</p>
+                <ul class="units-list">
+                    <li><a href="tafl_unit1.html">Unit 1 - Introduction to Automata Theory</a></li>
+                    <li><a href="tafl_unit2.html">Unit 2 - Finite Automata</a></li>
+                    <li><a href="tafl_unit3.html">Unit 3 - Context-Free Grammars</a></li>
+                    <li><a href="tafl_unit4.html">Unit 4 - Pushdown Automata</a></li>
+                    <li><a href="tafl_unit5.html">Unit 5 - Turing Machines</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>💡 Study smart, succeed brilliantly!</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Click on any unit to start learning</p>
+        </footer>
+    </div>
+</body>
+</html>

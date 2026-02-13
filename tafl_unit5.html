@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAFL Unit 5 - Undecidability & Complexity Theory | AKTU Notes</title>
+    <style>
+        html{
+  scroll-behavior: smooth;
+}
+
+.home-btn{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  background: #1e293b;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.home-btn:hover{
+  background: #0f172a;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background-color: white;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        nav h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.8rem;
+        }
+        
+        nav a {
+            color: #495057;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-left: 3px solid #667eea;
+            padding-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background-color: #f1f3f5;
+            color: #667eea;
+            padding-left: 1.5rem;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        section {
+            background-color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #495057;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h4 {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.7rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .definition {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .definition strong {
+            color: #1976D2;
+        }
+        
+        .example {
+            background-color: #f1f8e9;
+            border-left: 4px solid #689f38;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #558b2f;
+            margin-bottom: 0.5rem;
+        }
+        
+        .important {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .critical {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .exam-focus {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .exam-focus h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        td {
+            padding: 0.8rem;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .diagram {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            nav ul {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <a href="#top" class="home-btn" title="Back to Top">↑</a>
+    <header>
+        <h1>TAFL – Unit 5 | Undecidability & Complexity Theory</h1>
+        <p>AKTU B.Tech CSE – Exam Oriented Notes</p>
+    </header>
+
+
+    <nav>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">1. Introduction to Undecidability</a></li>
+            <li><a href="#recursive-re">2. Recursive and Recursively Enumerable Languages</a></li>
+            <li><a href="#decidability">3. Decidability</a></li>
+            <li><a href="#undecidable">4. Undecidable Problems</a></li>
+            <li><a href="#halting">5. Halting Problem</a></li>
+            <li><a href="#reduction">6. Reduction Technique</a></li>
+            <li><a href="#complexity-intro">7. Introduction to Complexity Theory</a></li>
+            <li><a href="#complexity-classes">8. Complexity Classes</a></li>
+            <li><a href="#exam-focus">9. Exam Focus</a></li>
+        </ul>
+    </nav>
+
+
+    <main>
+        <section id="introduction">
+            <h2>1. Introduction to Undecidability</h2>
+            
+            <h3>Meaning of Decidable and Undecidable Problems</h3>
+            
+            <div class="definition">
+                <strong>Decidable Problem:</strong> A problem is decidable if there exists an algorithm (Turing Machine) that always halts and correctly answers "yes" or "no" for every input instance of the problem.
+            </div>
+            
+            <div class="definition">
+                <strong>Undecidable Problem:</strong> A problem is undecidable if no algorithm exists that can solve all instances of the problem. There is no Turing Machine that always halts and gives the correct answer for every possible input.
+            </div>
+
+
+            <p>In simpler terms:</p>
+            <ul>
+                <li><strong>Decidable:</strong> We can write a program that will always give the correct answer and terminate</li>
+                <li><strong>Undecidable:</strong> No such program can exist, no matter how clever we are</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <p><strong>Decidable Problem:</strong> "Is this number even?" - We can easily write an algorithm that always answers correctly.</p>
+                <p><strong>Undecidable Problem:</strong> "Will this program halt on this input?" - No general algorithm exists to answer this for all programs and inputs.</p>
+            </div>
+
+
+            <h3>Why Some Problems Cannot Be Solved by Algorithms</h3>
+            
+            <p>The existence of undecidable problems is a fundamental discovery in computer science. Several reasons explain why some problems cannot be solved algorithmically:</p>
+
+
+            <h4>1. Infinite Possibilities</h4>
+            <ul>
+                <li>Some problems involve checking infinite possibilities</li>
+                <li>No finite algorithm can explore all infinite cases</li>
+                <li>Example: Determining if a program will ever halt requires checking potentially infinite execution steps</li>
+            </ul>
+
+
+            <h4>2. Self-Reference and Paradoxes</h4>
+            <ul>
+                <li>Many undecidable problems involve self-reference</li>
+                <li>Similar to logical paradoxes like "This statement is false"</li>
+                <li>Example: A program that analyzes whether other programs halt cannot consistently analyze itself</li>
+            </ul>
+
+
+            <h4>3. Diagonal Argument</h4>
+            <ul>
+                <li>Turing used a diagonal argument to prove undecidability</li>
+                <li>Shows that there are more problems than possible algorithms</li>
+                <li>Some problems must necessarily be unsolvable</li>
+            </ul>
+
+
+            <h4>4. Reduction from Known Undecidable Problems</h4>
+            <ul>
+                <li>Once one problem is proven undecidable, others can be proven undecidable by reduction</li>
+                <li>If problem A could be solved, it would solve problem B (which is undecidable)</li>
+                <li>Therefore, problem A must also be undecidable</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Key Insight:</strong> Undecidability is not about our current lack of knowledge or computational power. It represents a fundamental limitation of computation itself. No matter how advanced computers become, undecidable problems will remain unsolvable.
+            </div>
+
+
+            <h3>Importance of Undecidability in Computation Theory</h3>
+            
+            <p>Understanding undecidability has profound implications for computer science and mathematics:</p>
+
+
+            <h4>1. Defines Limits of Computation</h4>
+            <ul>
+                <li>Establishes what computers can and cannot do in principle</li>
+                <li>Helps us understand the boundaries of algorithmic problem-solving</li>
+                <li>Prevents wasted effort on impossible problems</li>
+            </ul>
+
+
+            <h4>2. Practical Software Development Implications</h4>
+            <ul>
+                <li><strong>Program Verification:</strong> We cannot create a perfect bug detector that finds all bugs in all programs</li>
+                <li><strong>Virus Detection:</strong> No antivirus can detect all possible viruses without false positives</li>
+                <li><strong>Code Optimization:</strong> No compiler can produce the absolutely optimal code for all programs</li>
+                <li><strong>Deadlock Detection:</strong> Cannot always detect if a concurrent program will deadlock</li>
+            </ul>
+
+
+            <h4>3. Theoretical Foundations</h4>
+            <ul>
+                <li>Forms the basis for complexity theory</li>
+                <li>Helps classify problems by their computational difficulty</li>
+                <li>Provides framework for understanding computability</li>
+            </ul>
+
+
+            <h4>4. Philosophy of Mathematics and Computation</h4>
+            <ul>
+                <li>Shows that not all mathematical questions have algorithmic answers</li>
+                <li>Demonstrates limits of formal systems (related to Gödel's Incompleteness Theorems)</li>
+                <li>Influences artificial intelligence research - some tasks may be fundamentally non-computable</li>
+            </ul>
+
+
+            <h4>5. Guides Research Directions</h4>
+            <ul>
+                <li>Helps researchers focus on solvable problems</li>
+                <li>For undecidable problems, seek approximate or heuristic solutions</li>
+                <li>Develop solutions for restricted special cases</li>
+            </ul>
+
+
+            <div class="critical">
+                <strong>Historical Significance:</strong> The discovery of undecidable problems by Alan Turing and Alonzo Church in the 1930s was revolutionary. It showed that David Hilbert's program to find algorithmic solutions to all mathematical problems was impossible. This fundamentally changed our understanding of mathematics and computation.
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Real-World Impact:</div>
+                <ul>
+                    <li><strong>Software Testing:</strong> Since we cannot create a program that detects all bugs, we must rely on testing methodologies, code reviews, and formal verification for specific properties</li>
+                    <li><strong>Security:</strong> Understanding undecidability helps security researchers know the limits of automated vulnerability detection</li>
+                    <li><strong>AI Safety:</strong> We cannot algorithmically verify that an AI system will always behave safely in all situations</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="recursive-re">
+            <h2>2. Recursive and Recursively Enumerable Languages</h2>
+
+
+            <h3>Definition of Recursive (Decidable) Languages</h3>
+            
+            <div class="definition">
+                <strong>Recursive Language (Decidable Language):</strong> A language L is recursive if there exists a Turing Machine M that halts on all inputs and accepts all strings in L and rejects all strings not in L.
+            </div>
+
+
+            <p>Key characteristics of recursive languages:</p>
+            <ul>
+                <li><strong>Always Halts:</strong> The Turing Machine always stops, whether accepting or rejecting</li>
+                <li><strong>Total Decision:</strong> Every string gets a definite answer - either accepted or rejected</li>
+                <li><strong>Decidable:</strong> We can decide membership in finite time for any string</li>
+                <li><strong>Also Called:</strong> Decidable languages or Turing-decidable languages</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Examples of Recursive Languages:</div>
+                <ul>
+                    <li>L = {aⁿbⁿcⁿ | n ≥ 0} - A TM can count and match all three symbols, always halting</li>
+                    <li>All regular languages - Finite automata always halt</li>
+                    <li>All deterministic context-free languages - Deterministic PDAs always halt</li>
+                    <li>L = {w | w is a palindrome over {0,1}} - A TM can check and always halt</li>
+                </ul>
+            </div>
+
+
+            <h3>Definition of Recursively Enumerable (RE) Languages</h3>
+            
+            <div class="definition">
+                <strong>Recursively Enumerable Language (Semi-Decidable Language):</strong> A language L is recursively enumerable if there exists a Turing Machine M that accepts all strings in L. For strings not in L, the machine may reject or loop forever (never halt).
+            </div>
+
+
+            <p>Key characteristics of recursively enumerable languages:</p>
+            <ul>
+                <li><strong>May Not Halt:</strong> The TM may run forever on strings not in the language</li>
+                <li><strong>Acceptance Guarantee:</strong> If w ∈ L, the TM will eventually accept</li>
+                <li><strong>No Rejection Guarantee:</strong> If w ∉ L, the TM may reject or may never halt</li>
+                <li><strong>Semi-Decidable:</strong> Can recognize members but cannot always recognize non-members</li>
+                <li><strong>Also Called:</strong> Turing-recognizable languages or Type-0 languages</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Examples of Recursively Enumerable Languages:</div>
+                <ul>
+                    <li>The language of all valid Java programs that terminate on empty input</li>
+                    <li>The language accepted by the Halting Problem TM (accepts codes of TMs that halt)</li>
+                    <li>All recursive languages (every recursive language is also RE)</li>
+                    <li>Languages generated by unrestricted grammars (Type-0 grammars)</li>
+                </ul>
+            </div>
+
+
+            <h3>Relationship Between Recursive and RE Languages</h3>
+            
+            <div class="important">
+                <strong>Fundamental Relationship:</strong> Every recursive language is recursively enumerable, but not every recursively enumerable language is recursive.
+                <p>Mathematically: Recursive ⊂ Recursively Enumerable</p>
+            </div>
+
+
+            <p>Understanding the relationship:</p>
+
+
+            <h4>1. Subset Relationship</h4>
+            <ul>
+                <li>All recursive languages are RE (proper subset)</li>
+                <li>Some RE languages are not recursive</li>
+                <li>Recursive languages form a strict subset of RE languages</li>
+            </ul>
+
+
+            <h4>2. Why Recursive ⊆ RE</h4>
+            <ul>
+                <li>If a TM decides a language (always halts), it also recognizes it</li>
+                <li>A decider is also a recognizer</li>
+                <li>We can convert any deciding TM to a recognizing TM simply by using it as-is</li>
+            </ul>
+
+
+            <h4>3. Why RE ⊄ Recursive</h4>
+            <ul>
+                <li>Some RE languages are not recursive (undecidable but recognizable)</li>
+                <li>Example: The Halting Problem language is RE but not recursive</li>
+                <li>These languages can be recognized but not decided</li>
+            </ul>
+
+
+            <h4>4. Complement Property</h4>
+            <div class="important">
+                <strong>Theorem:</strong> A language L is recursive if and only if both L and its complement L̄ are recursively enumerable.
+            </div>
+            <p>This means:</p>
+            <ul>
+                <li>If L is recursive, then L̄ is also recursive (and hence both are RE)</li>
+                <li>If both L and L̄ are RE, then L is recursive</li>
+                <li>If L is RE but L̄ is not RE, then L is not recursive</li>
+            </ul>
+
+
+            <h3>Comparison Table</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Recursive Languages</th>
+                        <th>Recursively Enumerable Languages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Halting Behavior</strong></td>
+                        <td>Always halts (on all inputs)</td>
+                        <td>May not halt on some inputs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decision Capability</strong></td>
+                        <td>Can decide membership (yes/no answer)</td>
+                        <td>Can recognize members only (yes answer guaranteed)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alternate Names</strong></td>
+                        <td>Decidable, Turing-decidable</td>
+                        <td>Semi-decidable, Recognizable, Turing-recognizable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TM Type</strong></td>
+                        <td>Decider (always halts)</td>
+                        <td>Recognizer/Acceptor (may loop)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>For String in L</strong></td>
+                        <td>TM accepts and halts</td>
+                        <td>TM accepts and halts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>For String not in L</strong></td>
+                        <td>TM rejects and halts</td>
+                        <td>TM may reject and halt OR loop forever</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complement</strong></td>
+                        <td>Complement is also recursive</td>
+                        <td>Complement may not be RE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grammar Type</strong></td>
+                        <td>Not all have grammar representation</td>
+                        <td>Type-0 (Unrestricted) grammars</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Closure Properties</strong></td>
+                        <td>Closed under union, intersection, complement, concatenation</td>
+                        <td>Closed under union, intersection, concatenation; NOT under complement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decidability</strong></td>
+                        <td>Decidable</td>
+                        <td>Semi-decidable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Practical Implication</strong></td>
+                        <td>Algorithm always terminates with answer</td>
+                        <td>Algorithm may run forever on some inputs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Example</strong></td>
+                        <td>Palindrome checking, arithmetic operations</td>
+                        <td>Halting problem, program correctness</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="diagram">
+Visual Representation:
+
+
+┌─────────────────────────────────────────────────────┐
+│      Recursively Enumerable Languages (RE)          │
+│                                                     │
+│   ┌──────────────────────────────────────┐         │
+│   │    Recursive Languages               │         │
+│   │    (Decidable)                       │         │
+│   │                                      │         │
+│   │  - Always halt                       │         │
+│   │  - Can decide membership             │         │
+│   │  - Complement is also recursive      │         │
+│   │                                      │         │
+│   └──────────────────────────────────────┘         │
+│                                                     │
+│   RE but not Recursive:                            │
+│   - May loop forever                               │
+│   - Can recognize members only                     │
+│   - Examples: Halting Problem                      │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+            </div>
+
+
+            <div class="critical">
+                <strong>Important for Exams:</strong>
+                <ul>
+                    <li>Always mention that recursive languages ALWAYS HALT</li>
+                    <li>RE languages may LOOP FOREVER on rejection</li>
+                    <li>Use the terms "decider" for recursive and "recognizer" for RE</li>
+                    <li>Remember: Recursive ⊂ RE (proper subset)</li>
+                    <li>Know the complement property theorem</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="decidability">
+            <h2>3. Decidability</h2>
+
+
+            <h3>Definition of Decidable Problems</h3>
+            
+            <div class="definition">
+                <strong>Decidable Problem:</strong> A problem is decidable if there exists an algorithm (Turing Machine) that always halts and correctly solves the problem for every possible input. The algorithm must provide a definite "yes" or "no" answer in finite time.
+            </div>
+
+
+            <p>More formally, a decision problem is decidable if:</p>
+            <ul>
+                <li>There exists a Turing Machine M that decides it</li>
+                <li>M halts on all inputs</li>
+                <li>M accepts inputs for which the answer is "yes"</li>
+                <li>M rejects inputs for which the answer is "no"</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Key Characteristics of Decidable Problems:</strong>
+                <ul>
+                    <li><strong>Termination Guarantee:</strong> Algorithm always terminates</li>
+                    <li><strong>Correctness Guarantee:</strong> Algorithm always gives correct answer</li>
+                    <li><strong>Completeness:</strong> Algorithm handles all possible inputs</li>
+                    <li><strong>Deterministic Answer:</strong> Every input gets a yes/no answer</li>
+                </ul>
+            </div>
+
+
+            <h3>Deciders and Recognizers</h3>
+            
+            <h4>Decider (for Decidable Problems)</h4>
+            <div class="definition">
+                <strong>Decider:</strong> A Turing Machine that halts on all inputs is called a decider. A decider decides a language - it accepts strings in the language and rejects strings not in the language, always halting.
+            </div>
+
+
+            <p>Properties of a Decider:</p>
+            <ul>
+                <li>Implements an algorithm that always terminates</li>
+                <li>Provides a definitive answer for every input</li>
+                <li>Decides a recursive (decidable) language</li>
+                <li>Has three possible states for any input: accept and halt, reject and halt</li>
+            </ul>
+
+
+            <h4>Recognizer (for Semi-Decidable Problems)</h4>
+            <div class="definition">
+                <strong>Recognizer:</strong> A Turing Machine that accepts strings in a language but may not halt on strings not in the language. A recognizer recognizes or accepts a language but may not decide it.
+            </div>
+
+
+            <p>Properties of a Recognizer:</p>
+            <ul>
+                <li>If input is in the language, it accepts and halts</li>
+                <li>If input is not in the language, it may reject and halt, or may loop forever</li>
+                <li>Recognizes a recursively enumerable language</li>
+                <li>Has three possible behaviors: accept and halt, reject and halt, or loop forever</li>
+            </ul>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Decider</th>
+                        <th>Recognizer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Halting</strong></td>
+                        <td>Always halts</td>
+                        <td>May not halt on all inputs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Language Class</strong></td>
+                        <td>Recursive (Decidable)</td>
+                        <td>Recursively Enumerable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>On String in L</strong></td>
+                        <td>Accepts and halts</td>
+                        <td>Accepts and halts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>On String not in L</strong></td>
+                        <td>Rejects and halts</td>
+                        <td>Rejects and halts OR loops</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Guarantee</strong></td>
+                        <td>Answer in finite time</td>
+                        <td>Accept if in language, no guarantee otherwise</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>Decide membership</td>
+                        <td>Recognize/Accept membership</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>Examples of Decidable Problems</h3>
+
+
+            <h4>1. Arithmetic and Mathematical Problems</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Is n a prime number?</strong> - Algorithm exists that always terminates and gives correct answer</li>
+                    <li><strong>What is the GCD of two numbers?</strong> - Euclidean algorithm always terminates</li>
+                    <li><strong>Is this number even?</strong> - Simple check, always terminates</li>
+                    <li><strong>Does this linear equation have a solution?</strong> - Decidable using algebraic methods</li>
+                </ul>
+            </div>
+
+
+            <h4>2. Regular Language Problems</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Membership Problem:</strong> Is string w in regular language L? - Decidable by running the FA</li>
+                    <li><strong>Emptiness Problem:</strong> Is the language of an FA empty? - Decidable by checking reachability</li>
+                    <li><strong>Equivalence Problem:</strong> Do two FAs accept the same language? - Decidable using various algorithms</li>
+                    <li><strong>Finiteness Problem:</strong> Is the language of an FA finite? - Decidable by cycle detection</li>
+                </ul>
+            </div>
+
+
+            <h4>3. Context-Free Language Problems</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Membership Problem:</strong> Is string w in CFL L? - Decidable using CYK algorithm or similar</li>
+                    <li><strong>Emptiness Problem:</strong> Is a CFG's language empty? - Decidable by checking if start symbol derives anything</li>
+                    <li><strong>Finiteness Problem:</strong> Is a CFG's language finite? - Decidable by pumping lemma analysis</li>
+                </ul>
+                <p><strong>Note:</strong> Equivalence of two CFGs is undecidable in general</p>
+            </div>
+
+
+            <h4>4. String and Pattern Problems</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Is this string a palindrome?</strong> - TM can check and always halt</li>
+                    <li><strong>Does string w contain substring x?</strong> - Pattern matching algorithms always terminate</li>
+                    <li><strong>Is the string balanced (parentheses)?</strong> - Stack-based algorithm decides this</li>
+                </ul>
+            </div>
+
+
+            <h4>5. Graph Problems (Many are Decidable)</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Is there a path between vertices u and v?</strong> - BFS/DFS algorithms decide this</li>
+                    <li><strong>Is the graph connected?</strong> - Decidable using graph traversal</li>
+                    <li><strong>Does the graph have a cycle?</strong> - Cycle detection algorithms decide this</li>
+                    <li><strong>Is the graph bipartite?</strong> - Decidable using coloring algorithm</li>
+                </ul>
+            </div>
+
+
+            <h4>6. Turing Machine Problems on Restricted Classes</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Will a finite automaton accept string w?</strong> - Always decidable</li>
+                    <li><strong>Will a PDA accept string w?</strong> - Decidable for deterministic PDAs</li>
+                    <li><strong>Does a specific simple TM halt on specific input?</strong> - May be decidable for restricted cases</li>
+                </ul>
+            </div>
+
+
+            <div class="important">
+                <strong>Why These Problems are Decidable:</strong>
+                <ul>
+                    <li>They have finite, well-defined search spaces</li>
+                    <li>Algorithms exist that systematically explore all possibilities</li>
+                    <li>The computation always terminates in finite steps</li>
+                    <li>We can prove termination and correctness</li>
+                </ul>
+            </div>
+
+
+            <div class="critical">
+                <strong>Important Distinction:</strong>
+                <p>Just because a problem is decidable doesn't mean it's easy or practical to solve. Some decidable problems may require enormous computational resources (time or space). This leads to complexity theory, which studies how efficiently decidable problems can be solved.</p>
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Decidable vs Tractable:</div>
+                <ul>
+                    <li><strong>Boolean Satisfiability (SAT):</strong> Decidable (we can always determine if a formula is satisfiable), but potentially requires exponential time</li>
+                    <li><strong>Traveling Salesman Problem (TSP):</strong> Decidable (we can check all possible tours), but NP-hard (likely requires exponential time)</li>
+                    <li><strong>Sorting an array:</strong> Decidable AND efficient (polynomial time algorithms exist)</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="undecidable">
+            <h2>4. Undecidable Problems</h2>
+
+
+            <h3>Definition of Undecidable Problems</h3>
+            
+            <div class="definition">
+                <strong>Undecidable Problem:</strong> A problem is undecidable if no algorithm (Turing Machine) exists that can solve all instances of the problem. There is no Turing Machine that always halts and gives the correct answer for every possible input.
+            </div>
+
+
+            <p>More precisely, a decision problem is undecidable if:</p>
+            <ul>
+                <li>The language corresponding to the problem is not recursive</li>
+                <li>No Turing Machine can decide membership in the language</li>
+                <li>Any TM that recognizes the language must loop forever on some inputs</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Important Note:</strong> An undecidable problem may be recursively enumerable (semi-decidable) or may not even be RE. If it's RE, we can recognize positive instances but not negative ones. If it's not RE, we cannot even systematically recognize positive instances.
+            </div>
+
+
+            <h3>Characteristics of Undecidable Problems</h3>
+
+
+            <h4>1. No Complete Algorithm Exists</h4>
+            <ul>
+                <li>No algorithm can handle all possible inputs correctly</li>
+                <li>Any proposed algorithm must fail on at least some inputs</li>
+                <li>This is a fundamental limitation, not a practical one</li>
+            </ul>
+
+
+            <h4>2. Self-Reference or Diagonal Arguments</h4>
+            <ul>
+                <li>Many undecidable problems involve programs analyzing themselves</li>
+                <li>Lead to logical paradoxes similar to "This statement is false"</li>
+                <li>Cannot be resolved within a consistent logical system</li>
+            </ul>
+
+
+            <h4>3. Infinite Search Space</h4>
+            <ul>
+                <li>Often require checking infinitely many possibilities</li>
+                <li>No systematic way to avoid checking all infinite cases</li>
+                <li>Cannot guarantee termination</li>
+            </ul>
+
+
+            <h4>4. May Be Semi-Decidable</h4>
+            <ul>
+                <li>Some undecidable problems are recursively enumerable</li>
+                <li>Can recognize "yes" instances but not "no" instances</li>
+                <li>Example: Halting Problem is RE but not recursive</li>
+            </ul>
+
+
+            <h4>5. Provably Impossible</h4>
+            <ul>
+                <li>Undecidability can be mathematically proven</li>
+                <li>Not just "we haven't found a solution yet"</li>
+                <li>Proven that no solution can ever exist</li>
+            </ul>
+
+
+            <h3>Why No Algorithm Exists for Such Problems</h3>
+
+
+            <h4>1. Logical Impossibility</h4>
+            <p>Some problems are logically impossible to solve algorithmically due to self-reference:</p>
+            <ul>
+                <li>If we had an algorithm that solves the problem, we could construct a paradox</li>
+                <li>The paradox proves the algorithm cannot exist</li>
+                <li>Similar to Russell's Paradox in set theory</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Halting Problem Paradox:</div>
+                <p>If we had a program H that decides if any program halts:</p>
+                <ul>
+                    <li>We could construct a program P that does the opposite of what H predicts for P itself</li>
+                    <li>If H says P halts, then P loops forever</li>
+                    <li>If H says P loops, then P halts</li>
+                    <li>This contradiction proves H cannot exist</li>
+                </ul>
+            </div>
+
+
+            <h4>2. Cardinality Arguments</h4>
+            <ul>
+                <li>There are countably many possible algorithms (Turing Machines)</li>
+                <li>There are uncountably many possible problems (languages over an alphabet)</li>
+                <li>Therefore, most problems must be undecidable</li>
+                <li>More problems exist than algorithms to solve them</li>
+            </ul>
+
+
+            <h4>3. Reduction from Known Undecidable Problems</h4>
+            <ul>
+                <li>If problem A is undecidable, and we can reduce A to problem B</li>
+                <li>Then B must also be undecidable</li>
+                <li>Otherwise, we could solve A by solving B (contradiction)</li>
+            </ul>
+
+
+            <h4>4. Limits of Formal Systems</h4>
+            <ul>
+                <li>Related to Gödel's Incompleteness Theorems</li>
+                <li>Any sufficiently powerful formal system has statements that cannot be proven true or false</li>
+                <li>Computing is a formal system with inherent limitations</li>
+            </ul>
+
+
+            <h3>Common Examples of Undecidable Problems</h3>
+
+
+            <h4>1. The Halting Problem (Most Famous)</h4>
+            <div class="critical">
+                <strong>Problem:</strong> Given a Turing Machine M and input w, will M halt when run on w?
+                <p><strong>Status:</strong> Undecidable (but recursively enumerable)</p>
+            </div>
+
+
+            <h4>2. Rice's Theorem Problems</h4>
+            <div class="example">
+                <div class="example-title">Examples covered by Rice's Theorem:</div>
+                <ul>
+                    <li><strong>Does TM M accept at least one string?</strong> - Undecidable</li>
+                    <li><strong>Does TM M accept all strings?</strong> - Undecidable</li>
+                    <li><strong>Is the language of TM M empty?</strong> - Undecidable</li>
+                    <li><strong>Is the language of TM M finite?</strong> - Undecidable</li>
+                    <li><strong>Is the language of TM M regular?</strong> - Undecidable</li>
+                    <li><strong>Is the language of TM M context-free?</strong> - Undecidable</li>
+                </ul>
+                <p><strong>Rice's Theorem:</strong> Any non-trivial property of the language recognized by a TM is undecidable</p>
+            </div>
+
+
+            <h4>3. Equivalence Problems</h4>
+            <div class="example">
+                <div class="example-title">Examples:</div>
+                <ul>
+                    <li><strong>Do two TMs accept the same language?</strong> - Undecidable</li>
+                    <li><strong>Do two context-free grammars generate the same language?</strong> - Undecidable</li>
+                    <li><strong>Are two programs functionally equivalent?</strong> - Undecidable</li>
+                </ul>
+            </div>
+
+
+            <h4>4. Post Correspondence Problem (PCP)</h4>
+            <div class="example">
+                <div class="example-title">Problem Description:</div>
+                <p>Given a set of domino pieces with strings on top and bottom, can we arrange them so the top string equals the bottom string?</p>
+                <p><strong>Status:</strong> Undecidable</p>
+            </div>
+
+
+            <h4>5. Blank Tape Halting Problem</h4>
+            <div class="example">
+                <div class="example-title">Problem:</div>
+                <p>Does a given Turing Machine halt when started on a blank tape?</p>
+                <p><strong>Status:</strong> Undecidable</p>
+            </div>
+
+
+            <h4>6. Totality Problem</h4>
+            <div class="example">
+                <div class="example-title">Problem:</div>
+                <p>Does a given Turing Machine halt on all inputs?</p>
+                <p><strong>Status:</strong> Undecidable (and not even RE)</p>
+            </div>
+
+
+            <h4>7. Ambiguity Problem for Context-Free Grammars</h4>
+            <div class="example">
+                <div class="example-title">Problem:</div>
+                <p>Is a given context-free grammar ambiguous?</p>
+                <p><strong>Status:</strong> Undecidable</p>
+            </div>
+
+
+            <h3>Practical Implications</h3>
+
+
+            <div class="important">
+                <strong>What Undecidability Means in Practice:</strong>
+                <ul>
+                    <li><strong>No Perfect Bug Detector:</strong> Cannot create a program that finds all bugs in all programs</li>
+                    <li><strong>No Perfect Virus Scanner:</strong> Cannot detect all possible viruses without false positives</li>
+                    <li><strong>No Perfect Optimizer:</strong> Cannot create a compiler that produces optimal code for all programs</li>
+                    <li><strong>No Complete Program Verifier:</strong> Cannot verify all properties of all programs</li>
+                    <li><strong>No Universal Deadlock Detector:</strong> Cannot detect all potential deadlocks in concurrent systems</li>
+                </ul>
+            </div>
+
+
+            <h3>Approaches When Facing Undecidable Problems</h3>
+
+
+            <p>Since undecidable problems cannot be fully solved, we use alternative approaches:</p>
+
+
+            <h4>1. Solve Special Cases</h4>
+            <ul>
+                <li>Focus on restricted versions of the problem</li>
+                <li>Example: Can detect some viruses, just not all viruses</li>
+            </ul>
+
+
+            <h4>2. Approximation and Heuristics</h4>
+            <ul>
+                <li>Use algorithms that work well in practice but aren't guaranteed</li>
+                <li>Example: Static analysis tools detect many bugs but not all</li>
+            </ul>
+
+
+            <h4>3. Semi-Decidable Approaches</h4>
+            <ul>
+                <li>For RE problems, can recognize positive instances</li>
+                <li>May not terminate on negative instances</li>
+            </ul>
+
+
+            <h4>4. Interactive or Human-Assisted Solutions</h4>
+            <ul>
+                <li>Combine automated tools with human expertise</li>
+                <li>Example: Theorem provers that require user guidance</li>
+            </ul>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Decidable?</th>
+                        <th>RE?</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FA membership</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>Always decidable</td>
+                    </tr>
+                    <tr>
+                        <td>CFG membership</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>CYK algorithm decides</td>
+                    </tr>
+                    <tr>
+                        <td>Halting Problem</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>Semi-decidable only</td>
+                    </tr>
+                    <tr>
+                        <td>TM equivalence</td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Not even RE</td>
+                    </tr>
+                    <tr>
+                        <td>Post Correspondence</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>RE but undecidable</td>
+                    </tr>
+                    <tr>
+                        <td>Rice's Theorem properties</td>
+                        <td>No</td>
+                        <td>Varies</td>
+                        <td>All undecidable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="halting">
+            <h2>5. Halting Problem</h2>
+
+
+            <h3>Statement of the Halting Problem</h3>
+            
+            <div class="definition">
+                <strong>The Halting Problem:</strong> Given a description of a Turing Machine M and an input string w, determine whether M will halt (stop) when run on input w, or whether it will run forever.
+            </div>
+
+
+            <p>Formally, the Halting Problem asks us to decide the language:</p>
+            <p class="formula">HALT = {&lt;M, w&gt; | M is a TM that halts on input w}</p>
+
+
+            <p>The problem can be stated as a decision question:</p>
+            <div class="important">
+                <strong>Question:</strong> Is there an algorithm that, given any program and any input, can determine whether that program will eventually halt or run forever?
+                <br><br>
+                <strong>Answer:</strong> No, such an algorithm cannot exist.
+            </div>
+
+
+            <h3>Explanation of Why It Is Undecidable</h3>
+
+
+            <p>The Halting Problem was proven undecidable by Alan Turing in 1936. Here is a conceptual explanation of why no algorithm can solve it:</p>
+
+
+            <h4>Proof by Contradiction (Conceptual Overview)</h4>
+
+
+            <p><strong>Step 1: Assume a Halting Decider Exists</strong></p>
+            <div class="example">
+                <div class="example-title">The Assumption:</div>
+                <p>Suppose there exists a Turing Machine H that solves the Halting Problem. This machine H would work as follows:</p>
+                <ul>
+                    <li>Input: Description of TM M and input string w</li>
+                    <li>Output: "HALTS" if M halts on w, "LOOPS" if M loops forever on w</li>
+                    <li>H always halts and gives the correct answer</li>
+                </ul>
+            </div>
+
+
+            <p><strong>Step 2: Construct a Paradoxical Machine</strong></p>
+            <div class="example">
+                <div class="example-title">Building the Paradox:</div>
+                <p>Using H, we construct a new machine D (Diagonal machine) that does the following:</p>
+                <ul>
+                    <li>D takes as input a description of a Turing Machine M</li>
+                    <li>D runs H on the input &lt;M, &lt;M&gt;&gt; (M with its own description as input)</li>
+                    <li>If H says "HALTS", then D goes into an infinite loop</li>
+                    <li>If H says "LOOPS", then D halts immediately</li>
+                </ul>
+                <p>In other words: <strong>D does the opposite of what H predicts for M running on itself</strong></p>
+            </div>
+
+
+            <p><strong>Step 3: Apply D to Itself</strong></p>
+            <div class="critical">
+                <div class="example-title">The Contradiction:</div>
+                <p>Now, what happens when we run D on its own description? D(&lt;D&gt;)</p>
+                <ul>
+                    <li><strong>Case 1:</strong> Suppose H says D halts on &lt;D&gt;
+                        <ul>
+                            <li>Then by D's definition, D goes into an infinite loop</li>
+                            <li>But H said D halts - contradiction!</li>
+                        </ul>
+                    </li>
+                    <li><strong>Case 2:</strong> Suppose H says D loops on &lt;D&gt;
+                        <ul>
+                            <li>Then by D's definition, D halts immediately</li>
+                            <li>But H said D loops - contradiction!</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><strong>Conclusion:</strong> Both cases lead to contradiction. Therefore, our assumption that H exists must be false. No such halting decider can exist.</p>
+            </div>
+
+
+            <h4>Intuitive Explanation</h4>
+
+
+            <div class="example">
+                <div class="example-title">Barber Paradox Analogy:</div>
+                <p>The Halting Problem is similar to the classic barber paradox:</p>
+                <p>"A barber shaves all men who do not shave themselves. Does the barber shave himself?"</p>
+                <ul>
+                    <li>If he shaves himself, then he's a man who shaves himself, so he shouldn't shave himself</li>
+                    <li>If he doesn't shave himself, then he's a man who doesn't shave himself, so he should shave himself</li>
+                </ul>
+                <p>Both lead to logical contradictions, showing the problem statement is fundamentally flawed.</p>
+            </div>
+
+
+            <h3>Importance of the Halting Problem</h3>
+
+
+            <h4>1. First Proven Undecidable Problem</h4>
+            <ul>
+                <li>First concrete example of a problem with no algorithmic solution</li>
+                <li>Proved that not all problems can be solved by computers</li>
+                <li>Established the existence of fundamental computational limits</li>
+            </ul>
+
+
+            <h4>2. Foundation for Other Undecidability Proofs</h4>
+            <ul>
+                <li>Used as a basis to prove other problems undecidable</li>
+                <li>Through reduction, many problems shown to be at least as hard as Halting Problem</li>
+                <li>Led to Rice's Theorem and many other undecidability results</li>
+            </ul>
+
+
+            <h4>3. Theoretical Significance</h4>
+            <ul>
+                <li>Demonstrates limits of computation and formal systems</li>
+                <li>Related to Gödel's Incompleteness Theorems</li>
+                <li>Shows that mathematical truth and computational decidability are different concepts</li>
+            </ul>
+
+
+            <h4>4. Philosophical Implications</h4>
+            <ul>
+                <li>Questions about free will and determinism</li>
+                <li>Limits of artificial intelligence and machine reasoning</li>
+                <li>Nature of mathematical truth and provability</li>
+            </ul>
+
+
+            <h3>Consequences in Computation Theory</h3>
+
+
+            <h4>1. Software Verification Is Limited</h4>
+            <div class="important">
+                <strong>Consequence:</strong> We cannot create a general-purpose program verifier that checks if any program is correct.
+                <ul>
+                    <li>Cannot automatically verify all programs are bug-free</li>
+                    <li>Cannot automatically prove all programs meet their specifications</li>
+                    <li>Must rely on testing, restricted verification, or human insight</li>
+                </ul>
+            </div>
+
+
+            <h4>2. Debugging Has Fundamental Limits</h4>
+            <div class="important">
+                <strong>Consequence:</strong> No perfect debugger can exist.
+                <ul>
+                    <li>Cannot create a tool that finds all infinite loops</li>
+                    <li>Cannot detect all cases where a program fails to terminate</li>
+                    <li>Debuggers can help but cannot guarantee finding all problems</li>
+                </ul>
+            </div>
+
+
+            <h4>3. Compiler Optimization Is Limited</h4>
+            <div class="important">
+                <strong>Consequence:</strong> Cannot create a compiler that produces optimal code for all programs.
+                <ul>
+                    <li>Determining the "best" optimization requires solving halting-like problems</li>
+                    <li>Compilers use heuristics and may not find optimal solutions</li>
+                    <li>Some optimizations may change program behavior unpredictably</li>
+                </ul>
+            </div>
+
+
+            <h4>4. Virus Detection Has Limits</h4>
+            <div class="important">
+                <strong>Consequence:</strong> Perfect antivirus software is impossible.
+                <ul>
+                    <li>Determining if a program is malicious reduces to halting-like problems</li>
+                    <li>Cannot detect all viruses without false positives</li>
+                    <li>Antivirus relies on patterns, heuristics, and known signatures</li>
+                </ul>
+            </div>
+
+
+            <h4>5. Artificial Intelligence Has Theoretical Limits</h4>
+            <div class="important">
+                <strong>Consequence:</strong> Some reasoning tasks cannot be automated.
+                <ul>
+                    <li>AI cannot solve all problems that humans might solve</li>
+                    <li>Some tasks require insight that cannot be algorithmically generated</li>
+                    <li>Creativity and intuition may go beyond pure computation</li>
+                </ul>
+            </div>
+
+
+            <h4>6. Establishes Hierarchy of Problems</h4>
+            <ul>
+                <li>Problems can be classified by reducibility to Halting Problem</li>
+                <li>Some problems are "Halting-complete" (equivalent in difficulty)</li>
+                <li>Creates a framework for comparing problem difficulty</li>
+            </ul>
+
+
+            <h4>7. Programming Language Design</h4>
+            <ul>
+                <li>Influences design of type systems and static analysis tools</li>
+                <li>Some properties are undecidable, requiring runtime checks</li>
+                <li>Trade-offs between expressiveness and decidability</li>
+            </ul>
+
+
+            <div class="critical">
+                <strong>Important for Exams:</strong>
+                <ul>
+                    <li>Halting Problem: Given TM M and input w, does M halt on w?</li>
+                    <li>It is undecidable - no algorithm can solve all instances</li>
+                    <li>Proven by contradiction using diagonal argument</li>
+                    <li>First and most famous undecidable problem</li>
+                    <li>Many practical consequences for software development</li>
+                    <li>Foundation for proving other problems undecidable</li>
+                </ul>
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Simple Analogy:</div>
+                <p>Imagine trying to predict whether a conversation will end or continue forever. For simple conversations, you might predict. But if the conversation includes "I will say the opposite of what you predict about this conversation," you face a paradox. Similarly, programs that reference their own behavior create unpredictable scenarios that no algorithm can resolve.</p>
+            </div>
+        </section>
+
+
+        <section id="reduction">
+            <h2>6. Reduction Technique</h2>
+
+
+            <h3>Meaning of Reduction</h3>
+            
+            <div class="definition">
+                <strong>Reduction:</strong> Reduction is a technique for converting one problem into another problem in such a way that a solution to the second problem can be used to solve the first problem. If we reduce problem A to problem B, we show that solving B would also solve A.
+            </div>
+
+
+            <p>In the context of undecidability, reduction is used to prove that new problems are undecidable by showing they are at least as hard as known undecidable problems.</p>
+
+
+            <h4>Types of Reduction</h4>
+            <ul>
+                <li><strong>Many-one reduction:</strong> Transform instances of problem A to instances of problem B</li>
+                <li><strong>Turing reduction:</strong> Use a solution to B as a subroutine to solve A</li>
+                <li><strong>Mapping reduction:</strong> Computable function that maps instances of A to instances of B</li>
+            </ul>
+
+
+            <p>For undecidability proofs, we typically use mapping reductions.</p>
+
+
+            <h3>How Reduction Is Used to Prove Undecidability</h3>
+
+
+            <div class="important">
+                <strong>Basic Principle:</strong> To prove a new problem B is undecidable:
+                <ol>
+                    <li>Start with a known undecidable problem A (like the Halting Problem)</li>
+                    <li>Show that if we could solve B, we could use that solution to solve A</li>
+                    <li>Since A is undecidable, B must also be undecidable</li>
+                </ol>
+            </div>
+
+
+            <p>The logic works as follows:</p>
+            <ul>
+                <li>We want to prove problem B is undecidable</li>
+                <li>We reduce known undecidable problem A to B (written as A ≤ B)</li>
+                <li>If B were decidable, then A would be decidable (by the reduction)</li>
+                <li>But A is undecidable (proven fact)</li>
+                <li>Therefore, B must be undecidable (by contradiction)</li>
+            </ul>
+
+
+            <div class="diagram">
+Reduction Logic:
+
+
+Known Undecidable Problem A
+           |
+           | Reduction
+           ↓
+      New Problem B
+           |
+    If B is decidable → A would be decidable
+    But A is undecidable
+    Therefore: B must be undecidable
+            </div>
+
+
+            <h3>High-Level Steps of Reduction Method</h3>
+
+
+            <h4>Step 1: Choose a Known Undecidable Problem</h4>
+            <ul>
+                <li>Usually start with the Halting Problem</li>
+                <li>Could also use another proven undecidable problem</li>
+                <li>Call this problem A</li>
+            </ul>
+
+
+            <h4>Step 2: Assume the New Problem Is Decidable</h4>
+            <ul>
+                <li>Suppose we have a decider D for the new problem B</li>
+                <li>This is our assumption that we will contradict</li>
+            </ul>
+
+
+            <h4>Step 3: Construct a Transformation</h4>
+            <ul>
+                <li>Build a procedure that transforms instances of A into instances of B</li>
+                <li>The transformation must be computable (algorithmic)</li>
+                <li>The transformation must preserve yes/no answers:
+                    <ul>
+                        <li>If instance of A has answer "yes", transformed B instance has answer "yes"</li>
+                        <li>If instance of A has answer "no", transformed B instance has answer "no"</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <h4>Step 4: Show How to Solve A Using D</h4>
+            <ul>
+                <li>Describe how to use the decider D for B to solve instances of A</li>
+                <li>Transform A instance to B instance</li>
+                <li>Run D on the B instance</li>
+                <li>Return D's answer as the answer to the A instance</li>
+            </ul>
+
+
+            <h4>Step 5: Reach a Contradiction</h4>
+            <ul>
+                <li>We now have a way to decide A using our procedure</li>
+                <li>But A is undecidable (this is our contradiction)</li>
+                <li>Therefore, our assumption in Step 2 must be false</li>
+                <li>Conclusion: B is undecidable</li>
+            </ul>
+
+
+            <h3>Simple Illustrative Explanation</h3>
+
+
+            <div class="example">
+                <div class="example-title">Example: Proving "Does TM accept any string?" is Undecidable</div>
+                
+                <p><strong>Problem B:</strong> Given a TM M, does M accept at least one string?</p>
+                
+                <p><strong>Reduction from Halting Problem:</strong></p>
+                
+                <p><strong>Step 1:</strong> Known undecidable problem A = Halting Problem<br>
+                Question: Does TM M halt on input w?</p>
+                
+                <p><strong>Step 2:</strong> Assume we have a decider D for problem B</p>
+                
+                <p><strong>Step 3:</strong> Transform Halting Problem instance to "accepts any string" instance<br>
+                Given: TM M and input w (from Halting Problem)<br>
+                Construct: A new TM M' that works as follows:
+                <ul>
+                    <li>M' ignores its input</li>
+                    <li>M' simulates M on w</li>
+                    <li>If M halts on w, M' accepts</li>
+                    <li>If M doesn't halt on w, M' never accepts</li>
+                </ul>
+                </p>
+                
+                <p><strong>Key observation:</strong></p>
+                <ul>
+                    <li>If M halts on w, then M' accepts at least one string (in fact, accepts all strings)</li>
+                    <li>If M doesn't halt on w, then M' never accepts any string</li>
+                </ul>
+                
+                <p><strong>Step 4:</strong> Use D to solve Halting Problem:
+                <ul>
+                    <li>Construct M' from M and w</li>
+                    <li>Run D on M'</li>
+                    <li>If D says "M' accepts some string", answer "M halts on w"</li>
+                    <li>If D says "M' accepts no string", answer "M doesn't halt on w"</li>
+                </ul>
+                </p>
+                
+                <p><strong>Step 5:</strong> We now have a procedure to solve the Halting Problem, which is impossible. Therefore, D cannot exist, and problem B is undecidable.</p>
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Another Example: Blank Tape Halting</div>
+                
+                <p><strong>Problem B:</strong> Does TM M halt when started on a blank tape?</p>
+                
+                <p><strong>Simple Reduction Idea:</strong></p>
+                <ul>
+                    <li>Start with Halting Problem: Does M halt on input w?</li>
+                    <li>Construct new TM M' that:
+                        <ul>
+                            <li>Writes w on blank tape</li>
+                            <li>Then simulates M on w</li>
+                        </ul>
+                    </li>
+                    <li>M halts on w if and only if M' halts on blank tape</li>
+                    <li>If we could decide blank tape halting, we could decide regular halting</li>
+                    <li>Since regular halting is undecidable, blank tape halting is undecidable</li>
+                </ul>
+            </div>
+
+
+            <h3>Common Reduction Patterns</h3>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>From (Known Undecidable)</th>
+                        <th>To (Proving Undecidable)</th>
+                        <th>Reduction Idea</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Halting Problem</td>
+                        <td>Acceptance Problem</td>
+                        <td>Construct TM that accepts if original halts</td>
+                    </tr>
+                    <tr>
+                        <td>Halting Problem</td>
+                        <td>Blank Tape Halting</td>
+                        <td>New TM writes input then simulates</td>
+                    </tr>
+                    <tr>
+                        <td>Halting Problem</td>
+                        <td>Equivalence Problem</td>
+                        <td>Construct two TMs with different behaviors based on halting</td>
+                    </tr>
+                    <tr>
+                        <td>Acceptance Problem</td>
+                        <td>Emptiness Problem</td>
+                        <td>Show acceptance of specific string equivalent to non-emptiness</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="important">
+                <strong>Key Points About Reduction:</strong>
+                <ul>
+                    <li>Reduction shows relative difficulty of problems</li>
+                    <li>If A reduces to B (A ≤ B), then B is at least as hard as A</li>
+                    <li>Used to prove undecidability, NP-completeness, and other hardness results</li>
+                    <li>The reduction itself must be computable (algorithmic)</li>
+                    <li>Most common starting point is the Halting Problem</li>
+                </ul>
+            </div>
+
+
+            <div class="critical">
+                <strong>For AKTU Exams:</strong>
+                <ul>
+                    <li>Understand that reduction converts problem A to problem B</li>
+                    <li>If B is solvable, then A is solvable (contrapositive: if A is unsolvable, then B is unsolvable)</li>
+                    <li>Know the high-level steps: assume decidability, construct transformation, reach contradiction</li>
+                    <li>Be able to explain simple reduction examples conceptually</li>
+                    <li>Don't need to write formal proofs, but understand the logic</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="complexity-intro">
+            <h2>7. Introduction to Complexity Theory</h2>
+
+
+            <h3>Meaning of Complexity Theory</h3>
+            
+            <div class="definition">
+                <strong>Complexity Theory:</strong> Complexity theory is the study of how efficiently problems can be solved, measured in terms of resources required (primarily time and space). It classifies computational problems based on the amount of resources needed to solve them.
+            </div>
+
+
+            <p>While computability theory asks "Can we solve this problem?", complexity theory asks "Can we solve this problem efficiently?"</p>
+
+
+            <h4>Key Aspects of Complexity Theory</h4>
+            <ul>
+                <li><strong>Resource Analysis:</strong> Measures time (number of steps) and space (memory used) required by algorithms</li>
+                <li><strong>Problem Classification:</strong> Groups problems into classes based on their complexity</li>
+                <li><strong>Efficiency Comparison:</strong> Compares different algorithms and approaches</li>
+                <li><strong>Hardness Results:</strong> Identifies problems that are inherently difficult</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Why Complexity Theory Matters:</strong>
+                <ul>
+                    <li>Decidable doesn't mean practical - some decidable problems take too long to solve</li>
+                    <li>Helps choose appropriate algorithms for real-world applications</li>
+                    <li>Identifies which problems have efficient solutions</li>
+                    <li>Guides research toward tractable problems</li>
+                </ul>
+            </div>
+
+
+            <h3>Time Complexity vs Space Complexity</h3>
+
+
+            <h4>Time Complexity</h4>
+            <div class="definition">
+                <strong>Time Complexity:</strong> The time complexity of an algorithm is the amount of time (number of basic operations or steps) required to execute the algorithm as a function of the input size.
+            </div>
+
+
+            <p>Characteristics of time complexity:</p>
+            <ul>
+                <li><strong>Measures:</strong> Number of computational steps or operations</li>
+                <li><strong>Input Dependent:</strong> Varies with input size n</li>
+                <li><strong>Expressed in Big-O Notation:</strong> O(n), O(n²), O(2ⁿ), etc.</li>
+                <li><strong>Focus:</strong> How running time grows as input grows</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Time Complexity Examples:</div>
+                <ul>
+                    <li><strong>O(1) - Constant:</strong> Accessing an array element, simple arithmetic</li>
+                    <li><strong>O(log n) - Logarithmic:</strong> Binary search</li>
+                    <li><strong>O(n) - Linear:</strong> Linear search, summing array elements</li>
+                    <li><strong>O(n log n) - Linearithmic:</strong> Efficient sorting (merge sort, quicksort)</li>
+                    <li><strong>O(n²) - Quadratic:</strong> Bubble sort, simple matrix multiplication</li>
+                    <li><strong>O(2ⁿ) - Exponential:</strong> Solving some recursive problems naively</li>
+                    <li><strong>O(n!) - Factorial:</strong> Generating all permutations</li>
+                </ul>
+            </div>
+
+
+            <h4>Space Complexity</h4>
+            <div class="definition">
+                <strong>Space Complexity:</strong> The space complexity of an algorithm is the amount of memory space required to execute the algorithm as a function of the input size.
+            </div>
+
+
+            <p>Characteristics of space complexity:</p>
+            <ul>
+                <li><strong>Measures:</strong> Memory/storage space used</li>
+                <li><strong>Includes:</strong> Input space, auxiliary space, and output space</li>
+                <li><strong>Often Analyzed:</strong> Auxiliary space only (extra space beyond input)</li>
+                <li><strong>Expressed in Big-O Notation:</strong> Same as time complexity</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Space Complexity Examples:</div>
+                <ul>
+                    <li><strong>O(1) - Constant:</strong> Algorithms using fixed variables regardless of input size</li>
+                    <li><strong>O(log n):</strong> Recursive algorithms with logarithmic depth</li>
+                    <li><strong>O(n):</strong> Algorithms that create a copy of input or use a hash table</li>
+                    <li><strong>O(n²):</strong> Algorithms using 2D arrays of size n×n</li>
+                </ul>
+            </div>
+
+
+            <h4>Comparison: Time vs Space Complexity</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Time Complexity</th>
+                        <th>Space Complexity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>What it measures</strong></td>
+                        <td>Execution time / number of operations</td>
+                        <td>Memory usage</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primary concern</strong></td>
+                        <td>How fast the algorithm runs</td>
+                        <td>How much memory it needs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trade-off</strong></td>
+                        <td>Can often reduce by using more space</td>
+                        <td>Can often reduce by using more time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Notation</strong></td>
+                        <td>Big-O, Big-Ω, Big-Θ</td>
+                        <td>Big-O, Big-Ω, Big-Θ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Example</strong></td>
+                        <td>Sorting n items in O(n log n) time</td>
+                        <td>Sorting in-place with O(1) extra space</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="important">
+                <strong>Time-Space Trade-off:</strong>
+                <p>Often there's a trade-off between time and space:</p>
+                <ul>
+                    <li><strong>Dynamic Programming:</strong> Uses extra space (memoization) to reduce time</li>
+                    <li><strong>In-place algorithms:</strong> Use minimal space but may take more time</li>
+                    <li><strong>Caching:</strong> Stores results in memory to speed up future computations</li>
+                </ul>
+            </div>
+
+
+            <h3>Why Complexity Analysis Is Required</h3>
+
+
+            <h4>1. Distinguish Practical from Impractical Solutions</h4>
+            <ul>
+                <li>Some decidable problems have exponential solutions - impractical for large inputs</li>
+                <li>Complexity analysis identifies which problems can be solved in reasonable time</li>
+                <li>Example: Traveling Salesman Problem has O(n!) brute force solution - impractical for even n=20</li>
+            </ul>
+
+
+            <h4>2. Algorithm Selection and Design</h4>
+            <ul>
+                <li>Choose the best algorithm for specific scenarios</li>
+                <li>Compare different approaches objectively</li>
+                <li>Example: For small arrays, insertion sort (O(n²)) may be faster than merge sort (O(n log n)) due to lower constants</li>
+            </ul>
+
+
+            <h4>3. Scalability Prediction</h4>
+            <ul>
+                <li>Predict how algorithm performance changes as data grows</li>
+                <li>Essential for systems handling large datasets</li>
+                <li>Example: O(n) algorithm doubles time when data doubles; O(n²) quadruples time</li>
+            </ul>
+
+
+            <h4>4. Resource Planning</h4>
+            <ul>
+                <li>Estimate computational resources needed (CPU, memory, time)</li>
+                <li>Budget for hardware and cloud computing costs</li>
+                <li>Plan system capacity</li>
+            </ul>
+
+
+            <h4>5. Identify Problem Difficulty</h4>
+            <ul>
+                <li>Classify problems as easy (P) or hard (NP, NP-complete)</li>
+                <li>Know when to seek approximate solutions instead of exact ones</li>
+                <li>Understand theoretical limits of efficient computation</li>
+            </ul>
+
+
+            <h4>6. Optimization Opportunities</h4>
+            <ul>
+                <li>Identify bottlenecks in algorithms</li>
+                <li>Focus optimization effort where it matters most</li>
+                <li>Avoid premature optimization of already-efficient code</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Practical Example:</div>
+                <p><strong>Problem:</strong> Search for an item in a database</p>
+                <ul>
+                    <li><strong>Linear Search:</strong> O(n) - acceptable for small databases</li>
+                    <li><strong>Binary Search:</strong> O(log n) - requires sorted data, much faster for large databases</li>
+                    <li><strong>Hash Table:</strong> O(1) average - fastest, but uses extra space</li>
+                </ul>
+                <p>Complexity analysis helps choose the right approach based on database size, update frequency, and available memory.</p>
+            </div>
+
+
+            <div class="diagram">
+Growth Rates Comparison (for large n):
+
+
+O(1)         |  Constant - best
+O(log n)     |  Logarithmic - excellent
+O(n)         |  Linear - good
+O(n log n)   |  Linearithmic - acceptable
+O(n²)        |  Quadratic - poor for large n
+O(n³)        |  Cubic - very poor for large n
+O(2ⁿ)        |  Exponential - impractical for n > 30
+O(n!)        |  Factorial - impractical for n > 15
+            </div>
+
+
+            <div class="critical">
+                <strong>Important Distinction:</strong>
+                <ul>
+                    <li><strong>Computability:</strong> Can this problem be solved at all? (yes/no)</li>
+                    <li><strong>Complexity:</strong> Can this problem be solved efficiently? (how fast/slow)</li>
+                </ul>
+                <p>A problem can be computable but intractable (solvable but too slow to be practical).</p>
+            </div>
+        </section>
+
+
+        <section id="complexity-classes">
+            <h2>8. Complexity Classes</h2>
+
+
+            <h3>Class P</h3>
+            
+            <div class="definition">
+                <strong>Class P (Polynomial Time):</strong> P is the class of all decision problems that can be solved by a deterministic Turing Machine in polynomial time. These are problems for which efficient algorithms exist.
+            </div>
+
+
+            <p>Formally: P = {L | L is decided by a deterministic TM in O(n^k) time for some constant k}</p>
+
+
+            <h4>Characteristics of P</h4>
+            <ul>
+                <li><strong>Polynomial Time:</strong> Time complexity is O(n^k) for some constant k</li>
+                <li><strong>Deterministic:</strong> Uses deterministic algorithms (no guessing)</li>
+                <li><strong>Tractable:</strong> Generally considered efficiently solvable</li>
+                <li><strong>Practical:</strong> Most problems in P can be solved in practice</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Examples of Problems in P:</div>
+                <ul>
+                    <li><strong>Sorting:</strong> Sort n numbers - O(n log n) - in P</li>
+                    <li><strong>Shortest Path:</strong> Find shortest path in a graph - O(n²) or O(n log n) - in P</li>
+                    <li><strong>Linear Programming:</strong> Solvable in polynomial time - in P</li>
+                    <li><strong>Primality Testing:</strong> Determine if number is prime - O(polynomial) - in P</li>
+                    <li><strong>Matching:</strong> Find maximum matching in a graph - polynomial - in P</li>
+                    <li><strong>Searching:</strong> Search in sorted array - O(log n) - in P</li>
+                    <li><strong>GCD Calculation:</strong> Greatest common divisor - polynomial - in P</li>
+                </ul>
+            </div>
+
+
+            <div class="important">
+                <strong>Why P is Important:</strong>
+                <ul>
+                    <li>Represents efficiently solvable problems</li>
+                    <li>Problems in P can generally handle large inputs</li>
+                    <li>Polynomial time is considered the boundary of tractability</li>
+                    <li>Closed under composition, union, concatenation, Kleene star</li>
+                </ul>
+            </div>
+
+
+            <h3>Class NP</h3>
+            
+            <div class="definition">
+                <strong>Class NP (Nondeterministic Polynomial Time):</strong> NP is the class of all decision problems for which a proposed solution can be verified in polynomial time by a deterministic Turing Machine. Alternatively, problems solvable in polynomial time by a non-deterministic Turing Machine.
+            </div>
+
+
+            <p>Formally: NP = {L | L is decided by a non-deterministic TM in O(n^k) time for some constant k}</p>
+
+
+            <h4>Two Equivalent Definitions of NP</h4>
+            <div class="important">
+                <strong>Definition 1 (Verifier-based):</strong> A problem is in NP if, given a proposed solution (certificate), we can verify it's correct in polynomial time.
+                <br><br>
+                <strong>Definition 2 (Non-deterministic):</strong> A problem is in NP if a non-deterministic Turing Machine can solve it in polynomial time (by "guessing" the right solution).
+            </div>
+
+
+            <h4>Characteristics of NP</h4>
+            <ul>
+                <li><strong>Verification in Polynomial Time:</strong> Can check a proposed solution quickly</li>
+                <li><strong>May Require Exponential Time to Solve:</strong> Finding the solution might be hard</li>
+                <li><strong>Contains P:</strong> Every problem in P is also in NP (P ⊆ NP)</li>
+                <li><strong>Many Practical Problems:</strong> Scheduling, routing, packing problems often in NP</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Examples of Problems in NP:</div>
+                <ul>
+                    <li><strong>Boolean Satisfiability (SAT):</strong> Is there an assignment making a formula true? Can verify proposed assignment in polynomial time</li>
+                    <li><strong>Traveling Salesman Problem (Decision Version):</strong> Is there a tour of length ≤ k? Can verify a proposed tour quickly</li>
+                    <li><strong>Graph Coloring:</strong> Can graph be colored with k colors? Can verify a proposed coloring in polynomial time</li>
+                    <li><strong>Subset Sum:</strong> Is there a subset summing to target? Can verify proposed subset quickly</li>
+                    <li><strong>Hamiltonian Path:</strong> Does graph have path visiting each vertex once? Can verify proposed path in polynomial time</li>
+                    <li><strong>Vertex Cover:</strong> Is there a vertex cover of size k? Can verify proposed cover quickly</li>
+                </ul>
+            </div>
+
+
+            <h4>Why NP Problems Are Interesting</h4>
+            <ul>
+                <li>Many real-world optimization problems are in NP</li>
+                <li>Easy to verify solutions but hard to find them</li>
+                <li>No known polynomial-time algorithms for many NP problems</li>
+                <li>Understanding NP helps in deciding when to use heuristics vs exact algorithms</li>
+            </ul>
+
+
+            <h3>Definition of P vs NP Problem</h3>
+            
+            <div class="critical">
+                <strong>The P vs NP Question:</strong> Does P = NP? In other words, if a solution to a problem can be verified quickly (in polynomial time), can the problem also be solved quickly (in polynomial time)?
+            </div>
+
+
+            <h4>What We Know</h4>
+            <ul>
+                <li><strong>P ⊆ NP:</strong> Every problem that can be solved quickly can also be verified quickly (obvious)</li>
+                <li><strong>Unknown: P = NP or P ≠ NP?</strong> We don't know if every quickly verifiable problem can be solved quickly</li>
+            </ul>
+
+
+            <h4>Two Possibilities</h4>
+
+
+            <div class="example">
+                <div class="example-title">Possibility 1: P = NP</div>
+                <ul>
+                    <li>Every problem whose solution can be verified in polynomial time can also be solved in polynomial time</li>
+                    <li>Finding a solution is no harder than checking a solution</li>
+                    <li>Would revolutionize computer science, mathematics, cryptography</li>
+                    <li>Most experts believe this is unlikely</li>
+                </ul>
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Possibility 2: P ≠ NP</div>
+                <ul>
+                    <li>Some problems are fundamentally harder to solve than to verify</li>
+                    <li>There exist problems where checking is easy but finding is hard</li>
+                    <li>Most computer scientists believe this is true</li>
+                    <li>Still unproven despite decades of research</li>
+                </ul>
+            </div>
+
+
+            <div class="diagram">
+Visual Representation:
+
+
+Case 1: If P = NP              Case 2: If P ≠ NP
+┌─────────────┐                ┌──────────────────┐
+│     NP      │                │        NP        │
+│             │                │  ┌──────────┐    │
+│   (P=NP)    │                │  │    P     │    │
+│             │                │  │          │    │
+└─────────────┘                │  └──────────┘    │
+                               └──────────────────┘
+            </div>
+
+
+            <h3>Importance of P vs NP Question</h3>
+
+
+            <h4>1. One of the Biggest Open Problems</h4>
+            <ul>
+                <li>Clay Mathematics Institute Millennium Prize Problem (worth $1 million)</li>
+                <li>One of the most important unsolved problems in mathematics and computer science</li>
+                <li>Studied for over 50 years without resolution</li>
+            </ul>
+
+
+            <h4>2. Theoretical Implications</h4>
+            <ul>
+                <li>Defines fundamental limits of efficient computation</li>
+                <li>Affects our understanding of what can be computed efficiently</li>
+                <li>Related to logic, mathematics, and philosophy</li>
+            </ul>
+
+
+            <h4>3. Practical Implications</h4>
+            <div class="important">
+                <strong>If P = NP (unlikely):</strong>
+                <ul>
+                    <li>Many currently hard problems would become easy</li>
+                    <li>Cryptography would be broken (encryption relies on NP problems)</li>
+                    <li>Optimization problems could be solved efficiently</li>
+                    <li>Drug discovery, logistics, scheduling would be revolutionized</li>
+                    <li>Mathematical proofs could be found automatically</li>
+                </ul>
+            </div>
+
+
+            <div class="important">
+                <strong>If P ≠ NP (likely):</strong>
+                <ul>
+                    <li>Some problems are inherently difficult</li>
+                    <li>Must continue using approximation algorithms and heuristics</li>
+                    <li>Cryptography remains secure</li>
+                    <li>Validates current approaches to hard problems</li>
+                </ul>
+            </div>
+
+
+            <h4>4. Guides Algorithm Research</h4>
+            <ul>
+                <li>If problem is NP-hard, don't waste time seeking polynomial algorithm</li>
+                <li>Focus on approximation, heuristics, special cases</li>
+                <li>Understand trade-offs between solution quality and time</li>
+            </ul>
+
+
+            <h4>5. NP-Complete Problems</h4>
+            <div class="definition">
+                <strong>NP-Complete:</strong> The hardest problems in NP. If any NP-complete problem can be solved in polynomial time, then P = NP.
+            </div>
+
+
+            <p>Key facts about NP-complete problems:</p>
+            <ul>
+                <li>All NP-complete problems are equally hard</li>
+                <li>If one NP-complete problem is in P, then all are in P (and P = NP)</li>
+                <li>Thousands of problems are known to be NP-complete</li>
+                <li>Examples: SAT, 3-SAT, Graph Coloring, Hamiltonian Path, Knapsack</li>
+            </ul>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Class P</th>
+                        <th>Class NP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Definition</strong></td>
+                        <td>Solvable in polynomial time</td>
+                        <td>Verifiable in polynomial time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Machine Type</strong></td>
+                        <td>Deterministic TM</td>
+                        <td>Non-deterministic TM</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Difficulty</strong></td>
+                        <td>Efficiently solvable</td>
+                        <td>May be hard to solve, easy to verify</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Examples</strong></td>
+                        <td>Sorting, shortest path, GCD</td>
+                        <td>SAT, TSP, Graph Coloring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relationship</strong></td>
+                        <td>P ⊆ NP</td>
+                        <td>Contains P</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Practical Impact</strong></td>
+                        <td>Can handle large inputs</td>
+                        <td>May need heuristics for large inputs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="critical">
+                <strong>For AKTU Exams - Key Points:</strong>
+                <ul>
+                    <li><strong>P:</strong> Problems solvable in polynomial time (efficiently solvable)</li>
+                    <li><strong>NP:</strong> Problems verifiable in polynomial time (solution can be checked quickly)</li>
+                    <li><strong>P ⊆ NP:</strong> Every problem in P is also in NP</li>
+                    <li><strong>P vs NP:</strong> Unknown whether P = NP or P ≠ NP</li>
+                    <li><strong>NP-Complete:</strong> Hardest problems in NP</li>
+                    <li><strong>Importance:</strong> Defines limits of efficient computation</li>
+                    <li>If P = NP: cryptography breaks, many hard problems become easy</li>
+                    <li>If P ≠ NP: some problems are inherently difficult</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="exam-focus">
+            <h2>9. Exam Focus</h2>
+            
+            <div class="exam-focus">
+                <h3>Important Definitions to Memorize</h3>
+                <ul>
+                    <li><strong>Decidable Problem:</strong> Problem solvable by a TM that always halts with correct answer</li>
+                    <li><strong>Undecidable Problem:</strong> Problem for which no algorithm exists that can solve all instances</li>
+                    <li><strong>Recursive Language:</strong> Language decided by a TM that halts on all inputs</li>
+                    <li><strong>Recursively Enumerable Language:</strong> Language recognized by a TM that halts on strings in the language but may not halt on strings not in the language</li>
+                    <li><strong>Halting Problem:</strong> Given TM M and input w, determine if M halts on w (UNDECIDABLE)</li>
+                    <li><strong>Reduction:</strong> Transforming one problem to another to prove relative difficulty</li>
+                    <li><strong>Class P:</strong> Problems solvable in polynomial time by deterministic TM</li>
+                    <li><strong>Class NP:</strong> Problems verifiable in polynomial time (or solvable by non-deterministic TM in polynomial time)</li>
+                    <li><strong>P vs NP:</strong> Open question whether every problem verifiable in polynomial time can be solved in polynomial time</li>
+                    <li><strong>Time Complexity:</strong> Number of steps required by algorithm as function of input size</li>
+                    <li><strong>Space Complexity:</strong> Amount of memory required by algorithm as function of input size</li>
+                </ul>
+
+
+                <h3>Frequently Asked AKTU Questions from Unit 5</h3>
+                <ol>
+                    <li>Define decidable and undecidable problems with examples.</li>
+                    <li>Differentiate between recursive an

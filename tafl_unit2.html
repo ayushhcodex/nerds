@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAFL Unit 2 - Regular Languages & Regular Expressions | AKTU B.Tech CSE</title>
+    <style>
+        html{
+  scroll-behavior: smooth;
+}
+
+.home-btn{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  background: #1e293b;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.home-btn:hover{
+  background: #0f172a;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 4px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        nav {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        nav h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 8px 0;
+        }
+
+        nav ul li a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        main {
+            margin-bottom: 40px;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        section h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        section h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+        }
+
+        .definition {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .formula {
+            background-color: #fff9e6;
+            border: 2px solid #f39c12;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            border-radius: 4px;
+        }
+
+        .example {
+            background-color: #f0f9ff;
+            border-left: 4px solid #16a085;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .important {
+            background-color: #ffe6e6;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .exam-box {
+            background-color: #fff3cd;
+            border: 3px solid #ffc107;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .exam-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .exam-box ul {
+            margin-left: 20px;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 5px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            section h2 {
+                font-size: 1.5em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <a href="#top" class="home-btn" title="Back to Top">↑</a>
+    <div class="container">
+        <header>
+            <h1>TAFL - Unit 2</h1>
+            <p>Regular Languages and Regular Expressions</p>
+            <p>AKTU B.Tech CSE - Exam Oriented Notes</p>
+        </header>
+
+        <nav>
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#section1">1. Introduction to Regular Languages</a></li>
+                <li><a href="#section2">2. Regular Expressions</a></li>
+                <li><a href="#section3">3. Algebraic Laws of Regular Expressions</a></li>
+                <li><a href="#section4">4. Finite Automata and Regular Expressions</a></li>
+                <li><a href="#section5">5. Equivalence of Models</a></li>
+                <li><a href="#section6">6. Closure Properties of Regular Languages</a></li>
+                <li><a href="#section7">7. Pumping Lemma for Regular Languages</a></li>
+                <li><a href="#section8">8. Examples of Non-Regular Languages</a></li>
+                <li><a href="#section9">9. Exam Focus</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="section1">
+                <h2>1. Introduction to Regular Languages</h2>
+                
+                <div class="definition">
+                    <h3>Definition of Regular Language</h3>
+                    <p>A language L is called a <strong>regular language</strong> if and only if there exists a finite automaton (DFA or NFA) that accepts it. Equivalently, a language is regular if it can be described by a regular expression.</p>
+                </div>
+
+                <h3>Importance of Regular Languages</h3>
+                <p>Regular languages form the foundation of theoretical computer science and have numerous practical applications:</p>
+                <ul>
+                    <li><strong>Compiler Design:</strong> Lexical analysis phase uses regular expressions to recognize tokens</li>
+                    <li><strong>Text Processing:</strong> Pattern matching in text editors and search engines</li>
+                    <li><strong>Network Protocols:</strong> Validation of data formats and protocol specifications</li>
+                    <li><strong>Digital Circuit Design:</strong> Specification of sequential circuits</li>
+                    <li><strong>Natural Language Processing:</strong> Morphological analysis</li>
+                </ul>
+
+                <h3>Relation between DFA, NFA, and Regular Expressions</h3>
+                <p>The following three computational models are equivalent in terms of their language recognition capabilities:</p>
+                <ul>
+                    <li><strong>Deterministic Finite Automaton (DFA)</strong></li>
+                    <li><strong>Non-deterministic Finite Automaton (NFA)</strong></li>
+                    <li><strong>Regular Expression (RE)</strong></li>
+                </ul>
+                
+                <div class="formula">
+                    DFA ≡ NFA ≡ Regular Expression
+                </div>
+
+                <p>This equivalence means that for every DFA, there exists an equivalent NFA and regular expression that accepts the same language, and vice versa.</p>
+
+                <div class="important">
+                    <strong>Key Point:</strong> All three models define exactly the same class of languages - the regular languages. This fundamental result allows us to choose the most convenient representation for any given problem.
+                </div>
+            </section>
+
+            <section id="section2">
+                <h2>2. Regular Expressions</h2>
+
+                <div class="definition">
+                    <h3>Definition</h3>
+                    <p>A <strong>regular expression</strong> is a formal notation for describing a set of strings over an alphabet. Regular expressions are built recursively using basic symbols and operators.</p>
+                </div>
+
+                <h3>Basic Regular Expressions</h3>
+                <p>The primitive regular expressions are:</p>
+                <ul>
+                    <li><code>∅</code> (Empty set) - Represents the empty language containing no strings</li>
+                    <li><code>ε</code> (Epsilon) - Represents the language containing only the empty string {ε}</li>
+                    <li><code>a</code> (Symbol) - Represents the language containing a single string consisting of symbol a, i.e., {a} where a ∈ Σ</li>
+                </ul>
+
+                <div class="example">
+                    <h4>Examples of Basic Regular Expressions</h4>
+                    <ul>
+                        <li><code>∅</code> denotes L(∅) = { }</li>
+                        <li><code>ε</code> denotes L(ε) = {ε}</li>
+                        <li><code>a</code> denotes L(a) = {a}</li>
+                        <li><code>0</code> denotes L(0) = {0}</li>
+                    </ul>
+                </div>
+
+                <h3>Operators in Regular Expressions</h3>
+
+                <h4>1. Union (+ or |)</h4>
+                <p><strong>Definition:</strong> If r and s are regular expressions, then r + s is a regular expression representing the union of the languages.</p>
+                <div class="formula">
+                    L(r + s) = L(r) ∪ L(s)
+                </div>
+                <div class="example">
+                    <p><strong>Example:</strong> If r = a and s = b, then r + s = a + b represents the language {a, b}</p>
+                    <p><strong>Example:</strong> (0 + 1) represents {0, 1}</p>
+                </div>
+
+                <h4>2. Concatenation (⋅)</h4>
+                <p><strong>Definition:</strong> If r and s are regular expressions, then rs (or r⋅s) is a regular expression representing the concatenation of the languages.</p>
+                <div class="formula">
+                    L(rs) = L(r) ⋅ L(s) = {xy | x ∈ L(r) and y ∈ L(s)}
+                </div>
+                <div class="example">
+                    <p><strong>Example:</strong> If r = a and s = b, then rs = ab represents the language {ab}</p>
+                    <p><strong>Example:</strong> (a + b)(0 + 1) represents {a0, a1, b0, b1}</p>
+                </div>
+
+                <h4>3. Kleene Star (*)</h4>
+                <p><strong>Definition:</strong> If r is a regular expression, then r* is a regular expression representing zero or more repetitions of strings from L(r).</p>
+                <div class="formula">
+                    L(r*) = {ε} ∪ L(r) ∪ L(r²) ∪ L(r³) ∪ ... = ⋃<sub>i=0</sub><sup>∞</sup> L(r<sup>i</sup>)
+                </div>
+                <div class="example">
+                    <p><strong>Example:</strong> a* represents {ε, a, aa, aaa, aaaa, ...}</p>
+                    <p><strong>Example:</strong> (ab)* represents {ε, ab, abab, ababab, ...}</p>
+                    <p><strong>Example:</strong> (0 + 1)* represents all binary strings including ε</p>
+                </div>
+
+                <div class="important">
+                    <strong>Important Note:</strong> The Kleene star always includes the empty string ε in the resulting language, even if ε is not in the original language.
+                </div>
+
+                <h3>Operator Precedence</h3>
+                <p>When multiple operators appear in a regular expression without parentheses, they are evaluated according to the following precedence order (highest to lowest):</p>
+                <ol>
+                    <li><strong>Kleene Star (*)</strong> - Highest precedence</li>
+                    <li><strong>Concatenation (⋅)</strong> - Middle precedence</li>
+                    <li><strong>Union (+)</strong> - Lowest precedence</li>
+                </ol>
+
+                <div class="example">
+                    <h4>Examples of Operator Precedence</h4>
+                    <ul>
+                        <li><code>ab*</code> means a(b*), not (ab)*</li>
+                        <li><code>a + bc</code> means a + (bc), not (a + b)c</li>
+                        <li><code>ab* + c</code> means (a(b*)) + c</li>
+                        <li><code>a + b*c</code> means a + ((b*)c)</li>
+                    </ul>
+                </div>
+
+                <h3>Worked Examples of Regular Expressions</h3>
+
+                <div class="example">
+                    <h4>Example 1: (a + b)*</h4>
+                    <p><strong>Language:</strong> All strings over the alphabet {a, b}, including the empty string</p>
+                    <p><strong>Strings:</strong> ε, a, b, aa, ab, ba, bb, aaa, aab, aba, abb, baa, bab, bba, bbb, ...</p>
+                </div>
+
+                <div class="example">
+                    <h4>Example 2: a(a + b)*b</h4>
+                    <p><strong>Language:</strong> All strings that start with 'a' and end with 'b'</p>
+                    <p><strong>Strings:</strong> ab, aab, abb, aaab, aabb, abab, abbb, aaaab, aaabb, ...</p>
+                </div>
+
+                <div class="example">
+                    <h4>Example 3: (0 + 1)*00</h4>
+                    <p><strong>Language:</strong> All binary strings ending with 00</p>
+                    <p><strong>Strings:</strong> 00, 000, 100, 0000, 0100, 1000, 1100, ...</p>
+                </div>
+
+                <div class="example">
+                    <h4>Example 4: a*b*</h4>
+                    <p><strong>Language:</strong> All strings with zero or more a's followed by zero or more b's</p>
+                    <p><strong>Strings:</strong> ε, a, b, aa, ab, bb, aaa, aab, abb, bbb, aaaa, aaab, aabb, abbb, bbbb, ...</p>
+                </div>
+
+                <div class="example">
+                    <h4>Example 5: (ab + ba)*</h4>
+                    <p><strong>Language:</strong> All strings composed of alternating pairs of ab and ba</p>
+                    <p><strong>Strings:</strong> ε, ab, ba, abab, abba, baab, baba, ababab, ababba, abbaab, ...</p>
+                </div>
+
+                <div class="example">
+                    <h4>Example 6: 0*10*10*</h4>
+                    <p><strong>Language:</strong> All binary strings containing exactly two 1's</p>
+                    <p><strong>Strings:</strong> 11, 011, 101, 110, 0011, 0101, 0110, 1001, 1010, 1100, ...</p>
+                </div>
+            </section>
+
+            <section id="section3">
+                <h2>3. Algebraic Laws of Regular Expressions</h2>
+
+                <p>Regular expressions obey several algebraic laws that allow us to manipulate and simplify them. These laws are fundamental for proving equivalence between regular expressions.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Law Name</th>
+                            <th>Expression</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Commutative Law (Union)</strong></td>
+                            <td>r + s = s + r</td>
+                            <td>Union operation is commutative</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Associative Law (Union)</strong></td>
+                            <td>(r + s) + t = r + (s + t)</td>
+                            <td>Union operation is associative</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Associative Law (Concatenation)</strong></td>
+                            <td>(rs)t = r(st)</td>
+                            <td>Concatenation operation is associative</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Left Distributive Law</strong></td>
+                            <td>r(s + t) = rs + rt</td>
+                            <td>Concatenation distributes over union from left</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Right Distributive Law</strong></td>
+                            <td>(s + t)r = sr + tr</td>
+                            <td>Concatenation distributes over union from right</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Identity for Union</strong></td>
+                            <td>r + ∅ = r</td>
+                            <td>Empty set is the identity for union</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Identity for Concatenation</strong></td>
+                            <td>rε = εr = r</td>
+                            <td>Empty string is the identity for concatenation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Annihilator for Concatenation</strong></td>
+                            <td>r∅ = ∅r = ∅</td>
+                            <td>Empty set is the annihilator for concatenation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Idempotent Law (Union)</strong></td>
+                            <td>r + r = r</td>
+                            <td>Union with itself gives same expression</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kleene Star Laws</strong></td>
+                            <td>(r*)* = r*</td>
+                            <td>Star of star equals star</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Star Expansion</strong></td>
+                            <td>r* = ε + r + r² + r³ + ...</td>
+                            <td>Definition of Kleene star</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Star Equivalence</strong></td>
+                            <td>r* = ε + rr*</td>
+                            <td>Recursive definition of star</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Star Equivalence</strong></td>
+                            <td>r* = ε + r*r</td>
+                            <td>Alternative recursive definition</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Plus Definition</strong></td>
+                            <td>r⁺ = rr* = r*r</td>
+                            <td>One or more occurrences</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Star and Plus Relation</strong></td>
+                            <td>r* = r⁺ + ε</td>
+                            <td>Star includes epsilon, plus does not</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Empty String Star</strong></td>
+                            <td>ε* = ε</td>
+                            <td>Star of empty string is empty string</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Empty Set Star</strong></td>
+                            <td>∅* = ε</td>
+                            <td>Star of empty set is empty string</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="important">
+                    <h4>Important Observations</h4>
+                    <ul>
+                        <li>Concatenation is <strong>NOT commutative</strong>: rs ≠ sr in general</li>
+                        <li>Union is both commutative and associative</li>
+                        <li>Concatenation is associative but not commutative</li>
+                        <li>These laws are essential for simplifying regular expressions in exams</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h4>Application Example</h4>
+                    <p>Simplify: (a + b)* a (a + b)*</p>
+                    <p><strong>Solution:</strong> This expression cannot be simplified further using algebraic laws. It represents all strings over {a, b} that contain at least one 'a'.</p>
+                </div>
+            </section>
+
+            <section id="section4">
+                <h2>4. Finite Automata and Regular Expressions</h2>
+
+                <p>This section establishes the algorithmic connections between regular expressions and finite automata, demonstrating their computational equivalence.</p>
+
+                <h3>Regular Expression to NFA (Thompson's Construction)</h3>
+
+                <p>Thompson's Construction is a method to convert any regular expression into an equivalent NFA with ε-transitions. The construction is recursive and follows these basic rules:</p>
+
+                <h4>Base Cases</h4>
+
+                <div class="example">
+                    <h4>Rule 1: Empty Set (∅)</h4>
+                    <p>Create an NFA with a start state that is not a final state. This NFA accepts no strings.</p>
+                </div>
+
+                <div class="example">
+                    <h4>Rule 2: Empty String (ε)</h4>
+                    <p>Create an NFA with a start state that is also a final state. This NFA accepts only the empty string.</p>
+                </div>
+
+                <div class="example">
+                    <h4>Rule 3: Single Symbol (a)</h4>
+                    <p>Create an NFA with two states: a start state and a final state, connected by a transition labeled 'a'.</p>
+                </div>
+
+                <h4>Recursive Cases</h4>
+
+                <div class="example">
+                    <h4>Rule 4: Union (r + s)</h4>
+                    <p>If N(r) and N(s) are NFAs for regular expressions r and s respectively, then:</p>
+                    <ul>
+                        <li>Create a new start state</li>
+                        <li>Add ε-transitions from new start state to start states of N(r) and N(s)</li>
+                        <li>Create a new final state</li>
+                        <li>Add ε-transitions from final states of N(r) and N(s) to new final state</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h4>Rule 5: Concatenation (rs)</h4>
+                    <p>If N(r) and N(s) are NFAs for regular expressions r and s respectively, then:</p>
+                    <ul>
+                        <li>Connect final states of N(r) to start state of N(s) using ε-transitions</li>
+                        <li>Start state of N(r) becomes the start state of combined NFA</li>
+                        <li>Final state(s) of N(s) become the final state(s) of combined NFA</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h4>Rule 6: Kleene Star (r*)</h4>
+                    <p>If N(r) is an NFA for regular expression r, then:</p>
+                    <ul>
+                        <li>Create a new start state (which is also a final state)</li>
+                        <li>Add ε-transition from new start state to old start state of N(r)</li>
+                        <li>Add ε-transitions from final states of N(r) back to old start state of N(r)</li>
+                        <li>Add ε-transition from new start state to new final state (for accepting ε)</li>
+                    </ul>
+                </div>
+
+                <div class="important">
+                    <h4>Properties of Thompson's Construction</h4>
+                    <ul>
+                        <li>The resulting NFA has exactly one start state and one final state</li>
+                        <li>No transitions enter the start state</li>
+                        <li>No transitions leave the final state</li>
+                        <li>Number of states is at most twice the number of symbols and operators in the regular expression</li>
+                    </ul>
+                </div>
+
+                <h3>NFA to DFA (Subset Construction)</h3>
+
+                <p>The Subset Construction algorithm converts an NFA (possibly with ε-transitions) into an equivalent DFA without ε-transitions. The key idea is that each state of the DFA corresponds to a subset of states of the NFA.</p>
+
+                <h4>Algorithm Overview</h4>
+                <ol>
+                    <li><strong>ε-closure Computation:</strong> For any state or set of states, compute the ε-closure (all states reachable via ε-transitions)</li>
+                    <li><strong>Initial State:</strong> The start state of DFA is ε-closure of start state of NFA</li>
+                    <li><strong>Transition Function:</strong> For each DFA state (subset of NFA states) and each input symbol, compute the next DFA state by:
+                        <ul>
+                            <li>Finding all NFA states reachable on that symbol from current subset</li>
+                            <li>Computing ε-closure of those states</li>
+                        </ul>
+                    </li>
+                    <li><strong>Final States:</strong> A DFA state is final if it contains at least one final state of NFA</li>
+                    <li><strong>Iteration:</strong> Continue until no new DFA states are discovered</li>
+                </ol>
+
+                <div class="important">
+                    <h4>Key Points</h4>
+                    <ul>
+                        <li>The resulting DFA may have up to 2<sup>n</sup> states, where n is the number of NFA states</li>
+                        <li>In practice, usually only a small fraction of possible subsets are reachable</li>
+                        <li>The DFA accepts exactly the same language as the original NFA</li>
+                    </ul>
+                </div>
+
+                <h3>DFA to Regular Expression (State Elimination Method)</h3>
+
+                <p>The State Elimination Method converts a DFA into an equivalent regular expression by systematically removing states and updating transition labels.</p>
+
+                <h4>Algorithm Steps</h4>
+                <ol>
+                    <li><strong>Preparation:</strong>
+                        <ul>
+                            <li>Add a new start state with ε-transition to old start state</li>
+                            <li>Add a new final state with ε-transitions from all old final states</li>
+                            <li>Ensure single start state and single final state</li>
+                        </ul>
+                    </li>
+                    <li><strong>State Elimination:</strong> For each intermediate state q to be eliminated:
+                        <ul>
+                            <li>For every pair of states (p, r) where p has transition to q and q has transition to r</li>
+                            <li>Add or update direct transition from p to r using formula</li>
+                        </ul>
+                    </li>
+                    <li><strong>Formula for New Transition:</strong> If eliminating state q:
+                        <div class="formula">
+                            New label from p to r = (p to q)(q to q)*(q to r) + (old p to r)
+                        </div>
+                    </li>
+                    <li><strong>Final Result:</strong> Continue until only start and final states remain. The label on the transition between them is the regular expression.</li>
+                </ol>
+
+                <div class="important">
+                    <h4>Important Notes</h4>
+                    <ul>
+                        <li>The order of state elimination can affect complexity but not correctness</li>
+                        <li>The resulting regular expression may be complex and require simplification</li>
+                        <li>Different elimination orders can produce different but equivalent regular expressions</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="section5">
+                <h2>5. Equivalence of Models</h2>
+
+                <p>This section formally establishes that DFA, NFA, and Regular Expressions are equivalent computational models for recognizing regular languages.</p>
+
+                <h3>DFA ↔ NFA Equivalence</h3>
+
+                <div class="definition">
+                    <h4>Theorem: DFA and NFA Equivalence</h4>
+                    <p>For every NFA, there exists an equivalent DFA that accepts the same language, and vice versa.</p>
+                </div>
+
+                <h4>NFA to DFA Conversion</h4>
+                <ul>
+                    <li>Every NFA can be converted to a DFA using Subset Construction algorithm</li>
+                    <li>The DFA simulates all possible computations of the NFA in parallel</li>
+                    <li>Time complexity: O(2<sup>n</sup>) in worst case, where n is number of NFA states</li>
+                </ul>
+
+                <h4>DFA to NFA Conversion</h4>
+                <ul>
+                    <li>Every DFA is already an NFA (by definition)</li>
+                    <li>DFA is a special case of NFA with specific restrictions:
+                        <ul>
+                            <li>No ε-transitions</li>
+                            <li>Exactly one transition per state per symbol</li>
+                        </ul>
+                    </li>
+                    <li>Conversion is trivial: the DFA itself is the NFA</li>
+                </ul>
+
+                <div class="important">
+                    <strong>Conclusion:</strong> DFA and NFA have the same computational power. NFAs are often more convenient for design, while DFAs are easier to implement.
+                </div>
+
+                <h3>DFA ↔ Regular Expression Equivalence</h3>
+
+                <div class="definition">
+                    <h4>Theorem: DFA and Regular Expression Equivalence</h4>
+                    <p>For every DFA, there exists an equivalent regular expression that describes the same language, and for every regular expression, there exists an equivalent DFA that accepts the same language.</p>
+                </div>
+
+                <h4>Regular Expression to DFA</h4>
+                <ul>
+                    <li>Step 1: Convert regular expression to NFA using Thompson's Construction</li>
+                    <li>Step 2: Convert NFA to DFA using Subset Construction</li>
+                    <li>Result: A DFA that accepts the language described by the regular expression</li>
+                </ul>
+
+                <h4>DFA to Regular Expression</h4>
+                <ul>
+                    <li>Method: State Elimination Method</li>
+                    <li>Systematically eliminate states while updating transition labels with regular expressions</li>
+                    <li>Final result: Regular expression on transition from start to final state</li>
+                </ul>
+
+                <h3>Final Equivalence Statement</h3>
+
+                <div class="formula">
+                    DFA ≡ NFA ≡ Regular Expression ≡ Regular Language
+                </div>
+
+                <p>This equivalence is one of the most important theoretical results in computer science. It means:</p>
+                <ul>
+                    <li>All three models define exactly the same class of languages: <strong>Regular Languages</strong></li>
+                    <li>For any language, if it can be recognized by one model, it can be recognized by all three</li>
+                    <li>We can choose the most convenient representation for any given problem</li>
+                    <li>Conversions between representations are always possible</li>
+                </ul>
+
+                <div class="example">
+                    <h4>Practical Implications</h4>
+                    <ul>
+                        <li><strong>Design Phase:</strong> Use regular expressions (human-readable and concise)</li>
+                        <li><strong>Analysis Phase:</strong> Use NFAs (easier to construct and understand)</li>
+                        <li><strong>Implementation Phase:</strong> Use DFAs (efficient and deterministic)</li>
+                    </ul>
+                </div>
+
+                <div class="important">
+                    <h4>Exam Perspective</h4>
+                    <p>Students should be able to:</p>
+                    <ul>
+                        <li>State the equivalence theorem precisely</li>
+                        <li>Explain why equivalence is significant</li>
+                        <li>Perform conversions between any two representations</li>
+                        <li>Recognize that all three models have the same limitations (cannot recognize non-regular languages)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="section6">
+                <h2>6. Closure Properties of Regular Languages</h2>
+
+                <div class="definition">
+                    <h4>Definition: Closure Property</h4>
+                    <p>A class of languages is said to be <strong>closed</strong> under an operation if, whenever we apply that operation to languages in the class, the result is also a language in the same class.</p>
+                </div>
+
+                <p>Regular languages are closed under numerous operations, which is a powerful property for constructing and analyzing regular languages.</p>
+
+                <h3>List of Closure Properties</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Definition</th>
+                            <th>If L1 and L2 are regular, then...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Union</strong></td>
+                            <td>L1 ∪ L2 = {w | w ∈ L1 or w ∈ L2}</td>
+                            <td>L1 ∪ L2 is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intersection</strong></td>
+                            <td>L1 ∩ L2 = {w | w ∈ L1 and w ∈ L2}</td>
+                            <td>L1 ∩ L2 is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complement</strong></td>
+                            <td>L̄ = {w | w ∉ L}</td>
+                            <td>L̄ is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Difference</strong></td>
+                            <td>L1 - L2 = {w | w ∈ L1 and w ∉ L2}</td>
+                            <td>L1 - L2 is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Concatenation</strong></td>
+                            <td>L1 ⋅ L2 = {xy | x ∈ L1 and y ∈ L2}</td>
+                            <td>L1 ⋅ L2 is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kleene Star</strong></td>
+                            <td>L* = {ε} ∪ L ∪ LL ∪ LLL ∪ ...</td>
+                            <td>L* is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reversal</strong></td>
+                            <td>L<sup>R</sup> = {w<sup>R</sup> | w ∈ L}</td>
+                            <td>L<sup>R</sup> is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Homomorphism</strong></td>
+                            <td>h(L) = {h(w) | w ∈ L}</td>
+                            <td>h(L) is regular</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Inverse Homomorphism</strong></td>
+                            <td>h<sup>-1</sup>(L) = {w | h(w) ∈ L}</td>
+                            <td>h<sup>-1</sup>(L) is regular</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Proof Techniques for Closure Properties</h3>
+
+                <h4>1. Union - Construction Proof</h4>
+                <p>Given DFAs M1 and M2, construct DFA M for L1 ∪ L2:</p>
+                <ul>
+                    <li>States: Cartesian product of states of M1 and M2</li>
+                    <li>Start state: (q1, q2) where q1 and q2 are start states of M1 and M2</li>
+                    <li>Final states: {(q1, q2) | q1 is final in M1 OR q2 is final in M2}</li>
+                </ul>
+
+                <h4>2. Intersection - Construction Proof</h4>
+                <p>Similar to union, but final states are: {(q1, q2) | q1 is final in M1 AND q2 is final in M2}</p>
+
+                <h4>3. Complement - Construction Proof</h4>
+                <p>Given DFA M for L, construct DFA M' for L̄:</p>
+                <ul>
+                    <li>Keep same states and transitions</li>
+                    <li>Make final states non-final and non-final states final</li>
+                </ul>
+
+                <h4>4. Concatenation - Regular Expression Proof</h4>
+                <p>If L1 and L2 have regular expressions r1 and r2, then L1L2 has regular expression r1r2</p>
+
+                <h4>5. Kleene Star - Regular Expression Proof</h4>
+                <p>If L has regular expression r, then L* has regular expression r*</p>
+
+                <h3>Significance of Closure Properties</h3>
+
+                <div class="important">
+                    <h4>Why Closure Properties Matter</h4>
+                    <ul>
+                        <li><strong>Language Construction:</strong> We can build complex regular languages from simpler ones</li>
+                        <li><strong>Regularity Testing:</strong> If we know certain languages are regular and apply closed operations, result must be regular</li>
+                        <li><strong>Decidability:</strong> Many decision problems become tractable due to closure</li>
+                        <li><strong>Practical Applications:</strong> Compiler design, text processing, pattern matching</li>
+                        <li><strong>Non-regularity Proofs:</strong> If a language cannot be obtained through closure operations from regular languages, it might be non-regular</li>
+                    </ul>
+                </div>
+
+                <div class="example">
+                    <h4>Example Application</h4>
+                    <p><strong>Problem:</strong> Show that if L is regular, then {w | w ∈ L and |w| is even} is also regular.</p>
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li>Let L<sub>even</sub> = {w | |w| is even} over alphabet Σ. This is regular (RE: (ΣΣ)*)</li>
+                        <li>The desired language is L ∩ L<sub>even</sub></li>
+                        <li>Since regular languages are closed under intersection, the result is regular</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="section7">
+                <h2>7. Pumping Lemma for Regular Languages</h2>
+
+                <div class="definition">
+                    <h4>Pumping Lemma Statement</h4>
+                    <p>Let L be a regular language. Then there exists a constant p (called the <strong>pumping length</strong>) such that for every string w ∈ L with |w| ≥ p, we can write w = xyz satisfying the following conditions:</p>
+                    <ol>
+                        <li>|y| > 0 (y is not the empty string)</li>
+                        <li>|xy| ≤ p (xy occurs within the first p characters)</li>
+                        <li>For all i ≥ 0, xy<sup>i</sup>z ∈ L (we can "pump" y any number of times)</li>
+                    </ol>
+                </div>
+
+                <h3>Understanding the Conditions</h3>
+
+                <div class="example">
+                    <h4>Condition 1: |y| > 0</h4>
+                    <p>The substring y must contain at least one symbol. This ensures that pumping actually changes the string.</p>
+                </div>
+
+                <div class="example">
+                    <h4>Condition 2: |xy| ≤ p</h4>
+                    <p>The substrings x and y together must occur within the first p characters of w. This condition is crucial for proving non-regularity.</p>
+                </div>
+
+                <div class="example">
+                    <h4>Condition 3: xy<sup>i</sup>z ∈ L for all i ≥ 0</h4>
+                    <p>We can repeat y zero times (getting xz), one time (getting xyz), two times (getting xyyz), or any number of times, and the result must still be in the language L.</p>
+                </div>
+
+                <h3>Purpose of Pumping Lemma</h3>
+
+                <div class="important">
+                    <h4>What Pumping Lemma Can Do</h4>
+                    <ul>
+                        <li><strong>Prove Non-Regularity:</strong> If a language violates the pumping lemma, it is NOT regular</li>
+                        <li>This is the primary use of the pumping lemma in practice</li>
+                    </ul>
+
+                    <h4>What Pumping Lemma Cannot Do</h4>
+                    <ul>
+                        <li><strong>Cannot Prove Regularity:</strong> If a language satisfies the pumping lemma, it MAY or MAY NOT be regular</li>
+                        <li>Satisfying pumping lemma is necessary but not sufficient for regularity</li>
+                    </ul>
+                </div>
+
+                <h3>Step-by-Step Method to Apply Pumping Lemma</h3>
+
+                <p>To prove that a language L is NOT regular using the pumping lemma, follow these steps:</p>
+
+                <div class="formula">
+                    <h4>5-Step Proof Method</h4>
+                </div>
+
+                <ol>
+                    <li>
+                        <strong>Step 1: Assume L is regular</strong>
+                        <p>Begin proof by contradiction. Assume that L is regular.</p>
+                    </li>
+                    <li>
+                        <strong>Step 2: Let p be the pumping length</strong>
+                        <p>By the pumping lemma, there exists a pumping length p (we don't know its value, but it exists).</p>
+                    </li>
+                    <li>
+                        <strong>Step 3: Choose a string w ∈ L with |w| ≥ p</strong>
+                        <p>Select a specific string that is in L and has length at least p. The choice of string is critical and often depends on p.</p>
+                        <p><strong>Tips for choosing w:</strong></p>
+                        <ul>
+                            <li>Choose w that depends on p (e.g., a<sup>p</sup>b<sup>p</sup>)</li>
+                            <li>Choose w that highlights the language's non-regular property</li>
+                            <li>Ensure |w| ≥ p</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Step 4: Consider all possible divisions w = xyz</strong>
+                        <p>The pumping lemma says w can be divided into xyz with the three conditions. We must consider ALL possible ways to divide w (that satisfy the conditions) and show that for each division, pumping fails.</p>
+                        <p><strong>Key constraint:</strong> |xy| ≤ p restricts where y can be located</p>
+                    </li>
+                    <li>
+                        <strong>Step 5: Show that xy<sup>i</sup>z ∉ L for some i</strong>
+                        <p>Find a value of i (often i = 0 or i = 2) such that xy<sup>i</sup>z is not in L. This contradicts condition 3 of the pumping lemma.</p>
+                        <p>Since we derived a contradiction, our assumption that L is regular must be false.</p>
+                        <p><strong>Therefore, L is not regular.</strong></p>
+                    </li>
+                </ol>
+
+                <div class="example">
+                    <h4>Complete Example: Prove L = {a<sup>n</sup>b<sup>n</sup> | n ≥ 0} is not regular</h4>
+                    
+                    <p><strong>Proof:</strong></p>
+                    <ol>
+                        <li><strong>Assume</strong> L is regular.</li>
+                        <li>Let p be the pumping length given by the pumping lemma.</li>
+                        <li><strong>Choose</strong> w = a<sup>p</sup>b<sup>p</sup>. Clearly w ∈ L and |w| = 2p ≥ p.</li>
+                        <li>By pumping lemma, w = xyz where:
+                            <ul>
+                                <li>|y| > 0</li>
+                                <li>|xy| ≤ p</li>
+                                <li>xy<sup>i</sup>z ∈ L for all i ≥ 0</li>
+                            </ul>
+                            Since |xy| ≤ p and w starts with p a's, both x and y consist only of a's.
+                            Therefore, y = a<sup>k</sup> for some k > 0.
+                        </li>
+                        <li><strong>Pump with i = 0:</strong>
+                            <p>xz = a<sup>p-k</sup>b<sup>p</sup></p>
+                            <p>This string has (p-k) a's and p b's, where k > 0.</p>
+                            <p>Therefore, xz has fewer a's than b's, so xz ∉ L.</p>
+                            <p>This contradicts the pumping lemma.</p>
+                        </li>
+                    </ol>
+                    <p><strong>Conclusion:</strong> Our assumption was wrong. Therefore, L is not regular.</p>
+                </div>
+
+                <div class="example">
+                    <h4>Another Example: Prove L = {ww | w ∈ {a,b}*} is not regular</h4>
+                    
+                    <p><strong>Proof:</strong></p>
+                    <ol>
+                        <li><strong>Assume</strong> L is regular.</li>
+                        <li>Let p be the pumping length.</li>
+                        <li><strong>Choose</strong> w = a<sup>p</sup>b<sup>p</sup>a<sup>p</sup>b<sup>p</sup>. This is of form ww where w = a<sup>p</sup>b<sup>p</sup>.</li>
+                        <li>By pumping lemma, w = xyz where |xy| ≤ p.
+                            <p>Therefore, y consists only of a's from the first a<sup>p</sup> segment.</p>
+                        </li>
+                        <li><strong>Pump with i = 2:</strong>
+                            <p>xy²z will have more a's in the first segment but same number of a's in the second segment.</p>
+                            <p>Therefore, xy²z is not of the form ww.</p>
+                            <p>So xy²z ∉ L, contradicting the pumping lemma.</p>
+                        </li>
+                    </ol>
+                    <p><strong>Conclusion:</strong> L is not regular.</p>
+                </div>
+
+                <h3>Limitations of Pumping Lemma</h3>
+
+                <div class="important">
+                    <h4>Important Points to Remember</h4>
+                    <ul>
+                        <li>Pumping lemma can only prove that a language is <strong>NOT regular</strong></li>
+                        <li>It cannot prove that a language <strong>IS regular</strong></li>
+                        <li>Some non-regular languages may satisfy the pumping lemma conditions</li>
+                        <li>To prove regularity, construct a DFA, NFA, or regular expression</li>
+                        <li>The choice of string w in Step 3 is crucial for a successful proof</li>
+                        <li>Must consider ALL possible divisions of w = xyz (within constraints)</li>
+                    </ul>
+                </div>
+
+                <div class="exam-box">
+                    <h3>Exam Tips for Pumping Lemma</h3>
+                    <ul>
+                        <li>Clearly state each step of the proof</li>
+                        <li>Write "Assume L is regular" at the beginning</li>
+                        <li>Explain why your choice of w is valid (w ∈ L and |w| ≥ p)</li>
+                        <li>Use the constraint |xy| ≤ p to determine what y must contain</li>
+                        <li>Show your calculation when pumping (i = 0, 1, or 2)</li>
+                        <li>Clearly state the contradiction</li>
+                        <li>Conclude with "Therefore, L is not regular"</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="section8">
+                <h2>8. Examples of Non-Regular Languages</h2>
+
+                <p>This section presents classic examples of languages that are not regular, along with intuitive explanations of why they cannot be recognized by finite automata.</p>
+
+                <div class="example">
+                    <h3>1. L = {a<sup>n</sup>b<sup>n</sup> | n ≥ 0}</h3>
+                    
+                    <h4>Language Description</h4>
+                    <p>This language consists of strings with equal numbers of a's followed by equal numbers of b's.</p>
+                    <p><strong>Strings in L:</strong> ε, ab, aabb, aaabbb, aaaabbbb, ...</p>
+                    <p><strong>Strings not in L:</strong> a, b, ba, aab, abb, aabbb, ...</p>
+
+                    <h4>Why Not Regular</h4>
+                    <ul>
+                        <li><strong>Counting Requirement:</strong> The automaton must "count" the number of a's to ensure equal number of b's</li>
+                        <li><strong>Unbounded Memory:</strong> Since n can be arbitrarily large, we need unbounded memory to count</li>
+                        <li><strong>Finite States Limitation:</strong> A finite automaton has only finitely many states, insufficient for counting arbitrary numbers</li>
+                    </ul>
+
+                    <h4>Proof Using Pumping Lemma</h4>
+                    <p>Choose w = a<sup>p</sup>b<sup>p</sup>. Any pumping of the a's will create unequal numbers of a's and b's, removing the string from the language.</p>
+                </div>
+
+                <div class="example">
+                    <h3>2. L = {ww | w ∈ {a,b}*}</h3>
+                    
+                    <h4>Language Description</h4>
+                    <p>This language consists of strings that are repetitions of the same substring.</p>
+                    <p><strong>Strings in L:</strong> ε, aa, bb, abab, baba, aaaaaa, ababab, ...</p>
+                    <p><strong>Strings not in L:</strong> a, b, aaa, aba, aab, abba, ...</p>
+
+                    <h4>Why Not Regular</h4>
+                    <ul>
+                        <li><strong>Memory of First Half:</strong> The automaton must remember the entire first half of the string to verify the second half matches</li>
+                        <li><strong>Unbounded Memory:</strong> Since w can be arbitrarily long, we need unbounded memory</li>
+                        <li><strong>Matching Requirement:</strong> Each symbol in the second half must exactly match the corresponding symbol in the first half</li>
+                    </ul>
+
+                    <h4>Proof Using Pumping Lemma</h4>
+                    <p>Choose w = a<sup>p</sup>b<sup>p</sup>a<sup>p</sup>b<sup>p</sup> (which equals ww where w = a<sup>p</sup>b<sup>p</sup>). Pumping will destroy the ww structure.</p>
+                </div>
+
+                <div class="example">
+                    <h3>3. L = {w | w has equal number of a's and b's}</h3>
+                    
+                    <h4>Language Description</h4>
+                    <p>This language consists of strings with the same number of a's and b's in any order.</p>
+                    <p><strong>Strings in L:</strong> ε, ab, ba, aabb, abab, abba, baab, baba, bbaa, ...</p>
+                    <p><strong>Strings not in L:</strong> a, b, aa, bb, aaa, bbb, aab, abb, ...</p>
+
+                    <h4>Why Not Regular</h4>
+                    <ul>
+                        <li><strong>Counting Two Quantities:</strong> Must track count of both a's and b's simultaneously</li>
+                        <li><strong>Difference Tracking:</strong> Must remember the difference between number of a's and b's seen so far</li>
+                        <li><strong>Unbounded Difference:</strong> The difference can grow arbitrarily large (positive or negative)</li>
+                        <li><strong>Final Verification:</strong> Must verify that final difference is zero</li>
+                    </ul>
+
+                    <h4>Proof Using Pumping Lemma</h4>
+                    <p>Choose w = a<sup>p</sup>b<sup>p</sup>. This string has equal a's and b's. Pumping will increase either a's or b's (depending on what y contains), destroying the equality.</p>
+                </div>
+
+                <div class="example">
+                    <h3>4. L = {a<sup>n²</sup> | n ≥ 0}</h3>
+                    
+                    <h4>Language Description</h4>
+                    <p>This language consists of strings whose length is a perfect square.</p>
+                    <p><strong>Strings in L:</strong> ε (0²), a (1²), aaaa (2²), aaaaaaaaa (3²), aaaaaaaaaaaaaaaa (4²), ...</p>
+                    <p><strong>Lengths in L:</strong> 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, ...</p>
+
+                    <h4>Why Not Regular</h4>
+                    <ul>
+                        <li><strong>Non-linear Growth:</strong> The gaps between consecutive lengths grow: 1, 3, 5, 7, 9, ...</li>
+                        <li><strong>Arithmetic Constraint:</strong> Must verify that length is a perfect square</li>
+                        <li><strong>Unbounded Verification:</strong> Requires multiplication capability, which finite automata lack</li>
+                    </ul>
+
+                    <h4>Proof Using Pumping Lemma</h4>
+                    <p>Choose w = a<sup>p²</sup>. If we pump to get a<sup>p²+k</sup> for some k > 0, we need to show this is not a perfect square. For large p, p² < p²+k < (p+1)² = p²+2p+1, so the pumped string has non-square length.</p>
+                </div>
+
+                <div class="example">
+                    <h3>5. L = {a<sup>n</sup> | n is prime}</h3>
+                    
+                    <h4>Language Description</h4>
+                    <p>This language consists of strings whose length is a prime number.</p>
+                    <p><strong>Strings in L:</strong> aa (2), aaa (3), aaaaa (5), aaaaaaa (7), aaaaaaaaaaa (11), ...</p>
+                    <p><strong>Lengths in L:</strong> 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ...</p>
+
+                    <h4>Why Not Regular</h4>
+                    <ul>
+                        <li><strong>Primality Testing:</strong> Requires checking if length is divisible only by 1 and itself</li>
+                        <li><strong>Arithmetic Operations:</strong> Finite automata cannot perform division or modular arithmetic</li>
+                        <li><strong>Irregular Pattern:</strong> Prime numbers have no regular pattern that finite states can capture</li>
+                    </ul>
+                </div>
+
+                <div class="important">
+                    <h4>Common Characteristics of Non-Regular Languages</h4>
+                    <p>Languages tend to be non-regular when they require:</p>
+                    <ul>
+                        <li><strong>Counting:</strong> Tracking arbitrarily large counts</li>
+                        <li><strong>Matching:</strong> Comparing two parts of the string (like ww or a<sup>n</sup>b<sup>n</sup>)</li>
+                        <li><strong>Arithmetic:</strong> Performing calculations on string length</li>
+                        <li><strong>Unbounded Memory:</strong> Remembering arbitrarily long prefixes</li>
+                        <li><strong>Nested Structure:</strong> Balanced parentheses, nested blocks</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="section9">
+                <h2>9. Exam Focus</h2>
+
+                <div class="exam-box">
+                    <h3>Frequently Asked AKTU Questions on Unit 2</h3>
+                    <ol>
+                        <li>Define regular language. How are DFA, NFA, and regular expressions related?</li>
+                        <li>Write regular expressions for the following languages:
+                            <ul>
+                                <li>All strings over {0,1} starting with 0 and ending with 1</li>
+                                <li>Strings with at least two occurrences of the substring "01"</li>
+                                <li>Binary numbers divisible by 3</li>
+                            </ul>
+                        </li>
+                        <li>State and prove the closure properties of regular languages.</li>
+                        <li>Convert the following regular expression to NFA: (a+b)*abb</li>
+                        <li>Explain Thompson's Construction method with an example.</li>
+                        <li>State the Pumping Lemma for regular languages. Use it to prove that L = {a<sup>n</sup>b<sup>n</sup> | n ≥ 0} is not regular.</li>
+                        <li>Prove that L = {ww | w ∈ {a,b}*} is not regular using Pumping Lemma.</li>
+                        <li>Write algebraic laws for regular expressions.</li>
+                        <li>Explain the equivalence: DFA ≡ NFA ≡ Regular Expression.</li>
+                        <li>What are the limitations of regular languages? Give examples.</li>
+                    </ol>
+                </div>
+
+                <div class="exam-box">
+                    <h3>Keywords to Use in Exam Answers</h3>
+                    <ul>
+                        <li><strong>For Regular Languages:</strong> finite automaton, accepts, recognizes, describes, equivalent</li>
+                        <li><strong>For Regular Expressions:</strong> union, concatenation, Kleene star, denotes, generates</li>
+                        <li><strong>For Conversions:</strong> Thompson's Construction, Subset Construction, State Elimination</li>
+                        <li><strong>For Closure Properties:</strong> closed under, operation, result is also regular</li>
+                        <li><strong>For Pumping Lemma:</strong> pumping length, divide, pump, contradiction, not regular</li>
+                        <li><strong>For Equivalence:</strong> equivalent models, same computational power, same class of languages</li>
+                    </ul>
+                </div>
+
+                <div class="exam-box">
+                    <h3>Common Mistakes to Avoid</h3>
+                    <ul>
+                        <li><strong>Regular Expressions:</strong>
+                            <ul>
+                                <li>Don't confuse operator precedence: * > concatenation > +</li>
+                                <li>Remember that a* includes ε</li>
+                                <li>Don't write (a+b) when you mean a or b separately</li>
+                            </ul>
+                        </li>
+                        <li><strong>Pumping Lemma:</strong>
+                            <ul>
+                                <li>Don't forget to state "Assume L is regular"</li>
+                                <li>Ensure your choice of w depends on p</li>
+                                <li>Use the constraint |xy| ≤ p properly</li>
+                                <li>Consider ALL possible divisions of xyz, not just one</li>
+                                <li>Show the contradiction clearly</li>
+                            </ul>
+                        </li>
+                        <li><strong>Closure Properties:</strong>
+                            <ul>
+                                <li>Don't claim closure proves regularity - it only preserves it</li>
+                                <li>Remember complement is defined for regular languages</li>
+                            </ul>
+                        </li>
+                        <li><strong>Conversions:</strong>
+                            <ul>
+                                <li>In Thompson's Construction, add ε-transitions properly</li>
+                                <li>In RE to NFA, follow the construction rules exactly</li>
+                                <li>Don't skip steps in long conversions</li>
+                            </ul>
+                        </li>
+                        <li><strong>General:</strong>
+                            <ul>
+                                <li>Don't use Unit 1 concepts when Unit 2 is asked</li>
+                                <li>Draw clear diagrams for NFAs and DFAs</li>
+                                <li>Show all steps in proofs - don't skip</li>
+                                <li>Define symbols before using them (Σ, L, p, etc.)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="exam-box">
+                    <h3>Formula Sheet for Quick Revision</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>Formula/Key Point</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Union</td>
+                                <td>L(r+s) = L(r) ∪ L(s)</td>
+                            </tr>
+                            <tr>
+                                <td>Concatenation</td>
+                                <td>L(rs) = {xy | x ∈ L(r), y ∈ L(s)}</td>
+                            </tr>
+                            <tr>
+                                <td>Kleene Star</td>
+                                <td>L(r*) = {ε} ∪ L(r) ∪ L(r²) ∪ ...</td>
+                            </tr>
+                            <tr>
+                                <td>Operator Precedence</td>
+                                <td>* > Concatenation > +</td>
+                            </tr>
+                            <tr>
+                                <td>Identity (Union)</td>
+                                <td>r + ∅ = r</td>
+                            </tr>
+                            <tr>
+                                <td>Identity (Concatenation)</td>
+                                <td>rε = εr = r</td>
+                            </tr>
+                            <tr>
+                                <td>Annihilator</td>
+                                <td>r∅ = ∅r = ∅</td>
+                            </tr>
+                            <tr>
+                                <td>Star Laws</td>
+                                <td>(r*)* = r*, r* = ε + rr*</td>
+                            </tr>
+                            <tr>
+                                <td>Pumping Lemma</td>
+                                <td>w = xyz, |y| > 0, |xy| ≤ p, xy<sup>i</sup>z ∈ L</td>
+                            </tr>
+                            <tr>
+                                <td>Equivalence</td>
+                                <td>DFA ≡ NFA ≡ RE</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="exam-box">
+                    <h3>Time Management Tips for Exam</h3>
+                    <ul>
+                        <li><strong>Short Questions (2-3 marks):</strong> 5-7 minutes each
+                            <ul>
+                                <li>Definitions, basic regular expressions, closure properties</li>
+                            </ul>
+                        </li>
+                        <li><strong>Medium Questions (5-7 marks):</strong> 12-15 minutes each
+                            <ul>
+                                <li>Regular expression conversions, Thompson's Construction examples</li>
+                            </ul>
+                        </li>
+                        <li><strong>Long Questions (10 marks):</strong> 20-25 minutes each
+                            <ul>
+                                <li>Pumping Lemma proofs, complete conversions with explanations</li>
+                            </ul>
+                        </li>
+                        <li><strong>Strategy:</strong>
+                            <ul>
+                                <li>Attempt questions you're most confident about first</li>
+                                <li>In Pumping Lemma, show every step clearly for maximum marks</li>
+                                <li>Draw neat diagrams for NFA constructions</li>
+                                <li>Leave space for corrections and additions</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="exam-box">
+                    <h3>Marks Distribution Strategy</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Typical Weightage</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Regular Expressions (basics + examples)</td>
+                                <td>10-15 marks</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Thompson's Construction</td>
+                                <td>7-10 marks</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Pumping Lemma</td>
+                                <td>10-12 marks</td>
+                                <td>Very High</td>
+                            </tr>
+                            <tr>
+                                <td>Algebraic Laws</td>
+                                <td>5-7 marks</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Closure Properties</td>
+                                <td>5-7 marks</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Equivalence of Models</td>
+                                <td>5-7 marks</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Conversions (DFA/NFA/RE)</td>
+                                <td>7-10 marks</td>
+                                <td>High</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="important">
+                    <h3>Final Exam Preparation Checklist</h3>
+                    <ul>
+                        <li>Can you write regular expressions for common patterns?</li>
+                        <li>Do you know Thompson's Construction rules by heart?</li>
+                        <li>Can you apply Pumping Lemma to any given language?</li>
+                        <li>Have you practiced at least 5 Pumping Lemma proofs?</li>
+                        <li>Do you know all algebraic laws?</li>
+                        <li>Can you explain equivalence of DFA, NFA, and RE?</li>
+                        <li>Do you understand all closure properties?</li>
+                        <li>Have you solved previous year AKTU questions?</li>
+                        <li>Can you identify non-regular languages by their characteristics?</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Prepared for AKTU B.Tech CSE - TAFL Unit 2</p>
+            <p>Regular Languages and Regular Expressions</p>
+        </footer>
+    </div>
+</body>
+</html>

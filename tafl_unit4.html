@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAFL Unit 4 - Turing Machines & Computational Power | AKTU Notes</title>
+    <style>
+        html{
+  scroll-behavior: smooth;
+}
+
+.home-btn{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  background: #1e293b;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.home-btn:hover{
+  background: #0f172a;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background-color: white;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        nav h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.8rem;
+        }
+        
+        nav a {
+            color: #495057;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-left: 3px solid #667eea;
+            padding-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background-color: #f1f3f5;
+            color: #667eea;
+            padding-left: 1.5rem;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        section {
+            background-color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #495057;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h4 {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.7rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .definition {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .definition strong {
+            color: #1976D2;
+        }
+        
+        .example {
+            background-color: #f1f8e9;
+            border-left: 4px solid #689f38;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #558b2f;
+            margin-bottom: 0.5rem;
+        }
+        
+        .important {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .exam-focus {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .exam-focus h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        td {
+            padding: 0.8rem;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .diagram {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            nav ul {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <a href="#top" class="home-btn" title="Back to Top">↑</a>
+    <header>
+        <h1>TAFL – Unit 4 | Turing Machines & Computational Power</h1>
+        <p>AKTU B.Tech CSE – Exam Oriented Notes</p>
+    </header>
+
+
+    <nav>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">1. Introduction to Turing Machines</a></li>
+            <li><a href="#formal-definition">2. Formal Definition of Turing Machine</a></li>
+            <li><a href="#components">3. Components and Working of Turing Machine</a></li>
+            <li><a href="#types">4. Types of Turing Machines</a></li>
+            <li><a href="#language-acceptance">5. Language Acceptance by Turing Machine</a></li>
+            <li><a href="#recognizer">6. Turing Machine as a Language Recognizer</a></li>
+            <li><a href="#church-turing">7. Church–Turing Thesis</a></li>
+            <li><a href="#computational-power">8. Computational Power of Turing Machine</a></li>
+            <li><a href="#exam-focus">9. Exam Focus</a></li>
+        </ul>
+    </nav>
+
+
+    <main>
+        <section id="introduction">
+            <h2>1. Introduction to Turing Machines</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A Turing Machine (TM) is a mathematical model of computation that defines an abstract machine capable of simulating any computer algorithm. It consists of an infinite tape divided into cells, a read-write head, and a finite control unit that determines the machine's behavior based on the current state and symbol being read.
+            </div>
+
+
+            <h3>Why Turing Machine is Needed</h3>
+            <p>Turing Machines were introduced by Alan Turing in 1936 to formalize the concept of computation and algorithm. They are needed for several important reasons:</p>
+            
+            <ul>
+                <li><strong>Unlimited Memory:</strong> Unlike Finite Automata and Pushdown Automata, Turing Machines have unlimited memory in the form of an infinite tape, allowing them to solve more complex problems</li>
+                <li><strong>Read and Write Capability:</strong> TM can both read from and write to the tape, whereas FA can only read input and PDA can only push/pop from a stack</li>
+                <li><strong>Bidirectional Movement:</strong> The tape head can move both left and right, providing more flexibility than linear input processing</li>
+                <li><strong>Universal Model of Computation:</strong> TM can simulate any computational process that can be performed by modern computers</li>
+                <li><strong>Theoretical Foundation:</strong> TM provides a theoretical framework to study what is computable and what is not</li>
+                <li><strong>Decision Problems:</strong> TM can be used to determine whether certain problems are solvable or unsolvable</li>
+            </ul>
+
+
+            <h3>Difference Between Finite Automata, PDA, and TM</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Finite Automata (FA)</th>
+                        <th>Pushdown Automata (PDA)</th>
+                        <th>Turing Machine (TM)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Memory</strong></td>
+                        <td>No additional memory (only states)</td>
+                        <td>Stack (LIFO)</td>
+                        <td>Infinite tape</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tape/Input Access</strong></td>
+                        <td>Read-only, one direction</td>
+                        <td>Read-only, one direction</td>
+                        <td>Read-write, bidirectional</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Languages Recognized</strong></td>
+                        <td>Regular Languages</td>
+                        <td>Context-Free Languages</td>
+                        <td>Recursively Enumerable Languages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Power</strong></td>
+                        <td>Least powerful</td>
+                        <td>More powerful than FA</td>
+                        <td>Most powerful</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Computational Ability</strong></td>
+                        <td>Limited pattern matching</td>
+                        <td>Can count and match patterns</td>
+                        <td>Can perform any computation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Example Language</strong></td>
+                        <td>L = {aⁿ | n ≥ 0}</td>
+                        <td>L = {aⁿbⁿ | n ≥ 0}</td>
+                        <td>L = {aⁿbⁿcⁿ | n ≥ 0}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Halting</strong></td>
+                        <td>Always halts</td>
+                        <td>Always halts</td>
+                        <td>May not halt</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Practical Use</strong></td>
+                        <td>Lexical analysis</td>
+                        <td>Parsing</td>
+                        <td>General computation model</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="important">
+                <strong>Key Insight:</strong> The hierarchy of computational power is: FA ⊂ PDA ⊂ TM. Each successive model can recognize all languages of the previous model plus additional languages. Turing Machine is the most powerful and can simulate both FA and PDA.
+            </div>
+        </section>
+
+
+        <section id="formal-definition">
+            <h2>2. Formal Definition of Turing Machine</h2>
+            
+            <p>A Turing Machine is formally defined as a 7-tuple:</p>
+            <p class="formula">M = (Q, Σ, Γ, δ, q₀, B, F)</p>
+
+
+            <h3>Explanation of Each Component</h3>
+
+
+            <h4>Q - Set of States</h4>
+            <div class="definition">
+                <strong>Q:</strong> A finite, non-empty set of states that the Turing Machine can be in at any given time.
+            </div>
+            <p>States represent the internal configuration of the machine. The machine transitions between states based on the transition function.</p>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                Q = {q₀, q₁, q₂, q₃, qaccept, qreject}
+            </div>
+
+
+            <h4>Σ - Input Alphabet</h4>
+            <div class="definition">
+                <strong>Σ:</strong> A finite set of symbols that can appear in the input string. The blank symbol B is not included in Σ.
+            </div>
+            <p>The input alphabet contains all symbols that may appear in the input to the Turing Machine.</p>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                Σ = {0, 1} or Σ = {a, b, c}
+            </div>
+
+
+            <h4>Γ - Tape Alphabet</h4>
+            <div class="definition">
+                <strong>Γ:</strong> A finite set of symbols that can appear on the tape. It includes the input alphabet and additional symbols including the blank symbol. Σ ⊆ Γ.
+            </div>
+            <p>The tape alphabet is larger than the input alphabet because the machine may write additional symbols during computation.</p>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                If Σ = {0, 1}, then Γ = {0, 1, X, Y, B} where X and Y are working symbols
+            </div>
+
+
+            <h4>δ - Transition Function</h4>
+            <div class="definition">
+                <strong>δ:</strong> The transition function that defines the behavior of the Turing Machine. It maps the current state and tape symbol to a new state, a symbol to write, and a direction to move the head.
+            </div>
+            <p>Formally: δ: Q × Γ → Q × Γ × {L, R, S}</p>
+            <p>Where:</p>
+            <ul>
+                <li>Q × Γ represents the current state and current tape symbol</li>
+                <li>Q represents the next state</li>
+                <li>Γ represents the symbol to write on the tape</li>
+                <li>{L, R, S} represents the direction to move (Left, Right, or Stay)</li>
+            </ul>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                δ(q₀, 0) = (q₁, X, R) means: "In state q₀, if reading 0, write X, move right, and go to state q₁"
+            </div>
+
+
+            <h4>q₀ - Start State</h4>
+            <div class="definition">
+                <strong>q₀:</strong> The initial state of the Turing Machine where computation begins. q₀ ∈ Q.
+            </div>
+            <p>The machine always starts in this state with the read-write head positioned at the leftmost symbol of the input.</p>
+
+
+            <h4>B - Blank Symbol</h4>
+            <div class="definition">
+                <strong>B:</strong> A special symbol in the tape alphabet (B ∈ Γ, B ∉ Σ) that represents blank cells on the tape. Initially, all tape cells except those containing the input are blank.
+            </div>
+            <p>The blank symbol is crucial for:</p>
+            <ul>
+                <li>Marking the boundaries of the input</li>
+                <li>Providing working space on the tape</li>
+                <li>Indicating unused portions of the infinite tape</li>
+            </ul>
+
+
+            <h4>F - Set of Final States</h4>
+            <div class="definition">
+                <strong>F:</strong> A set of accepting or final states. F ⊆ Q. When the machine enters a state in F, the input is accepted.
+            </div>
+            <p>Some Turing Machines have multiple final states, while others may have just one accept state. There may also be a reject state that is not in F.</p>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                F = {qaccept} or F = {q₃, q₅, q₇}
+            </div>
+
+
+            <div class="important">
+                <strong>Complete Example of TM Definition:</strong>
+                <p>TM for recognizing L = {0ⁿ1ⁿ | n ≥ 1}:</p>
+                <ul>
+                    <li>Q = {q₀, q₁, q₂, q₃, qaccept, qreject}</li>
+                    <li>Σ = {0, 1}</li>
+                    <li>Γ = {0, 1, X, Y, B}</li>
+                    <li>q₀ = initial state</li>
+                    <li>B = blank symbol</li>
+                    <li>F = {qaccept}</li>
+                    <li>δ is defined by the transition table or transition rules</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="components">
+            <h2>3. Components and Working of Turing Machine</h2>
+
+
+            <h3>Infinite Tape</h3>
+            <div class="definition">
+                <strong>Infinite Tape:</strong> An unlimited memory storage divided into discrete cells, each capable of holding one symbol from the tape alphabet. The tape extends infinitely in both directions.
+            </div>
+            
+            <p>Key characteristics of the tape:</p>
+            <ul>
+                <li>Divided into cells, each containing a single symbol</li>
+                <li>Initially contains the input string starting from the leftmost cell</li>
+                <li>All other cells contain the blank symbol B</li>
+                <li>Provides unlimited storage for computation</li>
+                <li>Can be read from and written to during execution</li>
+            </ul>
+
+
+            <div class="diagram">
+... | B | B | 0 | 1 | 0 | 1 | B | B | B | ...
+                   ↑
+              Read-Write Head
+            </div>
+
+
+            <h3>Read-Write Head</h3>
+            <div class="definition">
+                <strong>Read-Write Head:</strong> A component that points to exactly one cell on the tape at any given time. It can read the symbol in the current cell and write a new symbol to replace it.
+            </div>
+            
+            <p>Functions of the read-write head:</p>
+            <ul>
+                <li><strong>Reading:</strong> Scans the symbol in the current cell</li>
+                <li><strong>Writing:</strong> Replaces the current symbol with a new symbol from Γ</li>
+                <li><strong>Moving:</strong> Shifts left or right to adjacent cells, or stays in place</li>
+            </ul>
+
+
+            <h3>Tape Movement (Left, Right, Stay)</h3>
+            <p>After reading and writing, the head moves according to the transition function:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Direction</th>
+                        <th>Symbol</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Left</strong></td>
+                        <td>L</td>
+                        <td>Move the head one cell to the left</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Right</strong></td>
+                        <td>R</td>
+                        <td>Move the head one cell to the right</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stay</strong></td>
+                        <td>S</td>
+                        <td>Keep the head at the current position</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>Acceptance and Rejection of Strings</h3>
+            
+            <h4>Acceptance</h4>
+            <div class="definition">
+                <strong>String Acceptance:</strong> A Turing Machine accepts an input string if, starting from the initial configuration, it eventually enters an accepting state (a state in F) and halts.
+            </div>
+            
+            <p>Acceptance criteria:</p>
+            <ul>
+                <li>The machine must reach a state in the set F (final states)</li>
+                <li>The machine must halt (stop executing)</li>
+                <li>The tape contents and head position at acceptance are not relevant</li>
+            </ul>
+
+
+            <h4>Rejection</h4>
+            <div class="definition">
+                <strong>String Rejection:</strong> A Turing Machine rejects an input string if it enters a reject state and halts, or if it never halts (runs forever).
+            </div>
+            
+            <p>Rejection occurs when:</p>
+            <ul>
+                <li>The machine enters a designated reject state (qreject)</li>
+                <li>No valid transition exists for the current state and tape symbol</li>
+                <li>The machine runs indefinitely without accepting (non-halting)</li>
+            </ul>
+
+
+            <h3>Step-by-Step Working Explanation</h3>
+            
+            <p>The execution of a Turing Machine follows these steps:</p>
+            
+            <ol>
+                <li><strong>Initialization:</strong>
+                    <ul>
+                        <li>Place the input string on the tape starting from the leftmost cell</li>
+                        <li>Fill all other cells with blank symbol B</li>
+                        <li>Position the read-write head at the leftmost input symbol</li>
+                        <li>Set the current state to q₀ (start state)</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Read Current Symbol:</strong>
+                    <ul>
+                        <li>The head reads the symbol in the current cell</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Consult Transition Function:</strong>
+                    <ul>
+                        <li>Look up δ(current_state, current_symbol)</li>
+                        <li>Get (next_state, symbol_to_write, direction)</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Write New Symbol:</strong>
+                    <ul>
+                        <li>Replace the current tape symbol with symbol_to_write</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Move the Head:</strong>
+                    <ul>
+                        <li>Move left (L), right (R), or stay (S) as specified</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Update State:</strong>
+                    <ul>
+                        <li>Change the current state to next_state</li>
+                    </ul>
+                </li>
+                
+                <li><strong>Check for Termination:</strong>
+                    <ul>
+                        <li>If current state ∈ F, accept and halt</li>
+                        <li>If current state = qreject, reject and halt</li>
+                        <li>If no transition exists, reject and halt</li>
+                        <li>Otherwise, repeat from step 2</li>
+                    </ul>
+                </li>
+            </ol>
+
+
+            <div class="example">
+                <div class="example-title">Example: TM Execution for Input "01"</div>
+                <p>TM for checking if string has equal 0s and 1s:</p>
+                <p><strong>Initial Configuration:</strong></p>
+                <div class="diagram">
+State: q₀
+Tape: | 0 | 1 | B | B | ...
+        ↑
+</div>
+                
+                <p><strong>Step 1:</strong> Read 0, write X, move right, go to q₁</p>
+                <div class="diagram">
+State: q₁
+Tape: | X | 1 | B | B | ...
+            ↑
+</div>
+                
+                <p><strong>Step 2:</strong> Read 1, write Y, move right, go to q₂</p>
+                <div class="diagram">
+State: q₂
+Tape: | X | Y | B | B | ...
+                ↑
+</div>
+                
+                <p><strong>Step 3:</strong> Read B, reached end, all matched, accept</p>
+                <p><strong>Result:</strong> String "01" is ACCEPTED</p>
+            </div>
+
+
+            <div class="important">
+                <strong>Important Notes:</strong>
+                <ul>
+                    <li>The machine processes one symbol at a time</li>
+                    <li>Each step is deterministic (in deterministic TM)</li>
+                    <li>The tape can grow as needed (conceptually infinite)</li>
+                    <li>The machine may never halt for some inputs</li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="types">
+            <h2>4. Types of Turing Machines</h2>
+
+
+            <h3>Deterministic Turing Machine (DTM)</h3>
+            <div class="definition">
+                <strong>Deterministic Turing Machine:</strong> A Turing Machine where, for each combination of current state and tape symbol, there is at most one possible transition defined by the transition function.
+            </div>
+            
+            <p>Characteristics:</p>
+            <ul>
+                <li>The transition function δ is a total or partial function, not a relation</li>
+                <li>At each step, there is exactly one possible move</li>
+                <li>The computation path is uniquely determined by the input</li>
+                <li>Execution is predictable and reproducible</li>
+                <li>Most practical computational models are deterministic</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Example:</div>
+                <p>For DTM: δ(q₁, 0) = (q₂, 1, R) is the only transition from state q₁ when reading 0</p>
+            </div>
+
+
+            <h3>Non-Deterministic Turing Machine (NTM)</h3>
+            <div class="definition">
+                <strong>Non-Deterministic Turing Machine:</strong> A Turing Machine where, for a given state and tape symbol, there can be multiple possible transitions. The machine can "choose" any one of these transitions.
+            </div>
+            
+            <p>Characteristics:</p>
+            <ul>
+                <li>The transition function δ maps to a set of possible transitions</li>
+                <li>Multiple computation paths may exist for the same input</li>
+                <li>String is accepted if at least one computation path leads to acceptance</li>
+                <li>Conceptually more powerful, but computationally equivalent to DTM</li>
+                <li>Useful for theoretical analysis and complexity theory</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Example:</div>
+                <p>For NTM: δ(q₁, 0) = {(q₂, 1, R), (q₃, 0, L)} offers two choices from state q₁ when reading 0</p>
+            </div>
+            
+            <div class="important">
+                <strong>DTM vs NTM Equivalence:</strong> Every Non-Deterministic Turing Machine can be simulated by a Deterministic Turing Machine, though the simulation may require exponentially more time. Both recognize the same class of languages (recursively enumerable languages).
+            </div>
+
+
+            <h3>Multi-tape Turing Machine</h3>
+            <div class="definition">
+                <strong>Multi-tape Turing Machine:</strong> A variant of Turing Machine that has k tapes (where k ≥ 1), each with its own read-write head. All heads move independently based on a single transition function.
+            </div>
+            
+            <p>Characteristics:</p>
+            <ul>
+                <li>Has k tapes, each infinite in both directions</li>
+                <li>Each tape has its own independent read-write head</li>
+                <li>Input is placed on the first tape; other tapes start blank</li>
+                <li>Transition function: δ: Q × Γᵏ → Q × Γᵏ × {L, R, S}ᵏ</li>
+                <li>Can be more efficient than single-tape TM for certain problems</li>
+                <li>Computationally equivalent to standard TM (can be simulated)</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Example Use Case:</div>
+                <p>A 2-tape TM for copying a string: One tape holds the original input, the second tape is used to write the copy. This is more efficient than using a single tape.</p>
+            </div>
+
+
+            <h3>Multi-track Turing Machine</h3>
+            <div class="definition">
+                <strong>Multi-track Turing Machine:</strong> A Turing Machine where each tape cell is divided into multiple tracks. Each track can hold a different symbol, but all tracks of a cell are read and written simultaneously.
+            </div>
+            
+            <p>Characteristics:</p>
+            <ul>
+                <li>Single tape divided into k parallel tracks</li>
+                <li>Each cell contains a k-tuple of symbols (one per track)</li>
+                <li>Single read-write head processes all tracks of a cell together</li>
+                <li>Useful for keeping related information aligned</li>
+                <li>Can be simulated by standard single-track TM</li>
+                <li>Tape alphabet becomes Γᵏ (k-tuples of symbols)</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Example:</div>
+                <p>A 2-track TM with tracks for data and marks:</p>
+                <div class="diagram">
+Track 1: | 0 | 1 | 0 | 1 |
+Track 2: | X | - | X | - |
+</div>
+                <p>Track 1 holds the input; Track 2 marks processed symbols with X</p>
+            </div>
+
+
+            <h3>Universal Turing Machine</h3>
+            <div class="definition">
+                <strong>Universal Turing Machine:</strong> A special Turing Machine that can simulate any other Turing Machine on any input. It takes two inputs: an encoded description of a Turing Machine M and an input string w, and simulates M's execution on w.
+            </div>
+            
+            <p>Characteristics:</p>
+            <ul>
+                <li>Acts as an interpreter for other Turing Machines</li>
+                <li>Input format: &lt;M, w&gt; where M is encoded TM, w is input string</li>
+                <li>Simulates M step-by-step on input w</li>
+                <li>Demonstrates that a single TM can perform any computation</li>
+                <li>Theoretical foundation for modern programmable computers</li>
+                <li>Shows that computation is a universal concept</li>
+            </ul>
+            
+            <div class="important">
+                <strong>Significance of Universal TM:</strong>
+                <ul>
+                    <li>Proves the concept of stored-program computers</li>
+                    <li>Foundation for the theory of computation</li>
+                    <li>Demonstrates that one machine can execute any algorithm</li>
+                    <li>Analogous to modern operating systems running different programs</li>
+                    <li>Essential for understanding computability limits</li>
+                </ul>
+            </div>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Key Feature</th>
+                        <th>Equivalence to Standard TM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Deterministic TM</td>
+                        <td>One transition per configuration</td>
+                        <td>Standard model</td>
+                    </tr>
+                    <tr>
+                        <td>Non-Deterministic TM</td>
+                        <td>Multiple possible transitions</td>
+                        <td>Equivalent (same languages)</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-tape TM</td>
+                        <td>Multiple independent tapes</td>
+                        <td>Equivalent (can be simulated)</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-track TM</td>
+                        <td>Multiple tracks per cell</td>
+                        <td>Equivalent (can be simulated)</td>
+                    </tr>
+                    <tr>
+                        <td>Universal TM</td>
+                        <td>Simulates any other TM</td>
+                        <td>Equivalent (is a standard TM)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="language-acceptance">
+            <h2>5. Language Acceptance by Turing Machine</h2>
+
+
+            <h3>Recursive Languages</h3>
+            <div class="definition">
+                <strong>Recursive Language (Decidable Language):</strong> A language L is recursive if there exists a Turing Machine M that halts on all inputs and accepts all strings in L and rejects all strings not in L.
+            </div>
+            
+            <p>Key properties of recursive languages:</p>
+            <ul>
+                <li><strong>Always Halts:</strong> The TM halts for every input string (both accept and reject cases)</li>
+                <li><strong>Total Decision:</strong> For any string w, the TM either accepts or rejects (never loops indefinitely)</li>
+                <li><strong>Decidable:</strong> There is an algorithm that can decide membership in finite time</li>
+                <li><strong>Complement Closed:</strong> If L is recursive, then L̄ (complement of L) is also recursive</li>
+                <li><strong>Closed Under Union, Intersection, Concatenation:</strong> Standard set operations preserve recursiveness</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Examples of Recursive Languages:</div>
+                <ul>
+                    <li>L = {aⁿbⁿcⁿ | n ≥ 0} - TM can count and match, always halts</li>
+                    <li>L = {ww | w ∈ {0,1}*} - TM can check if string is followed by its copy, always halts</li>
+                    <li>All regular languages (FA always halt)</li>
+                    <li>All context-free languages that can be decided (deterministic CFL)</li>
+                </ul>
+            </div>
+            
+            <div class="important">
+                <strong>Recursive = Decidable:</strong> The terms "recursive" and "decidable" are synonymous. A recursive language is one for which we can construct an algorithm (TM) that always terminates and correctly decides membership.
+            </div>
+
+
+            <h3>Recursively Enumerable Languages</h3>
+            <div class="definition">
+                <strong>Recursively Enumerable Language (Semi-Decidable Language):</strong> A language L is recursively enumerable if there exists a Turing Machine M that accepts all strings in L and either rejects or loops forever for strings not in L.
+            </div>
+            
+            <p>Key properties of recursively enumerable languages:</p>
+            <ul>
+                <li><strong>May Not Halt:</strong> The TM may run forever on strings not in the language</li>
+                <li><strong>Acceptance Guarantee:</strong> If w ∈ L, the TM will eventually accept</li>
+                <li><strong>No Rejection Guarantee:</strong> If w ∉ L, the TM may reject or loop indefinitely</li>
+                <li><strong>Semi-Decidable:</strong> Can recognize members, but cannot always recognize non-members</li>
+                <li><strong>Also Called RE Languages or Type-0 Languages</strong></li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Examples of Recursively Enumerable Languages:</div>
+                <ul>
+                    <li>The Halting Problem language (not recursive but RE)</li>
+                    <li>Language of all valid programs in a programming language</li>
+                    <li>All recursive languages (subset of RE languages)</li>
+                    <li>Languages accepted by any Turing Machine</li>
+                </ul>
+            </div>
+
+
+            <h3>Difference Between Recursive and Recursively Enumerable Languages</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Recursive Languages</th>
+                        <th>Recursively Enumerable Languages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Halting Behavior</strong></td>
+                        <td>Always halts (accept or reject)</td>
+                        <td>May not halt on some inputs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decision Capability</strong></td>
+                        <td>Can decide membership for all strings</td>
+                        <td>Can recognize members, may not identify non-members</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alternate Name</strong></td>
+                        <td>Decidable Languages</td>
+                        <td>Semi-Decidable Languages, Recognizable Languages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TM Type</strong></td>
+                        <td>Decider TM (always halts)</td>
+                        <td>Acceptor/Recognizer TM (may loop)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complement</strong></td>
+                        <td>Complement is also recursive</td>
+                        <td>Complement may not be RE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relationship</strong></td>
+                        <td>Subset of RE languages</td>
+                        <td>Superset of recursive languages</td>
+                    </tr>
+                    <tr>
+                        <td><strong>For String w ∈ L</strong></td>
+                        <td>TM accepts and halts</td>
+                        <td>TM accepts and halts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>For String w ∉ L</strong></td>
+                        <td>TM rejects and halts</td>
+                        <td>TM rejects and halts OR loops forever</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Practical Implication</strong></td>
+                        <td>Algorithm exists that always terminates</td>
+                        <td>Algorithm may not terminate for all inputs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="important">
+                <strong>Fundamental Relationship:</strong>
+                <p>Recursive Languages ⊂ Recursively Enumerable Languages</p>
+                <p>This means:</p>
+                <ul>
+                    <li>Every recursive language is also recursively enumerable</li>
+                    <li>Not every recursively enumerable language is recursive</li>
+                    <li>There exist RE languages that are not recursive (undecidable problems)</li>
+                </ul>
+            </div>
+
+
+            <div class="important">
+                <strong>Theorem:</strong> A language L is recursive if and only if both L and its complement L̄ are recursively enumerable.
+                <p><strong>Proof Sketch:</strong></p>
+                <ul>
+                    <li>If L is recursive, a TM can decide it, so both L and L̄ are RE</li>
+                    <li>If both L and L̄ are RE, we can run both TMs in parallel; one will accept, giving a decision</li>
+                </ul>
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Visual Representation:</div>
+                <div class="diagram">
+┌─────────────────────────────────────────────┐
+│   Recursively Enumerable Languages (RE)     │
+│                                             │
+│   ┌──────────────────────────────────┐     │
+│   │   Recursive Languages            │     │
+│   │   (Decidable)                    │     │
+│   │                                  │     │
+│   │   - Always halt                  │     │
+│   │   - Can decide membership        │     │
+│   │                                  │     │
+│   └──────────────────────────────────┘     │
+│                                             │
+│   - May loop forever                        │
+│   - Can recognize members only              │
+│                                             │
+└─────────────────────────────────────────────┘
+</div>
+            </div>
+        </section>
+
+
+        <section id="recognizer">
+            <h2>6. Turing Machine as a Language Recognizer</h2>
+
+
+            <h3>TM as Acceptor</h3>
+            <div class="definition">
+                <strong>Turing Machine as Acceptor:</strong> A TM that recognizes or accepts a language L. It accepts strings in L (eventually enters an accept state) but may reject or loop forever on strings not in L.
+            </div>
+            
+            <p>Characteristics of TM as Acceptor:</p>
+            <ul>
+                <li><strong>Purpose:</strong> Recognize membership in a language</li>
+                <li><strong>Behavior on w ∈ L:</strong> Eventually accepts (enters accepting state and halts)</li>
+                <li><strong>Behavior on w ∉ L:</strong> May reject (enter reject state) or may loop forever</li>
+                <li><strong>Languages Recognized:</strong> Recursively enumerable languages</li>
+                <li><strong>Guarantee:</strong> If a string is in the language, the TM will eventually accept it</li>
+                <li><strong>No Guarantee:</strong> For strings not in the language, may never halt</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Example: TM as Acceptor</div>
+                <p>A TM that accepts strings with equal number of 0s and 1s:</p>
+                <ul>
+                    <li>For "0011" → Accepts (equal 0s and 1s)</li>
+                    <li>For "001" → May reject or loop (unequal)</li>
+                    <li>The TM recognizes the language but doesn't necessarily decide it</li>
+                </ul>
+            </div>
+
+
+            <h3>TM as Decider</h3>
+            <div class="definition">
+                <strong>Turing Machine as Decider:</strong> A TM that not only recognizes a language but also always halts. It accepts strings in L and rejects strings not in L, always terminating.
+            </div>
+            
+            <p>Characteristics of TM as Decider:</p>
+            <ul>
+                <li><strong>Purpose:</strong> Decide membership in a language</li>
+                <li><strong>Behavior on w ∈ L:</strong> Accepts and halts</li>
+                <li><strong>Behavior on w ∉ L:</strong> Rejects and halts</li>
+                <li><strong>Languages Decided:</strong> Recursive (decidable) languages</li>
+                <li><strong>Guarantee:</strong> Always halts for every input</li>
+                <li><strong>Total Function:</strong> Provides a yes/no answer for every input</li>
+            </ul>
+            
+            <div class="example">
+                <div class="example-title">Example: TM as Decider</div>
+                <p>A TM that decides if a string is a palindrome:</p>
+                <ul>
+                    <li>For "aba" → Accepts and halts (is palindrome)</li>
+                    <li>For "abc" → Rejects and halts (not palindrome)</li>
+                    <li>The TM always halts with a definite answer</li>
+                </ul>
+            </div>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>TM as Acceptor (Recognizer)</th>
+                        <th>TM as Decider</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Halting</strong></td>
+                        <td>May not halt on all inputs</td>
+                        <td>Always halts on all inputs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Language Class</strong></td>
+                        <td>Recursively Enumerable (RE)</td>
+                        <td>Recursive (Decidable)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accept Behavior</strong></td>
+                        <td>Accepts if w ∈ L</td>
+                        <td>Accepts if w ∈ L</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reject Behavior</strong></td>
+                        <td>May reject or loop if w ∉ L</td>
+                        <td>Always rejects if w ∉ L</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decidability</strong></td>
+                        <td>Semi-decidable</td>
+                        <td>Fully decidable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Practical Use</strong></td>
+                        <td>Pattern recognition, search</td>
+                        <td>Decision algorithms, verification</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>Halting Problem (Introductory Concept)</h3>
+            <div class="definition">
+                <strong>Halting Problem:</strong> The problem of determining whether a given Turing Machine will halt (stop) on a given input or run forever. This problem is undecidable.
+            </div>
+            
+            <p>Statement of the Halting Problem:</p>
+            <p class="formula">Given: A Turing Machine M and an input string w<br>Question: Will M halt when run on input w?</p>
+            
+            <p>Key aspects of the Halting Problem:</p>
+            <ul>
+                <li><strong>Undecidable:</strong> No TM exists that can decide the halting problem for all TM-input pairs</li>
+                <li><strong>Proven by Contradiction:</strong> Alan Turing proved this using a diagonal argument</li>
+                <li><strong>Fundamental Limit:</strong> Demonstrates inherent limitations of computation</li>
+                <li><strong>Not All Problems Are Solvable:</strong> Some problems have no algorithmic solution</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Significance of Halting Problem:</strong>
+                <ul>
+                    <li>First problem proven to be undecidable</li>
+                    <li>Shows that not all mathematical questions can be answered by computation</li>
+                    <li>Has practical implications: no general-purpose debugger can detect infinite loops</li>
+                    <li>Foundation for proving other problems undecidable</li>
+                    <li>Demonstrates limits of what computers can do</li>
+                </ul>
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Informal Explanation:</div>
+                <p>Suppose we had a TM H that could solve the halting problem:</p>
+                <ul>
+                    <li>H(&lt;M&gt;, w) = "accept" if M halts on w</li>
+                    <li>H(&lt;M&gt;, w) = "reject" if M loops forever on w</li>
+                </ul>
+                <p>We can construct a paradoxical machine D that uses H:</p>
+                <ul>
+                    <li>D(&lt;M&gt;) runs H on (&lt;M&gt;, &lt;M&gt;)</li>
+                    <li>If H says M halts, then D loops forever</li>
+                    <li>If H says M loops, then D halts</li>
+                </ul>
+                <p>What happens when we run D(&lt;D&gt;)? This creates a contradiction, proving H cannot exist.</p>
+            </div>
+
+
+            <div class="important">
+                <strong>Relationship Summary:</strong>
+                <ul>
+                    <li><strong>Every Decider is an Acceptor:</strong> If a TM decides a language, it also recognizes it</li>
+                    <li><strong>Not Every Acceptor is a Decider:</strong> Some TMs recognize languages but don't decide them</li>
+                    <li><strong>Deciders correspond to Recursive Languages</strong></li>
+                    <li><strong>Acceptors correspond to Recursively Enumerable Languages</strong></li>
+                </ul>
+            </div>
+        </section>
+
+
+        <section id="church-turing">
+            <h2>7. Church–Turing Thesis</h2>
+
+
+            <div class="definition">
+                <strong>Church–Turing Thesis:</strong> Any function that can be computed by an effective algorithm can be computed by a Turing Machine. In other words, the set of functions computable by any reasonable model of computation is exactly the set of functions computable by Turing Machines.
+            </div>
+
+
+            <h3>Statement of Church–Turing Thesis</h3>
+            <p>The thesis can be stated in several equivalent forms:</p>
+            
+            <ul>
+                <li><strong>Form 1:</strong> Every effectively calculable function is computable by a Turing Machine</li>
+                <li><strong>Form 2:</strong> Any algorithm can be implemented on a Turing Machine</li>
+                <li><strong>Form 3:</strong> The informal notion of "algorithm" is captured precisely by Turing Machines</li>
+                <li><strong>Form 4:</strong> If a problem can be solved by any computational device, it can be solved by a Turing Machine</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Note:</strong> The Church-Turing Thesis is not a mathematical theorem that can be proven; it is a hypothesis about the nature of computation. However, it is widely accepted because:
+                <ul>
+                    <li>No counterexample has ever been found</li>
+                    <li>All proposed models of computation have been shown equivalent to TMs</li>
+                    <li>It has held true for over 80 years despite extensive investigation</li>
+                </ul>
+            </div>
+
+
+            <h3>Significance</h3>
+            <p>The Church-Turing Thesis has profound significance in computer science and mathematics:</p>
+            
+            <ul>
+                <li><strong>Defines Computability:</strong> Provides a precise definition of what it means for something to be computable</li>
+                <li><strong>Universal Model:</strong> Establishes Turing Machine as the standard model for studying computation</li>
+                <li><strong>Equivalence of Models:</strong> Shows that different models of computation (lambda calculus, recursive functions, Turing Machines) are equivalent</li>
+                <li><strong>Foundation for Computer Science:</strong> Forms the theoretical basis for the entire field</li>
+                <li><strong>Limits of Computation:</strong> Helps identify problems that no computer can solve</li>
+                <li><strong>Algorithm Analysis:</strong> Allows theoretical study of algorithms independent of hardware</li>
+            </ul>
+
+
+            <h3>Implications in Computation Theory</h3>
+            
+            <h4>1. Model Independence</h4>
+            <p>The thesis implies that the choice of computational model doesn't matter for determining computability:</p>
+            <ul>
+                <li>If a problem is solvable in one model, it's solvable in all equivalent models</li>
+                <li>Turing Machines, lambda calculus, and recursive functions all compute the same class of functions</li>
+                <li>Modern programming languages can compute anything a TM can compute</li>
+            </ul>
+
+
+            <h4>2. Existence of Uncomputable Functions</h4>
+            <p>The thesis, combined with other results, shows that:</p>
+            <ul>
+                <li>Not all mathematical functions can be computed by algorithms</li>
+                <li>There are problems that no computer program can solve</li>
+                <li>The Halting Problem is one such example</li>
+                <li>There are "limits to computation" that are fundamental, not just technological</li>
+            </ul>
+
+
+            <h4>3. Equivalence of Computational Models</h4>
+            <p>The thesis supports the equivalence of various models:</p>
+            <ul>
+                <li><strong>Turing Machines</strong> (mechanical computation)</li>
+                <li><strong>Lambda Calculus</strong> (functional computation)</li>
+                <li><strong>Recursive Functions</strong> (mathematical functions)</li>
+                <li><strong>Register Machines</strong> (assembly-like computation)</li>
+                <li><strong>Post Systems</strong> (string rewriting)</li>
+            </ul>
+            <p>All these models can compute exactly the same set of functions.</p>
+
+
+            <h4>4. Church's Thesis and Turing's Thesis</h4>
+            <div class="important">
+                <p><strong>Historical Context:</strong></p>
+                <ul>
+                    <li><strong>Alonzo Church</strong> proposed that lambda-definable functions capture all effectively computable functions (1936)</li>
+                    <li><strong>Alan Turing</strong> independently proposed that Turing-computable functions capture all effectively computable functions (1936)</li>
+                    <li>Later proven that lambda calculus and Turing Machines are equivalent in computational power</li>
+                    <li>Combined into the Church-Turing Thesis</li>
+                </ul>
+            </div>
+
+
+            <h4>5. Practical Implications</h4>
+            <ul>
+                <li><strong>Programming Languages:</strong> Any general-purpose programming language is Turing-complete and can compute anything computable</li>
+                <li><strong>Hardware Independence:</strong> Computability is independent of the specific hardware implementation</li>
+                <li><strong>Theoretical Limits:</strong> Helps identify problems that are inherently unsolvable by computers</li>
+                <li><strong>Algorithm Design:</strong> Can prove lower bounds on computational complexity</li>
+                <li><strong>Artificial Intelligence:</strong> Helps understand what tasks can and cannot be automated</li>
+            </ul>
+
+
+            <div class="example">
+                <div class="example-title">Example of Equivalence:</div>
+                <p>Computing the factorial function:</p>
+                <ul>
+                    <li><strong>Turing Machine:</strong> Can be programmed to compute n!</li>
+                    <li><strong>Lambda Calculus:</strong> Can express n! as a lambda expression</li>
+                    <li><strong>Python/Java/C:</strong> Can write a factorial function</li>
+                    <li><strong>Recursive Function:</strong> Can define factorial mathematically</li>
+                </ul>
+                <p>All these approaches compute the same function, supporting the thesis.</p>
+            </div>
+
+
+            <div class="important">
+                <strong>Extended Church-Turing Thesis:</strong>
+                <p>A stronger version states that any "reasonable" model of computation can be efficiently simulated by a Turing Machine. This relates to computational complexity and P vs NP.</p>
+                <p>This extended version is more controversial and remains an open question in some interpretations, especially with quantum computing.</p>
+            </div>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model of Computation</th>
+                        <th>Proposed By</th>
+                        <th>Year</th>
+                        <th>Equivalent to TM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Turing Machine</td>
+                        <td>Alan Turing</td>
+                        <td>1936</td>
+                        <td>Yes (definition)</td>
+                    </tr>
+                    <tr>
+                        <td>Lambda Calculus</td>
+                        <td>Alonzo Church</td>
+                        <td>1936</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Recursive Functions</td>
+                        <td>Gödel, Kleene</td>
+                        <td>1930s</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Post Systems</td>
+                        <td>Emil Post</td>
+                        <td>1943</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Register Machines</td>
+                        <td>Various</td>
+                        <td>1960s</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="computational-power">
+            <h2>8. Computational Power of Turing Machine</h2>
+
+
+            <h3>Comparison with FA and PDA</h3>
+            <p>Turing Machines represent the highest level of computational power in the Chomsky hierarchy:</p>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Automaton</th>
+                        <th>Memory</th>
+                        <th>Language Class</th>
+                        <th>Closure Properties</th>
+                        <th>Decision Problems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Finite Automata</strong></td>
+                        <td>No auxiliary memory (only states)</td>
+                        <td>Regular Languages (Type 3)</td>
+                        <td>Closed under union, intersection, complement, concatenation, Kleene star</td>
+                        <td>All decidable (membership, emptiness, equivalence)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pushdown Automata</strong></td>
+                        <td>Stack (LIFO)</td>
+                        <td>Context-Free Languages (Type 2)</td>
+                        <td>Closed under union, concatenation, Kleene star; NOT closed under intersection, complement</td>
+                        <td>Membership decidable; equivalence undecidable for general CFG</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Turing Machine</strong></td>
+                        <td>Infinite tape (read-write, bidirectional)</td>
+                        <td>Recursively Enumerable Languages (Type 0)</td>
+                        <td>Closed under union, intersection, concatenation, Kleene star, complement (for recursive languages)</td>
+                        <td>Membership undecidable in general; many decision problems undecidable</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>Why TM is More Powerful</h3>
+            <p>Turing Machines are more powerful than FA and PDA due to several key features:</p>
+
+
+            <h4>1. Unlimited Memory</h4>
+            <ul>
+                <li><strong>FA:</strong> No memory beyond finite states</li>
+                <li><strong>PDA:</strong> Limited to stack operations (LIFO access)</li>
+                <li><strong>TM:</strong> Infinite tape with random access to any cell</li>
+                <li><strong>Implication:</strong> TM can store and retrieve arbitrary amounts of information</li>
+            </ul>
+
+
+            <h4>2. Read-Write Capability</h4>
+            <ul>
+                <li><strong>FA:</strong> Read-only input</li>
+                <li><strong>PDA:</strong> Read-only input, write-only stack</li>
+                <li><strong>TM:</strong> Can read and write on the tape, modifying input and intermediate results</li>
+                <li><strong>Implication:</strong> TM can perform complex transformations and computations</li>
+            </ul>
+
+
+            <h4>3. Bidirectional Movement</h4>
+            <ul>
+                <li><strong>FA:</strong> Moves only forward through input</li>
+                <li><strong>PDA:</strong> Moves only forward through input (stack allows some backtracking)</li>
+                <li><strong>TM:</strong> Head can move left, right, or stay, allowing revisiting of data</li>
+                <li><strong>Implication:</strong> TM can process information in any order</li>
+            </ul>
+
+
+            <h4>4. Language Recognition</h4>
+            <div class="example">
+                <div class="example-title">Examples of Languages:</div>
+                <ul>
+                    <li><strong>FA can recognize:</strong> L = {aⁿ | n ≥ 0} (simple patterns)</li>
+                    <li><strong>PDA can recognize:</strong> L = {aⁿbⁿ | n ≥ 0} (nested structures)</li>
+                    <li><strong>TM can recognize:</strong> L = {aⁿbⁿcⁿ | n ≥ 0} (multiple dependencies)</li>
+                    <li><strong>TM can also recognize:</strong> All regular and context-free languages, plus much more</li>
+                </ul>
+            </div>
+
+
+            <h4>5. Computational Capabilities</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th>FA</th>
+                        <th>PDA</th>
+                        <th>TM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Count to arbitrary n</td>
+                        <td>No</td>
+                        <td>Yes (one counter)</td>
+                        <td>Yes (multiple counters)</td>
+                    </tr>
+                    <tr>
+                        <td>Match aⁿbⁿcⁿ</td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Compute arithmetic operations</td>
+                        <td>No</td>
+                        <td>Limited</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Simulate other automata</td>
+                        <td>No</td>
+                        <td>Can simulate FA</td>
+                        <td>Can simulate FA, PDA, and other TMs</td>
+                    </tr>
+                    <tr>
+                        <td>Solve arbitrary computable problems</td>
+                        <td>No</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>Limitations of Turing Machine</h3>
+            <p>Despite being the most powerful computational model, Turing Machines have fundamental limitations:</p>
+
+
+            <h4>1. The Halting Problem</h4>
+            <div class="important">
+                <strong>Limitation:</strong> No TM can determine whether an arbitrary TM will halt on a given input. This is proven to be undecidable.
+            </div>
+
+
+            <h4>2. Undecidable Problems</h4>
+            <p>Many problems cannot be solved by any Turing Machine:</p>
+            <ul>
+                <li><strong>Halting Problem:</strong> Does a TM halt on a given input?</li>
+                <li><strong>Blank Tape Problem:</strong> Does a TM halt when started on a blank tape?</li>
+                <li><strong>Equivalence Problem:</strong> Do two TMs accept the same language?</li>
+                <li><strong>Rice's Theorem:</strong> Any non-trivial property of TM-recognizable languages is undecidable</li>
+                <li><strong>Post Correspondence Problem:</strong> Does a sequence of dominos have a match?</li>
+            </ul>
+
+
+            <h4>3. Non-Computable Functions</h4>
+            <div class="important">
+                <strong>Limitation:</strong> There are more real-valued functions than there are Turing Machines (by cardinality arguments), so most functions cannot be computed by any TM.
+            </div>
+
+
+            <h4>4. Time and Space Complexity</h4>
+            <ul>
+                <li><strong>Practical Limitation:</strong> Some problems computable by TM may require impractical amounts of time or space</li>
+                <li><strong>Intractable Problems:</strong> Problems requiring exponential time (e.g., many NP-complete problems)</li>
+                <li><strong>No Physical Implementation:</strong> Real computers have finite memory, unlike the infinite tape of TM</li>
+            </ul>
+
+
+            <h4>5. Non-Determinism vs Determinism</h4>
+            <ul>
+                <li><strong>Theoretical Limitation:</strong> While non-deterministic TMs are theoretically equivalent to deterministic TMs, the simulation can be exponentially slower</li>
+                <li><strong>P vs NP:</strong> It's unknown whether deterministic TMs can solve all problems solvable by non-deterministic TMs in polynomial time</li>
+            </ul>
+
+
+            <h4>6. Oracle Limitations</h4>
+            <ul>
+                <li>Even with an oracle for the Halting Problem, there would still be undecidable problems</li>
+                <li>There exists an infinite hierarchy of increasingly complex undecidable problems</li>
+            </ul>
+
+
+            <div class="important">
+                <strong>Key Insight:</strong> The limitations of Turing Machines are not due to implementation details but are fundamental limits of computation itself. According to the Church-Turing Thesis, these limits apply to any computational model, not just TMs.
+            </div>
+
+
+            <div class="example">
+                <div class="example-title">Practical Implications:</div>
+                <ul>
+                    <li><strong>Software Verification:</strong> Cannot create a general program to detect all bugs</li>
+                    <li><strong>Virus Detection:</strong> No perfect antivirus can exist that detects all viruses without false positives</li>
+                    <li><strong>Optimization:</strong> Some optimization problems have no efficient general solution</li>
+                    <li><strong>Artificial Intelligence:</strong> Some AI problems may be inherently unsolvable</li>
+                </ul>
+            </div>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Can TM Do It?</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Add two numbers</td>
+                        <td>Yes</td>
+                        <td>Computable function</td>
+                    </tr>
+                    <tr>
+                        <td>Recognize {aⁿbⁿcⁿ}</td>
+                        <td>Yes</td>
+                        <td>Beyond context-free but computable</td>
+                    </tr>
+                    <tr>
+                        <td>Solve the Halting Problem</td>
+                        <td>No</td>
+                        <td>Proven undecidable</td>
+                    </tr>
+                    <tr>
+                        <td>Check if two TMs are equivalent</td>
+                        <td>No</td>
+                        <td>Undecidable in general</td>
+                    </tr>
+                    <tr>
+                        <td>Simulate any algorithm</td>
+                        <td>Yes</td>
+                        <td>Church-Turing Thesis</td>
+                    </tr>
+                    <tr>
+                        <td>Compute all mathematical functions</td>
+                        <td>No</td>
+                        <td>Non-computable functions exist</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="exam-focus">
+            <h2>9. Exam Focus</h2>
+            
+            <div class="exam-focus">
+                <h3>Important Definitions to Memorize</h3>
+                <ul>
+                    <li><strong>Turing Machine:</strong> 7-tuple M = (Q, Σ, Γ, δ, q₀, B, F)</li>
+                    <li><strong>Recursive Language:</strong> Language decided by a TM that always halts</li>
+                    <li><strong>Recursively Enumerable Language:</strong> Language recognized by a TM that halts for strings in the language</li>
+                    <li><strong>Church-Turing Thesis:</strong> Any effectively computable function can be computed by a Turing Machine</li>
+                    <li><strong>Halting Problem:</strong> The undecidable problem of determining if a TM halts on a given input</li>
+                    <li><strong>Universal Turing Machine:</strong> A TM that can simulate any other TM</li>
+                    <li><strong>Decidable/Undecidable:</strong> Decidable = recursive; Undecidable = no TM can decide it</li>
+                </ul>
+
+
+                <h3>Frequently Asked AKTU Questions from Unit 4</h3>
+                <ol>
+                    <li>Define Turing Machine. Explain its components with a diagram.</li>
+                    <li>Give the formal definition of Turing Machine (7-tuple). Explain each component.</li>
+                    <li>Differentiate between Finite Automata, Pushdown Automata, and Turing Machine.</li>
+                    <li>Explain the working of a Turing Machine with an example.</li>
+                    <li>Construct a Turing Machine for the language L = {aⁿbⁿ | n ≥ 1}.</li>
+                    <li>Construct a Turing Machine to accept palindromes over {a, b}.</li>
+                    <li>What are the different types of Turing Machines? Explain any two.</li>
+                    <li>Differentiate between Deterministic and Non-Deterministic Turing Machine.</li>
+                    <li>What is a Multi-tape Turing Machine? Explain its advantages.</li>
+                    <li>Define recursive and recursively enumerable languages. Give examples.</li>
+                    <li>Differentiate between recursive and recursively enumerable languages.</li>
+                    <li>Explain Turing Machine as acceptor and decider.</li>
+                    <li>What is the Halting Problem? Why is it undecidable?</li>
+                    <li>State and explain the Church-Turing Thesis. What is its significance?</li>
+                    <li>Compare the computational power of FA, PDA, and TM.</li>
+                    <li>Why is Turing Machine more powerful than PDA?</li>
+                    <li>What are the limitations of Turing Machine?</li>
+                    <li>Explain Universal Turing Machine with its significance.</li>
+                    <li>Prove that every recursive language is recursively enumerable.</li>
+                    <li>What is the relationship between decidable and undecidable problems?</li>
+                </ol>
+
+
+                <h3>Keywords to Include in Answers</h3>
+                <ul>
+                    <li>For TM definition: states, input alphabet, tape alphabet, transition function, start state, blank symbol, final states</li>
+                    <li>For components: infinite tape, read-write head, finite control, left/right movement</li>
+                    <li>For languages: recursive, recursively enumerable, decidable, semi-decidable, halting</li>
+                    <li>For comparisons: memory structure, computational power, language class, closure properties</li>
+                    <li>For types: deterministic, non-deterministic, multi-tape, multi-track, universal</li>
+                    <li>For Church-Turing: effectively computable, algorithm, equivalence of models</li>
+                    <li>For halting: undecidable, diagonal argument, contradiction</li>
+                    <li>For power: bidirectional, read-write, unlimited memory, simulation</li>
+                </ul>
+
+
+                <h3>Common Mistakes Students Make</h3>
+                <ul>
+                    <li><strong>Incomplete TM definition:</strong> Forgetting to mention all 7 components of the tuple</li>
+                    <li><strong>Confusing tape alphabet and input alphabet:</strong> Remember Σ ⊆ Γ and B ∈ Γ but B ∉ Σ</li>
+                    <li><strong>Not explaining transition function properly:</strong> Always specify δ: Q × Γ → Q × Γ × {L, R, S}</li>
+                    <li><strong>Mixing up recursive and RE languages:</strong> Recursive always halts; RE may not halt</li>
+                    <li><strong>Confusing acceptor and decider:</strong> Acceptor recognizes; decider decides (always halts)</li>
+                    <li><strong>Claiming TM can solve halting problem:</strong> Halting problem is undecidable; no TM can solve it</li>
+                    <li><strong>Not showing step-by-step execution:</strong> When constructing TM, show complete execution trace</li>
+                    <li><strong>Forgetting blank symbol:</strong> Must initialize unused tape cells with B</li>
+                    <li><strong>Incorrect comparison:</strong> FA ⊂ PDA ⊂ TM in terms of language classes</li>
+                    <li><strong>Misunderstanding Church-Turing Thesis:</strong> It's a thesis, not a theorem; cannot be proven</li>
+                </ul>
+
+
+                <h3>Marks Distribution (Typical AKTU Pattern)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question Type</th>
+                            <th>Marks</th>
+                            <th>What to Write</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Define TM with components</td>
+                            <td>2-3</td>
+                            <td>7-tuple definition + brief component explanation</td>
+                        </tr>
+                        <tr>
+                            <td>TM working with example</td>
+                            <td>5-7</td>
+                            <td>Step-by-step execution + tape configurations</td>
+                        </tr>
+                        <tr>
+                            <td>Construct TM for language</td>
+                            <td>7-10</td>
+                            <td>Formal definition + transition function + execution trace</td>
+                        </tr>
+                        <tr>
+                            <td>Compare FA, PDA, TM</td>
+                            <td>5-7</td>
+                            <td>Table with features + brief explanation</td>
+                        </tr>
+                        <tr>
+                            <td>Recursive vs RE languages</td>
+                            <td>5-7</td>
+                            <td>Definitions + differences + examples</td>
+                        </tr>
+                        <tr>
+                            <td>Church-Turing Thesis</td>
+                            <td>5-7</td>
+                            <td>Statement + significance + implications</td>
+                        </tr>
+                        <tr>
+                            <td>Halting Problem</td>
+                            <td>5-7</td>
+                            <td>Definition + undecidability + significance</td>
+                        </tr>
+                        <tr>
+                            <td>Types of TM</td>
+                            <td>7-10</td>
+                            <td>Explain 3-4 types with characteristics</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <h3>Quick Revision Points</h3>
+                <ul>
+                    <li>TM has infinite tape; FA has no extra memory; PDA has stack</li>
+                    <li>TM can move left, right, or stay; FA and PDA move only forward</li>
+                    <li>TM can read and write; FA and PDA can only read input</li>
+                    <li>Recursive ⊂ Recursively Enumerable</li>
+                    <li>Recursive = Decidable = Always halts</li>
+                    <li>RE = Semi-decidable = May not halt on rejection</li>
+                    <li>Halting Problem is undecidable but RE</li>
+                    <li>Church-Turing Thesis: TM = Algorithm</li>
+                    <li>Universal TM can simulate any other TM</li>
+                    <li>Language hierarchy: Regular ⊂ Context-Free ⊂ Recursive ⊂ RE</li>
+                </ul>
+
+
+                <h3>Important Diagrams to Practice</h3>
+                <ul>
+                    <li>TM structure diagram (tape, head, finite control)</li>
+                    <li>Tape configuration at different steps</li>
+                    <li>State transition diagram for simple TMs</li>
+                    <li>Comparison table: FA vs PDA vs TM</li>
+                    <li>Venn diagram: Recursive vs RE languages</li>
+                    <li>Chomsky hierarchy diagram</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+
+    <footer>
+        <p>Prepared for AKTU B.Tech CSE – TAFL Unit 4</p>
+    </footer>
+</body>
+</html>

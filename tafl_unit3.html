@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAFL Unit 3 - Context-Free Grammars & Pushdown Automata | AKTU Notes</title>
+    <style>
+        html{
+  scroll-behavior: smooth;
+}
+
+.home-btn{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  width: 42px;
+  height: 42px;
+  background: #1e293b;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.home-btn:hover{
+  background: #0f172a;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        nav {
+            background-color: white;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        nav h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.8rem;
+        }
+        
+        nav a {
+            color: #495057;
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-left: 3px solid #667eea;
+            padding-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background-color: #f1f3f5;
+            color: #667eea;
+            padding-left: 1.5rem;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        section {
+            background-color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h3 {
+            color: #495057;
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h4 {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.7rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .definition {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .definition strong {
+            color: #1976D2;
+        }
+        
+        .example {
+            background-color: #f1f8e9;
+            border-left: 4px solid #689f38;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: #558b2f;
+            margin-bottom: 0.5rem;
+        }
+        
+        .important {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        
+        .exam-focus {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .exam-focus h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+        
+        th {
+            background-color: #667eea;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        td {
+            padding: 0.8rem;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            nav ul {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <a href="#top" class="home-btn" title="Back to Top">↑</a>
+    <header>
+        <h1>TAFL – Unit 3 | Context-Free Grammars & Pushdown Automata</h1>
+        <p>AKTU B.Tech CSE – Exam Oriented Notes</p>
+    </header>
+
+    <nav>
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#cfg">1. Context-Free Grammars (CFG)</a></li>
+            <li><a href="#derivations">2. Derivations in CFG</a></li>
+            <li><a href="#parse-trees">3. Parse Trees</a></li>
+            <li><a href="#ambiguity">4. Ambiguity in Grammar</a></li>
+            <li><a href="#simplification">5. Simplification of CFG</a></li>
+            <li><a href="#normal-forms">6. Normal Forms</a></li>
+            <li><a href="#pda">7. Pushdown Automata (PDA)</a></li>
+            <li><a href="#acceptance">8. Acceptance of Strings by PDA</a></li>
+            <li><a href="#cfg-pda">9. PDA and CFG Relationship</a></li>
+            <li><a href="#exam-focus">10. Exam Focus</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="cfg">
+            <h2>1. Context-Free Grammars (CFG)</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A Context-Free Grammar (CFG) is a formal grammar used to generate context-free languages. It consists of a set of rules that describe how strings in the language can be formed.
+            </div>
+
+            <h3>Formal Definition</h3>
+            <p>A Context-Free Grammar is a 4-tuple represented as:</p>
+            <p class="formula">G = (V, T, P, S)</p>
+            
+            <p>Where:</p>
+            <ul>
+                <li><strong>V</strong> – Set of Non-terminal symbols (Variables)</li>
+                <li><strong>T</strong> – Set of Terminal symbols</li>
+                <li><strong>P</strong> – Set of Production rules</li>
+                <li><strong>S</strong> – Start symbol (S ∈ V)</li>
+            </ul>
+
+            <h3>Components Explanation</h3>
+
+            <h4>Terminals</h4>
+            <p>Terminals are the basic symbols from which strings are formed. They are the actual characters or tokens that appear in the final string generated by the grammar. Terminals cannot be replaced by anything else.</p>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                In the grammar for arithmetic expressions, terminals could be: {a, b, +, *, (, )}
+            </div>
+
+            <h4>Non-terminals</h4>
+            <p>Non-terminals are variables that represent sets of strings. They are used to define the structure of the language and can be replaced by other symbols according to production rules. Non-terminals are typically denoted by uppercase letters.</p>
+            <div class="example">
+                <div class="example-title">Example:</div>
+                Common non-terminals include: S (Start), E (Expression), T (Term), F (Factor)
+            </div>
+
+            <h4>Productions</h4>
+            <p>Production rules define how non-terminals can be replaced by combinations of terminals and non-terminals. Each production rule is of the form:</p>
+            <p class="formula">A → α</p>
+            <p>where A is a non-terminal and α is a string of terminals and non-terminals.</p>
+
+            <h4>Start Symbol</h4>
+            <p>The start symbol is a special non-terminal from which all strings in the language are derived. It represents the initial state of the derivation process.</p>
+
+            <h3>Examples of CFG</h3>
+            
+            <div class="example">
+                <div class="example-title">Example 1: Grammar for Balanced Parentheses</div>
+                <p>G = ({S}, {(, )}, P, S)</p>
+                <p>Productions:</p>
+                <ul>
+                    <li>S → (S)</li>
+                    <li>S → SS</li>
+                    <li>S → ε</li>
+                </ul>
+                <p>This grammar generates strings like: ( ), (( )), ( )( ), (( )( )), etc.</p>
+            </div>
+
+            <div class="example">
+                <div class="example-title">Example 2: Grammar for arithmetic expressions</div>
+                <p>G = ({E, T, F}, {a, +, *, (, )}, P, E)</p>
+                <p>Productions:</p>
+                <ul>
+                    <li>E → E + T | T</li>
+                    <li>T → T * F | F</li>
+                    <li>F → (E) | a</li>
+                </ul>
+                <p>This grammar generates expressions like: a, a+a, a*a, (a+a)*a, etc.</p>
+            </div>
+
+            <div class="example">
+                <div class="example-title">Example 3: Grammar for strings with equal number of a's and b's</div>
+                <p>G = ({S}, {a, b}, P, S)</p>
+                <p>Productions:</p>
+                <ul>
+                    <li>S → aSbS | bSaS | ε</li>
+                </ul>
+                <p>This grammar generates strings like: ab, ba, aabb, abab, baab, etc.</p>
+            </div>
+        </section>
+
+        <section id="derivations">
+            <h2>2. Derivations in CFG</h2>
+            
+            <p>Derivation is the process of generating strings from a grammar by successively applying production rules starting from the start symbol.</p>
+
+            <h3>Leftmost Derivation</h3>
+            <div class="definition">
+                <strong>Definition:</strong> In leftmost derivation, at each step, the leftmost non-terminal in the string is replaced by one of its production rules.
+            </div>
+            
+            <p>Leftmost derivation is denoted by the symbol: <span class="formula">⇒<sub>lm</sub></span></p>
+
+            <div class="example">
+                <div class="example-title">Example: Leftmost Derivation</div>
+                <p>Grammar: E → E + E | E * E | (E) | id</p>
+                <p>Derive the string: id + id * id</p>
+                <p><strong>Leftmost Derivation:</strong></p>
+                <ol>
+                    <li>E ⇒ E + E (apply E → E + E, replace leftmost E)</li>
+                    <li>⇒ id + E (apply E → id, replace leftmost E)</li>
+                    <li>⇒ id + E * E (apply E → E * E, replace leftmost E)</li>
+                    <li>⇒ id + id * E (apply E → id, replace leftmost E)</li>
+                    <li>⇒ id + id * id (apply E → id, replace leftmost E)</li>
+                </ol>
+            </div>
+
+            <h3>Rightmost Derivation</h3>
+            <div class="definition">
+                <strong>Definition:</strong> In rightmost derivation, at each step, the rightmost non-terminal in the string is replaced by one of its production rules.
+            </div>
+            
+            <p>Rightmost derivation is denoted by the symbol: <span class="formula">⇒<sub>rm</sub></span></p>
+            <p>Rightmost derivation is also called canonical derivation.</p>
+
+            <div class="example">
+                <div class="example-title">Example: Rightmost Derivation</div>
+                <p>Grammar: E → E + E | E * E | (E) | id</p>
+                <p>Derive the string: id + id * id</p>
+                <p><strong>Rightmost Derivation:</strong></p>
+                <ol>
+                    <li>E ⇒ E + E (apply E → E + E, replace rightmost E)</li>
+                    <li>⇒ E + E * E (apply E → E * E, replace rightmost E)</li>
+                    <li>⇒ E + E * id (apply E → id, replace rightmost E)</li>
+                    <li>⇒ E + id * id (apply E → id, replace rightmost E)</li>
+                    <li>⇒ id + id * id (apply E → id, replace rightmost E)</li>
+                </ol>
+            </div>
+
+            <h3>Importance in Parsing</h3>
+            <div class="important">
+                <strong>Significance:</strong>
+                <ul>
+                    <li><strong>Top-down parsers</strong> use leftmost derivation to construct parse trees</li>
+                    <li><strong>Bottom-up parsers</strong> use rightmost derivation in reverse</li>
+                    <li>Understanding derivations is essential for compiler design and syntax analysis</li>
+                    <li>Different derivations of the same string may lead to different interpretations in ambiguous grammars</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="parse-trees">
+            <h2>3. Parse Trees</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A parse tree (also called derivation tree or syntax tree) is a graphical representation of a derivation that shows how the start symbol of a grammar derives a string in the language.
+            </div>
+
+            <h3>Construction Rules</h3>
+            <p>A parse tree must satisfy the following properties:</p>
+            <ul>
+                <li>The root of the tree is labeled with the start symbol</li>
+                <li>Each interior node is labeled with a non-terminal</li>
+                <li>Each leaf node is labeled with a terminal or ε</li>
+                <li>If a node labeled A has children labeled X₁, X₂, ..., Xₙ, then A → X₁X₂...Xₙ must be a production in the grammar</li>
+                <li>The yield of the tree (reading leaves from left to right) gives the derived string</li>
+            </ul>
+
+            <h3>Relation Between Derivation and Parse Tree</h3>
+            <p>The relationship between derivations and parse trees is fundamental:</p>
+            <ul>
+                <li>Every derivation corresponds to a unique parse tree</li>
+                <li>Multiple derivations (leftmost and rightmost) can produce the same parse tree</li>
+                <li>A parse tree represents the structure of the derivation, independent of the order in which rules are applied</li>
+                <li>Parse trees are more abstract than derivations because they ignore the order of replacement</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: Parse Tree Construction</div>
+                <p>Grammar: E → E + T | T, T → T * F | F, F → (E) | id</p>
+                <p>String: id + id * id</p>
+                <p><strong>Parse Tree Structure (text representation):</strong></p>
+                <pre style="background-color: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+                    E
+                    |
+                 -------
+                 |  |  |
+                 E  +  T
+                 |     |
+                 T  -------
+                 |  |  |  |
+                 F  T  *  F
+                 |  |     |
+                id F    id
+                   |
+                  id
+                </pre>
+                <p><strong>Explanation:</strong></p>
+                <ul>
+                    <li>Root is E (start symbol)</li>
+                    <li>E is expanded to E + T</li>
+                    <li>First E is expanded to T, then to F, then to id</li>
+                    <li>T on the right is expanded to T * F</li>
+                    <li>This T is expanded to F, then to id</li>
+                    <li>Final F is expanded to id</li>
+                    <li>Yield (reading leaves left to right): id + id * id</li>
+                </ul>
+            </div>
+
+            <div class="important">
+                <strong>Key Points:</strong>
+                <ul>
+                    <li>Parse trees provide a hierarchical structure of the derivation</li>
+                    <li>They are essential in compiler design for semantic analysis</li>
+                    <li>The same parse tree can be obtained from different derivation orders (leftmost or rightmost)</li>
+                    <li>Parse trees help identify the precedence and associativity of operators in expressions</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="ambiguity">
+            <h2>4. Ambiguity in Grammar</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A context-free grammar is said to be ambiguous if there exists at least one string in the language that has more than one distinct parse tree (or equivalently, more than one leftmost derivation or more than one rightmost derivation).
+            </div>
+
+            <h3>Example of Ambiguous Grammar</h3>
+            
+            <div class="example">
+                <div class="example-title">Example: Ambiguous Grammar for Arithmetic Expressions</div>
+                <p>Grammar: E → E + E | E * E | (E) | id</p>
+                <p>String: id + id * id</p>
+                
+                <p><strong>Parse Tree 1 (Addition first):</strong></p>
+                <pre style="background-color: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                    E
+                    |
+                 -------
+                 |  |  |
+                 E  +  E
+                 |     |
+                id  -------
+                    |  |  |
+                    E  *  E
+                    |     |
+                   id    id
+                
+                Interpretation: id + (id * id)
+                </pre>
+                
+                <p><strong>Parse Tree 2 (Multiplication first):</strong></p>
+                <pre style="background-color: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                    E
+                    |
+                 -------
+                 |  |  |
+                 E  *  E
+                 |     |
+              -------  id
+              |  |  |
+              E  +  E
+              |     |
+             id    id
+                
+                Interpretation: (id + id) * id
+                </pre>
+            </div>
+
+            <h3>Multiple Parse Trees for Same String</h3>
+            <p>When a grammar is ambiguous, a single string can have multiple parse trees, which means:</p>
+            <ul>
+                <li>Different structural interpretations of the same input</li>
+                <li>Different semantic meanings in programming languages</li>
+                <li>Uncertainty in how the string should be processed</li>
+                <li>Multiple leftmost or rightmost derivations exist for the same string</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: Dangling Else Problem</div>
+                <p>Grammar for if-else statements:</p>
+                <p>S → if E then S | if E then S else S | other</p>
+                <p>String: if E1 then if E2 then S1 else S2</p>
+                <p><strong>Two possible interpretations:</strong></p>
+                <ol>
+                    <li>if E1 then (if E2 then S1 else S2) - else belongs to inner if</li>
+                    <li>if E1 then (if E2 then S1) else S2 - else belongs to outer if</li>
+                </ol>
+            </div>
+
+            <h3>Importance of Ambiguity in Compilers</h3>
+            <div class="important">
+                <strong>Why Ambiguity Matters:</strong>
+                <ul>
+                    <li><strong>Compiler Design:</strong> Ambiguous grammars lead to uncertain parsing, making it difficult to generate correct code</li>
+                    <li><strong>Semantic Analysis:</strong> Different parse trees can lead to different meanings and different execution results</li>
+                    <li><strong>Error Detection:</strong> Ambiguity can hide logical errors in the source code</li>
+                    <li><strong>Language Design:</strong> Programming languages should ideally have unambiguous grammars to ensure predictable behavior</li>
+                    <li><strong>Parser Implementation:</strong> Most parsers cannot handle ambiguous grammars directly and require disambiguation</li>
+                </ul>
+                
+                <p><strong>Solutions to Ambiguity:</strong></p>
+                <ul>
+                    <li>Rewriting the grammar to remove ambiguity</li>
+                    <li>Using operator precedence and associativity rules</li>
+                    <li>Adding disambiguation rules in the parser</li>
+                    <li>Using parser directives or hints</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="simplification">
+            <h2>5. Simplification of Context-Free Grammars</h2>
+            
+            <p>Grammar simplification is the process of transforming a grammar into an equivalent grammar that is simpler and more efficient for parsing. This involves removing unnecessary productions and symbols.</p>
+
+            <h3>Removal of Null (ε) Productions</h3>
+            <div class="definition">
+                <strong>Null Production:</strong> A production of the form A → ε, where A is a non-terminal and ε represents the empty string.
+            </div>
+            
+            <p><strong>Purpose:</strong> Null productions can complicate parsing and should be eliminated except when the language contains the empty string.</p>
+            
+            <p><strong>High-level Steps:</strong></p>
+            <ol>
+                <li>Identify all nullable non-terminals (non-terminals that can derive ε)</li>
+                <li>For each production containing nullable non-terminals, create new productions with all possible combinations of including and excluding the nullable symbols</li>
+                <li>Remove all ε-productions except S → ε if ε is in the language</li>
+                <li>Ensure S does not appear on the right side of any production if S → ε exists</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Example: Removing Null Productions</div>
+                <p><strong>Original Grammar:</strong></p>
+                <ul>
+                    <li>S → AaB</li>
+                    <li>A → Bb | ε</li>
+                    <li>B → Aa | ε</li>
+                </ul>
+                <p><strong>Nullable non-terminals:</strong> A, B</p>
+                <p><strong>Modified Grammar (after removing ε-productions):</strong></p>
+                <ul>
+                    <li>S → AaB | Aa | aB | a</li>
+                    <li>A → Bb | b</li>
+                    <li>B → Aa | a</li>
+                </ul>
+            </div>
+
+            <h3>Removal of Unit Productions</h3>
+            <div class="definition">
+                <strong>Unit Production:</strong> A production of the form A → B, where both A and B are non-terminals.
+            </div>
+            
+            <p><strong>Purpose:</strong> Unit productions add unnecessary steps in derivations and can be eliminated to simplify the grammar.</p>
+            
+            <p><strong>High-level Steps:</strong></p>
+            <ol>
+                <li>For each non-terminal A, find all non-terminals B such that A ⇒* B using only unit productions</li>
+                <li>For each such pair (A, B), add all non-unit productions of B to A</li>
+                <li>Remove all unit productions from the grammar</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Example: Removing Unit Productions</div>
+                <p><strong>Original Grammar:</strong></p>
+                <ul>
+                    <li>S → A | a</li>
+                    <li>A → B | b</li>
+                    <li>B → C | c</li>
+                    <li>C → d</li>
+                </ul>
+                <p><strong>Modified Grammar (after removing unit productions):</strong></p>
+                <ul>
+                    <li>S → a | b | c | d</li>
+                    <li>A → b | c | d</li>
+                    <li>B → c | d</li>
+                    <li>C → d</li>
+                </ul>
+            </div>
+
+            <h3>Removal of Useless Symbols</h3>
+            <div class="definition">
+                <strong>Useless Symbol:</strong> A symbol is useless if it does not appear in the derivation of any string in the language.
+            </div>
+            
+            <p>Useless symbols are of two types:</p>
+            <ul>
+                <li><strong>Non-generating symbols:</strong> Symbols that cannot derive any terminal string</li>
+                <li><strong>Unreachable symbols:</strong> Symbols that cannot be reached from the start symbol</li>
+            </ul>
+
+            <p><strong>Purpose:</strong> Removing useless symbols reduces the size of the grammar and makes it more efficient.</p>
+
+            <p><strong>High-level Steps:</strong></p>
+            <ol>
+                <li><strong>Step 1:</strong> Eliminate non-generating symbols
+                    <ul>
+                        <li>Find all symbols that can derive terminal strings</li>
+                        <li>Remove all symbols and productions that cannot derive terminal strings</li>
+                    </ul>
+                </li>
+                <li><strong>Step 2:</strong> Eliminate unreachable symbols
+                    <ul>
+                        <li>Find all symbols reachable from the start symbol</li>
+                        <li>Remove all symbols and productions that are not reachable</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Example: Removing Useless Symbols</div>
+                <p><strong>Original Grammar:</strong></p>
+                <ul>
+                    <li>S → AB | a</li>
+                    <li>A → b</li>
+                    <li>B → CD</li>
+                    <li>C → c</li>
+                    <li>D → d</li>
+                    <li>E → e</li>
+                </ul>
+                <p><strong>Analysis:</strong></p>
+                <ul>
+                    <li>Generating symbols: S, A, C, D (can derive terminals)</li>
+                    <li>B is non-generating (B → CD, but we need both C and D, which are separate)</li>
+                    <li>E is unreachable from S</li>
+                </ul>
+                <p><strong>Modified Grammar:</strong></p>
+                <ul>
+                    <li>S → a</li>
+                    <li>A → b</li>
+                </ul>
+            </div>
+
+            <div class="important">
+                <strong>Order of Simplification:</strong>
+                <p>The correct order for grammar simplification is:</p>
+                <ol>
+                    <li>Remove null productions (ε-productions)</li>
+                    <li>Remove unit productions</li>
+                    <li>Remove useless symbols (first non-generating, then unreachable)</li>
+                </ol>
+                <p>This order is important because each step may create new opportunities for the next step.</p>
+            </div>
+        </section>
+
+        <section id="normal-forms">
+            <h2>6. Normal Forms</h2>
+            
+            <p>Normal forms are standardized ways of writing context-free grammars. They simplify parsing and theoretical analysis.</p>
+
+            <h3>Chomsky Normal Form (CNF)</h3>
+            <div class="definition">
+                <strong>Definition:</strong> A context-free grammar is in Chomsky Normal Form if all production rules are of the form:
+                <ul>
+                    <li>A → BC (two non-terminals), or</li>
+                    <li>A → a (single terminal), or</li>
+                    <li>S → ε (only if ε is in the language and S does not appear on the right side of any production)</li>
+                </ul>
+                where A, B, C are non-terminals and a is a terminal.
+            </div>
+
+            <h4>Rules for CNF</h4>
+            <ul>
+                <li>Every production must have exactly two non-terminals on the right side, or exactly one terminal</li>
+                <li>The start symbol can produce ε only if it does not appear on the right side of any production</li>
+                <li>No null productions except possibly S → ε</li>
+                <li>No unit productions</li>
+            </ul>
+
+            <h4>Importance of CNF</h4>
+            <div class="important">
+                <ul>
+                    <li>Simplifies parsing algorithms like CYK (Cocke-Younger-Kasami) parser</li>
+                    <li>Used in theoretical proofs about context-free languages</li>
+                    <li>Provides a standard form for comparing grammars</li>
+                    <li>Makes it easier to determine if a string belongs to a language</li>
+                    <li>Every context-free language without ε can be generated by a grammar in CNF</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <div class="example-title">Example: CNF Grammar</div>
+                <p><strong>Grammar in CNF:</strong></p>
+                <ul>
+                    <li>S → AB | BC</li>
+                    <li>A → a</li>
+                    <li>B → b</li>
+                    <li>C → CD</li>
+                    <li>D → d</li>
+                </ul>
+                <p>All productions follow CNF rules: either two non-terminals or one terminal.</p>
+            </div>
+
+            <h3>Greibach Normal Form (GNF)</h3>
+            <div class="definition">
+                <strong>Definition:</strong> A context-free grammar is in Greibach Normal Form if all production rules are of the form:
+                <ul>
+                    <li>A → aα</li>
+                </ul>
+                where A is a non-terminal, a is a terminal, and α is a (possibly empty) string of non-terminals.
+            </div>
+
+            <h4>Rules for GNF</h4>
+            <ul>
+                <li>Every production must start with a terminal on the right side</li>
+                <li>After the terminal, there can be zero or more non-terminals</li>
+                <li>No left recursion is allowed</li>
+                <li>No null productions except possibly S → ε</li>
+            </ul>
+
+            <h4>Importance of GNF</h4>
+            <div class="important">
+                <ul>
+                    <li>Useful in converting CFG to PDA</li>
+                    <li>Eliminates left recursion, which is problematic for top-down parsers</li>
+                    <li>Makes it easy to construct a PDA from a grammar</li>
+                    <li>Every context-free language without ε can be generated by a grammar in GNF</li>
+                    <li>Simplifies certain theoretical proofs</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <div class="example-title">Example: GNF Grammar</div>
+                <p><strong>Grammar in GNF:</strong></p>
+                <ul>
+                    <li>S → aAB | bB</li>
+                    <li>A → aS | bAB</li>
+                    <li>B → a | bS</li>
+                </ul>
+                <p>All productions start with a terminal followed by zero or more non-terminals.</p>
+            </div>
+
+            <h3>Comparison Between CNF and GNF</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Chomsky Normal Form</th>
+                        <th>Greibach Normal Form</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Production Format</td>
+                        <td>A → BC or A → a</td>
+                        <td>A → aα (α is string of non-terminals)</td>
+                    </tr>
+                    <tr>
+                        <td>Right Side</td>
+                        <td>Two non-terminals or one terminal</td>
+                        <td>One terminal followed by non-terminals</td>
+                    </tr>
+                    <tr>
+                        <td>Primary Use</td>
+                        <td>CYK parsing algorithm</td>
+                        <td>CFG to PDA conversion</td>
+                    </tr>
+                    <tr>
+                        <td>Derivation Length</td>
+                        <td>Fixed: 2n-1 steps for string of length n</td>
+                        <td>Exactly n steps for string of length n</td>
+                    </tr>
+                    <tr>
+                        <td>Left Recursion</td>
+                        <td>May contain left recursion</td>
+                        <td>No left recursion</td>
+                    </tr>
+                    <tr>
+                        <td>Conversion Complexity</td>
+                        <td>Relatively easier</td>
+                        <td>More complex</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="important">
+                <strong>Key Observation:</strong>
+                <p>Both CNF and GNF are powerful normal forms, and any context-free language (except possibly ε) can be represented in either form. The choice between them depends on the specific application or algorithm being used.</p>
+            </div>
+        </section>
+
+        <section id="pda">
+            <h2>7. Pushdown Automata (PDA)</h2>
+            
+            <div class="definition">
+                <strong>Definition:</strong> A Pushdown Automaton (PDA) is a type of automaton that uses a stack to store information. It is more powerful than a finite automaton and is equivalent to context-free grammars in terms of computational power.
+            </div>
+
+            <h3>Why PDA is Needed (Limitation of FA)</h3>
+            <p>Finite Automata have several limitations that necessitate the use of Pushdown Automata:</p>
+            <ul>
+                <li><strong>No Memory Beyond States:</strong> Finite automata have only a finite number of states and cannot count or remember unbounded information</li>
+                <li><strong>Cannot Recognize Nested Structures:</strong> Languages like {aⁿbⁿ | n ≥ 0} cannot be recognized by finite automata</li>
+                <li><strong>Cannot Match Patterns:</strong> Patterns requiring matching of symbols (like balanced parentheses) are beyond FA capabilities</li>
+                <li><strong>Limited to Regular Languages:</strong> FA can only recognize regular languages, which is a proper subset of context-free languages</li>
+            </ul>
+
+            <div class="important">
+                <p><strong>PDA = Finite Automaton + Stack</strong></p>
+                <p>The stack provides unlimited memory that can grow and shrink, allowing PDA to recognize context-free languages.</p>
+            </div>
+
+            <h3>Components of PDA</h3>
+            <p>A Pushdown Automaton consists of:</p>
+            <ul>
+                <li><strong>Input Tape:</strong> Contains the input string to be processed</li>
+                <li><strong>Finite Control:</strong> A finite set of states that control the behavior</li>
+                <li><strong>Stack:</strong> An infinite memory structure that operates on LIFO (Last In First Out) principle</li>
+                <li><strong>Transition Function:</strong> Defines how the PDA moves from one state to another based on input and stack top</li>
+            </ul>
+
+            <h3>Formal Definition (7-tuple)</h3>
+            <p>A Pushdown Automaton is formally defined as a 7-tuple:</p>
+            <p class="formula">PDA = (Q, Σ, Γ, δ, q₀, Z₀, F)</p>
+            
+            <p>Where:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Q</strong></td>
+                        <td>Finite set of states</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Σ</strong></td>
+                        <td>Input alphabet (finite set of input symbols)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Γ</strong></td>
+                        <td>Stack alphabet (finite set of stack symbols)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>δ</strong></td>
+                        <td>Transition function: δ: Q × (Σ ∪ {ε}) × Γ → finite subsets of Q × Γ*</td>
+                    </tr>
+                    <tr>
+                        <td><strong>q₀</strong></td>
+                        <td>Initial state (q₀ ∈ Q)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Z₀</strong></td>
+                        <td>Initial stack symbol (Z₀ ∈ Γ)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F</strong></td>
+                        <td>Set of final (accepting) states (F ⊆ Q)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Understanding the Transition Function</h4>
+            <p>The transition function δ takes three inputs:</p>
+            <ul>
+                <li><strong>Current state (q):</strong> The state in which the PDA is currently</li>
+                <li><strong>Input symbol (a):</strong> The current symbol being read from input (or ε for no input)</li>
+                <li><strong>Stack top (Z):</strong> The symbol currently at the top of the stack</li>
+            </ul>
+            
+            <p>And produces:</p>
+            <ul>
+                <li><strong>Next state (p):</strong> The state to move to</li>
+                <li><strong>Stack operation (γ):</strong> String of symbols to replace the top of stack</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: PDA for {aⁿbⁿ | n ≥ 1}</div>
+                <p>PDA = ({q₀, q₁, q₂}, {a, b}, {a, Z₀}, δ, q₀, Z₀, {q₂})</p>
+                <p><strong>Transition Function δ:</strong></p>
+                <ul>
+                    <li>δ(q₀, a, Z₀) = {(q₀, aZ₀)} - Push 'a' when reading 'a' in initial state</li>
+                    <li>δ(q₀, a, a) = {(q₀, aa)} - Continue pushing 'a' for each 'a' read</li>
+                    <li>δ(q₀, b, a) = {(q₁, ε)} - Pop 'a' when first 'b' is read, move to q₁</li>
+                    <li>δ(q₁, b, a) = {(q₁, ε)} - Continue popping 'a' for each 'b'</li>
+                    <li>δ(q₁, ε, Z₀) = {(q₂, Z₀)} - Accept when stack has only Z₀</li>
+                </ul>
+                <p><strong>Working:</strong> This PDA pushes one 'a' on the stack for each 'a' in input, then pops one 'a' for each 'b'. String is accepted if stack becomes empty (except Z₀) after reading entire input.</p>
+            </div>
+
+            <div class="important">
+                <strong>Key Properties of PDA:</strong>
+                <ul>
+                    <li>PDA can recognize all context-free languages</li>
+                    <li>The stack allows PDA to count and match symbols</li>
+                    <li>PDA can have non-deterministic transitions (multiple possible moves)</li>
+                    <li>Deterministic PDA (DPDA) is less powerful than non-deterministic PDA</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="acceptance">
+            <h2>8. Acceptance of Strings by PDA</h2>
+            
+            <p>There are two methods by which a PDA can accept strings:</p>
+
+            <h3>Acceptance by Final State</h3>
+            <div class="definition">
+                <strong>Definition:</strong> A string w is accepted by final state if the PDA, starting from the initial state with the initial stack symbol, can consume the entire input string and reach a final state (regardless of the stack contents).
+            </div>
+
+            <p><strong>Formal Definition:</strong></p>
+            <p>For PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F), the language accepted by final state is:</p>
+            <p class="formula">L(M) = {w | (q₀, w, Z₀) ⊢* (q, ε, α) where q ∈ F and α ∈ Γ*}</p>
+            
+            <p>This means:</p>
+            <ul>
+                <li>Start in initial state q₀ with input w and stack containing Z₀</li>
+                <li>After processing entire input (ε means no input left)</li>
+                <li>End in a final state q ∈ F</li>
+                <li>Stack can contain any string α (stack contents don't matter)</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: Acceptance by Final State</div>
+                <p>PDA for {aⁿbⁿ | n ≥ 0} accepting by final state:</p>
+                <p>States: {q₀, q₁, q₂}, Final states: F = {q₂}</p>
+                <p>String "aabb" is accepted if it reaches q₂ after consuming entire input, regardless of stack.</p>
+            </div>
+
+            <h3>Acceptance by Empty Stack</h3>
+            <div class="definition">
+                <strong>Definition:</strong> A string w is accepted by empty stack if the PDA, starting from the initial state with the initial stack symbol, can consume the entire input string and empty the stack completely (regardless of the final state).
+            </div>
+
+            <p><strong>Formal Definition:</strong></p>
+            <p>For PDA M = (Q, Σ, Γ, δ, q₀, Z₀, F), the language accepted by empty stack is:</p>
+            <p class="formula">N(M) = {w | (q₀, w, Z₀) ⊢* (q, ε, ε) where q ∈ Q}</p>
+            
+            <p>This means:</p>
+            <ul>
+                <li>Start in initial state q₀ with input w and stack containing Z₀</li>
+                <li>After processing entire input (first ε means no input left)</li>
+                <li>End in any state q (state doesn't matter)</li>
+                <li>Stack must be completely empty (second ε means empty stack)</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: Acceptance by Empty Stack</div>
+                <p>PDA for {aⁿbⁿ | n ≥ 1} accepting by empty stack:</p>
+                <p>String "aabb" is accepted if:</p>
+                <ul>
+                    <li>After reading "aa", stack contains: Z₀aa</li>
+                    <li>After reading first "b", stack contains: Z₀a</li>
+                    <li>After reading second "b", stack contains: Z₀</li>
+                    <li>Make one more ε-transition to pop Z₀ and empty the stack</li>
+                </ul>
+            </div>
+
+            <h3>Difference Between the Two Methods</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Acceptance by Final State</th>
+                        <th>Acceptance by Empty Stack</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Acceptance Criteria</strong></td>
+                        <td>Must reach a state in F</td>
+                        <td>Stack must become empty</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stack Condition</strong></td>
+                        <td>Stack can have any contents</td>
+                        <td>Stack must be completely empty</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Final States</strong></td>
+                        <td>Required (set F must be defined)</td>
+                        <td>Not required (any state is okay)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formal Notation</strong></td>
+                        <td>L(M)</td>
+                        <td>N(M)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Typical Use</strong></td>
+                        <td>More intuitive for most applications</td>
+                        <td>Easier for theoretical conversions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Conversion</strong></td>
+                        <td>Can be converted to empty stack</td>
+                        <td>Can be converted to final state</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="important">
+                <strong>Equivalence Theorem:</strong>
+                <p>For every PDA accepting by final state, there exists an equivalent PDA accepting by empty stack, and vice versa. This means both methods are equally powerful and can recognize the same class of languages (context-free languages).</p>
+                
+                <p><strong>Conversion Tips:</strong></p>
+                <ul>
+                    <li><strong>Final State → Empty Stack:</strong> Add new initial state, push a special marker, then accept by popping all including the marker</li>
+                    <li><strong>Empty Stack → Final State:</strong> Add new stack bottom marker, add a final state, accept when stack has only the marker</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="cfg-pda">
+            <h2>9. PDA and CFG Relationship</h2>
+            
+            <p>There is a fundamental equivalence between Context-Free Grammars and Pushdown Automata. Every context-free language can be recognized by a PDA, and every language recognized by a PDA is context-free.</p>
+
+            <h3>CFG to PDA Equivalence</h3>
+            <div class="definition">
+                <strong>Theorem:</strong> For every context-free grammar G, there exists a pushdown automaton M such that L(G) = N(M) (language generated by G equals language accepted by M by empty stack).
+            </div>
+
+            <p><strong>Construction Approach:</strong></p>
+            <p>Given a CFG G = (V, T, P, S), construct a PDA M that simulates leftmost derivations:</p>
+            <ol>
+                <li>PDA has a single state (except initial state for setup)</li>
+                <li>Start symbol S is pushed onto the stack initially</li>
+                <li>PDA performs two types of operations:
+                    <ul>
+                        <li><strong>If stack top is a non-terminal A:</strong> Pop A and push the right side of some production A → α</li>
+                        <li><strong>If stack top is a terminal a:</strong> Match it with input symbol a and pop it</li>
+                    </ul>
+                </li>
+                <li>Accept when input is consumed and stack is empty</li>
+            </ol>
+
+            <div class="example">
+                <div class="example-title">Example: CFG to PDA</div>
+                <p><strong>CFG:</strong></p>
+                <ul>
+                    <li>S → aSb | ε</li>
+                </ul>
+                <p>This generates L = {aⁿbⁿ | n ≥ 0}</p>
+                
+                <p><strong>Equivalent PDA transitions:</strong></p>
+                <ul>
+                    <li>δ(q, ε, S) = {(q, aSb), (q, ε)} - Replace S with aSb or ε</li>
+                    <li>δ(q, a, a) = {(q, ε)} - Match terminal 'a'</li>
+                    <li>δ(q, b, b) = {(q, ε)} - Match terminal 'b'</li>
+                </ul>
+                <p>The PDA simulates the derivation by expanding non-terminals and matching terminals.</p>
+            </div>
+
+            <h3>PDA to CFG Equivalence</h3>
+            <div class="definition">
+                <strong>Theorem:</strong> For every pushdown automaton M, there exists a context-free grammar G such that L(G) = N(M) (language generated by G equals language accepted by M by empty stack).
+            </div>
+
+            <p><strong>Construction Approach:</strong></p>
+            <p>Given a PDA M, construct a CFG G where:</p>
+            <ol>
+                <li>Non-terminals of G represent stack configurations of M</li>
+                <li>Non-terminal [p, A, q] represents: "Starting in state p with A on stack top, PDA can reach state q with A popped"</li>
+                <li>Productions are created based on PDA transitions</li>
+                <li>Start symbol represents initial configuration</li>
+            </ol>
+
+            <p><strong>High-level Steps:</strong></p>
+            <ul>
+                <li>Ensure PDA has a single state and accepts by empty stack</li>
+                <li>Create non-terminals in the form [q, A, p] for all states q, p and stack symbol A</li>
+                <li>For each transition, create corresponding productions</li>
+                <li>The construction ensures grammar generates exactly the strings accepted by PDA</li>
+            </ul>
+
+            <div class="example">
+                <div class="example-title">Example: PDA to CFG Concept</div>
+                <p>If PDA has transition δ(q₁, a, Z) = {(q₂, YZ)}, this means:</p>
+                <ul>
+                    <li>In state q₁, read 'a', pop Z, push Y then Z, move to q₂</li>
+                </ul>
+                <p>Corresponding grammar production would involve non-terminals representing states before and after this transition, capturing the stack behavior.</p>
+            </div>
+
+            <h3>Final Equivalence Statement</h3>
+            <div class="important">
+                <strong>Fundamental Equivalence:</strong>
+                <p>The following three are equivalent:</p>
+                <ol>
+                    <li>A language L is generated by a context-free grammar</li>
+                    <li>A language L is accepted by a pushdown automaton by final state</li>
+                    <li>A language L is accepted by a pushdown automaton by empty stack</li>
+                </ol>
+                
+                <p><strong>This means:</strong></p>
+                <ul>
+                    <li>Context-Free Languages = Languages recognized by PDA</li>
+                    <li>CFG and PDA are equivalent models of computation for context-free languages</li>
+                    <li>Any problem that can be solved by CFG can be solved by PDA and vice versa</li>
+                    <li>This equivalence is fundamental in compiler design and parsing theory</li>
+                </ul>
+            </div>
+
+            <div class="important">
+                <strong>Practical Implications:</strong>
+                <ul>
+                    <li><strong>Parser Design:</strong> Can use either CFG-based or PDA-based approaches</li>
+                    <li><strong>Language Recognition:</strong> Can prove a language is context-free using either model</li>
+                    <li><strong>Theoretical Analysis:</strong> Can choose the more convenient model for proofs</li>
+                    <li><strong>Compiler Construction:</strong> CFG for specification, PDA for implementation</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="exam-focus">
+            <h2>10. Exam Focus</h2>
+            
+            <div class="exam-focus">
+                <h3>Important Definitions to Memorize</h3>
+                <ul>
+                    <li><strong>Context-Free Grammar:</strong> 4-tuple G = (V, T, P, S)</li>
+                    <li><strong>Pushdown Automaton:</strong> 7-tuple PDA = (Q, Σ, Γ, δ, q₀, Z₀, F)</li>
+                    <li><strong>Ambiguous Grammar:</strong> Grammar where at least one string has more than one parse tree</li>
+                    <li><strong>Chomsky Normal Form:</strong> Productions of form A → BC or A → a</li>
+                    <li><strong>Greibach Normal Form:</strong> Productions of form A → aα</li>
+                    <li><strong>Leftmost Derivation:</strong> Derivation where leftmost non-terminal is replaced at each step</li>
+                    <li><strong>Rightmost Derivation:</strong> Derivation where rightmost non-terminal is replaced at each step</li>
+                    <li><strong>Parse Tree:</strong> Graphical representation of derivation showing hierarchical structure</li>
+                </ul>
+
+                <h3>Frequently Asked AKTU Questions from Unit 3</h3>
+                <ol>
+                    <li>Define Context-Free Grammar with example. Explain its components.</li>
+                    <li>What is the difference between leftmost and rightmost derivation? Illustrate with example.</li>
+                    <li>Construct a parse tree for a given string using a given grammar.</li>
+                    <li>What is an ambiguous grammar? Give an example and show two different parse trees.</li>
+                    <li>Explain the process of removing null productions from CFG.</li>
+                    <li>Explain the process of removing unit productions from CFG.</li>
+                    <li>Define Chomsky Normal Form. Convert a given grammar to CNF.</li>
+                    <li>Define Greibach Normal Form. What is its significance?</li>
+                    <li>What is a Pushdown Automaton? Why is it more powerful than Finite Automata?</li>
+                    <li>Give the formal definition of PDA and explain each component.</li>
+                    <li>Explain acceptance by final state and acceptance by empty stack in PDA.</li>
+                    <li>Construct a PDA for the language {aⁿbⁿ | n ≥ 1}.</li>
+                    <li>Construct a PDA for the language of balanced parentheses.</li>
+                    <li>Prove that CFG and PDA are equivalent.</li>
+                    <li>Convert a given CFG to equivalent PDA.</li>
+                </ol>
+
+                <h3>Keywords to Include in Answers</h3>
+                <ul>
+                    <li>For CFG questions: terminals, non-terminals, productions, start symbol, derivation</li>
+                    <li>For derivation questions: leftmost, rightmost, step-by-step, sequence</li>
+                    <li>For parse tree questions: root, interior nodes, leaf nodes, yield</li>
+                    <li>For ambiguity questions: multiple parse trees, different interpretations, structural ambiguity</li>
+                    <li>For simplification questions: nullable, useless symbols, generating symbols, reachable symbols</li>
+                    <li>For normal forms: standard form, conversion, canonical form</li>
+                    <li>For PDA questions: stack, push, pop, transition function, configuration</li>
+                    <li>For acceptance questions: final state, empty stack, language accepted</li>
+                </ul>
+
+                <h3>Common Mistakes Students Make</h3>
+                <ul>
+                    <li><strong>Confusing terminals and non-terminals:</strong> Remember terminals are lowercase/actual symbols, non-terminals are uppercase/variables</li>
+                    <li><strong>Not showing all steps in derivations:</strong> Always show each step clearly in leftmost/rightmost derivation</li>
+                    <li><strong>Incorrect parse tree structure:</strong> Ensure leaves are terminals, interior nodes are non-terminals, root is start symbol</li>
+                    <li><strong>Missing the definition of ambiguity:</strong> Must show TWO different parse trees for same string to prove ambiguity</li>
+                    <li><strong>Wrong order in simplification:</strong> First remove null productions, then unit productions, then useless symbols</li>
+                    <li><strong>Confusing CNF and GNF rules:</strong> CNF has two non-terminals OR one terminal; GNF starts with terminal</li>
+                    <li><strong>Incomplete PDA definition:</strong> Must include all 7 components in formal definition</li>
+                    <li><strong>Not specifying acceptance method:</strong> Always clarify if accepting by final state or empty stack</li>
+                    <li><strong>Forgetting initial stack symbol Z₀:</strong> PDA always starts with Z₀ on stack</li>
+                    <li><strong>Not explaining equivalence properly:</strong> Must state both directions when proving CFG-PDA equivalence</li>
+                </ul>
+
+                <h3>Marks Distribution (Typical AKTU Pattern)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Question Type</th>
+                            <th>Marks</th>
+                            <th>What to Write</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Define CFG with example</td>
+                            <td>2-3</td>
+                            <td>Formal definition + one simple example with explanation</td>
+                        </tr>
+                        <tr>
+                            <td>Leftmost vs Rightmost derivation</td>
+                            <td>5-7</td>
+                            <td>Definitions + example showing both derivations step-by-step</td>
+                        </tr>
+                        <tr>
+                            <td>Construct parse tree</td>
+                            <td>5-7</td>
+                            <td>Draw complete parse tree with proper structure + brief explanation</td>
+                        </tr>
+                        <tr>
+                            <td>Prove grammar is ambiguous</td>
+                            <td>5-7</td>
+                            <td>Show two different parse trees for one string + conclusion</td>
+                        </tr>
+                        <tr>
+                            <td>Convert to CNF/GNF</td>
+                            <td>7-10</td>
+                            <td>Step-by-step conversion showing all intermediate steps</td>
+                        </tr>
+                        <tr>
+                            <td>PDA construction</td>
+                            <td>7-10</td>
+                            <td>Formal definition + transition function + explanation of working</td>
+                        </tr>
+                        <tr>
+                            <td>CFG to PDA conversion</td>
+                            <td>10</td>
+                            <td>Complete construction with explanation of each step</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Prepared for AKTU B.Tech CSE – TAFL Unit 3</p>
+    </footer>
+</body>
+</html>
